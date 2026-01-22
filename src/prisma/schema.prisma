@@ -1,0 +1,466 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+/**
+ * Instantiators
+ */
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/**
+ * App-User Tables
+ */
+model Property {
+  id               String         @id @default(uuid())
+  name             String /// @encrypted
+  nameHash         String? /// @encryption:hash(name)
+  homepageLink     String /// @encrypted
+  homepageLinkHash String? /// @encryption:hash(homepageLink)
+  archived         Boolean?       @default(false)
+  archivedAt       DateTime?
+  Photo            Photo?
+  Address          Address?
+  Calendar         Calendar?
+  CronService      CronService?
+  AttachedPMS      AttachedPMS?
+  cid              String
+  coid             String
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([coid, cid]) // For company-clerk queries
+  @@index([coid]) // For company-based queries
+  @@index([cid]) // For user-based queries
+  @@index([name]) // For name-based searches
+}
+
+model Photo {
+  id               String   @id @default(uuid())
+  title            String? /// @encrypted
+  titleHash        String? /// @encryption:hash(title)
+  width            String? /// @encrypted
+  widthHash        String? /// @encryption:hash(width)
+  height           String? /// @encrypted
+  heightHash       String? /// @encryption:hash(height)
+  size             BigInt @default(0)
+  mime             String? /// @encrypted
+  mimeHash         String? /// @encryption:hash(mime)
+  ext              String? /// @encrypted
+  extHash          String? /// @encryption:hash(ext)
+  srcUrl           String? /// @encrypted
+  srcUrlHash       String? /// @encryption:hash(srcUrl)
+  thumbnailUrl     String? /// @encrypted
+  thumbnailUrlHash String? /// @encryption:hash(thumbnailUrl)
+  mediumUrl        String? /// @encrypted
+  mediumUrlHash    String? /// @encryption:hash(mediumUrl)
+  deleteUrl        String? /// @encrypted
+  deleteUrlHash    String? /// @encryption:hash(deleteUrl)
+  Property         Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId       String     @unique()
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Address {
+  id             String             @id @default(uuid())
+  isMUA          Boolean            @default(false)
+  street         String /// @encrypted
+  streetHash     String? /// @encryption:hash(street)
+  street2        String? /// @encrypted
+  street2Hash    String? /// @encryption:hash(street2)
+  street3        String? /// @encrypted
+  street3Hash    String? /// @encryption:hash(street3)
+  city           String /// @encrypted
+  cityHash       String? /// @encryption:hash(city)
+  state          String /// @encrypted
+  stateHash      String? /// @encryption:hash(state)
+  postalCode     String /// @encrypted
+  postalCodeHash String? /// @encryption:hash(postalCode)
+  country        SupportedCountries @default(USA)
+  Property       Property           @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId     String             @unique()
+
+  @@index([city, state]) // For location-based queries
+  @@index([postalCode]) // For postal code filtering
+  @@index([isMUA]) // For MUA status filtering
+  // Optional composite indexes based on usage patterns
+  @@index([city, state, postalCode]) // For complete location queries
+}
+
+model Calendar {
+  id          String       @id @default(uuid())
+  Property    Property     @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId  String       @unique()
+  icalSources ICalEntry[]
+  CronService CronService?
+  coid        String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([propertyId]) // Supporting unique constraint
+  @@index([coid]) // For organization-based queries
+  @@index([createdAt]) // For time-based queries
+  @@index([propertyId, createdAt]) // For property-based time queries
+  // Optional composite indexes based on usage patterns
+  @@index([coid, createdAt]) // For organization time-based queries
+  @@index([propertyId, coid]) // For property organization queries
+}
+
+model CronService {
+  id                  String              @id @default(uuid())
+  icalFileUploadLimit ICalFileUploadLimit @default(THREE)
+  urlSources          ICalEntry[]
+  scheduleType        ScheduleType        @default(DAILY)
+  lastRun             DateTime?
+  nextRun             DateTime
+  status              CronServiceStatus   @default(NOT_PROCESSED)
+  coid                String
+  Property            Property            @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId          String              @unique()
+  Calendar            Calendar?           @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+  calendarId          String?             @unique
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@index([nextRun(sort: Asc)]) // For scheduling queries
+  @@index([lastRun]) // For monitoring/history queries
+  @@index([coid, id]) // For monitoring/history queries
+  @@index([propertyId]) // Supporting unique constraint
+  // Optional composite indexes based on usage patterns
+  @@index([scheduleType, nextRun]) // For batch processing
+  @@index([status, nextRun]) // For status-based scheduling
+}
+
+model ICalEntry {
+  id                 String              @id @default(uuid())
+  importType         String /// @encrypted
+  importTypeHash     String? /// @encryption:hash(importType)
+  icalUrl            String? /// @encrypted
+  icalUrlHash        String? /// @encryption:hash(icalUrl)
+  icalFilename       String? /// @encrypted
+  icalFilenameHash   String? /// @encryption:hash(icalFilename)
+  isMainSrc          Boolean             @default(false)
+  dateBlocks         DateBlock[]
+  dateBlockConflicts DateBlockConflict[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  CronService        CronService         @relation(fields: [cronServiceId], references: [id], onDelete: Cascade)
+  cronServiceId      String
+  Calendar           Calendar            @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+  calendarId         String
+  UserImprint        UserImprint         @relation(fields: [userImprintId], references: [id])
+  userImprintId      String
+  propertyId         String
+
+  @@index([propertyId]) // For property relationship queries
+  @@index([propertyId, calendarId]) // For property calendar relationship queries
+  @@index([cronServiceId]) // For cron service relationship queries
+  @@index([importType]) // For import type filtering
+  @@index([createdAt]) // For time-based queries
+  // Optional composite indexes based on usage patterns
+  @@index([propertyId, importType]) // For property-based import queries
+  @@index([cronServiceId, importType]) // For cron service import queries
+}
+
+model DateBlock {
+  id               String              @id @default(uuid())
+  calendarId       String
+  calendarType     String
+  prodid           String
+  version          String
+  eventType        String
+  eventUID         String
+  eventCreated     DateTime
+  summary          String /// @encrypted
+  summaryHash      String? /// @encryption:hash(summary)
+  startDate        DateTime
+  endDate          DateTime
+  isRecurring      Boolean             @default(false)
+  recurrenceRule   String              @default("")
+  priority         PriorityType        @default(NO_PRIORITY)
+  conflicts        DateBlockConflict[]
+  ICalEntry        ICalEntry           @relation(fields: [iCalEntryId], references: [id], onDelete: Cascade)
+  iCalEntryId      String
+  propertyId       String?
+  propertyName     String? /// @encrypted
+  propertyNameHash String? /// @encryption:hash(propertyName)
+  cid              String
+  coid             String
+  UserImprint      UserImprint         @relation(fields: [userImprintId], references: [id])
+  userImprintId    String
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  @@unique([eventUID, startDate, endDate, coid, propertyId], name: "dateBlockUnique")
+  @@index([startDate, endDate, coid])
+  @@index(calendarId)
+}
+
+model DateBlockConflict {
+  id               String             @id @default(uuid())
+  calendarId       String
+  calendarType     String
+  prodid           String
+  version          String
+  eventType        String
+  eventUID         String
+  eventCreated     DateTime
+  summary          String /// @encrypted
+  summaryHash      String? /// @encryption:hash(summary)
+  startDate        DateTime
+  endDate          DateTime
+  isRecurring      Boolean            @default(false)
+  recurrenceRule   String             @default("")
+  priority         PriorityType       @default(NO_PRIORITY)
+  firstBlock       DateBlock          @relation(fields: [firstBlockId], references: [id], onDelete: Cascade)
+  firstBlockId     String
+  overlapDuration  Int // Duration stored in Minutes
+  resolved         Boolean
+  resolutionAction ConflictResolution @default(NONE)
+  ICalEntry        ICalEntry          @relation(fields: [iCalEntryId], references: [id], onDelete: Cascade)
+  iCalEntryId      String
+  propertyId       String?
+  propertyName     String? /// @encrypted
+  propertyNameHash String? /// @encryption:hash(propertyName)
+  cid              String
+  coid             String
+  UserImprint      UserImprint        @relation(fields: [userImprintId], references: [id])
+  userImprintId    String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@unique([eventUID, startDate, endDate, coid, firstBlockId, propertyId], name: "dateBlockUnique")
+  @@index([firstBlockId, id, coid])
+  @@index([startDate, endDate])
+  @@index(calendarId)
+}
+
+model BookingRequest {
+  id            String                @id @default(uuid())
+  status        BookingRequestStatus? @default(PENDING)
+  arrival       DateTime
+  departure     DateTime
+  notes         String /// @encrypted
+  notesHash     String? /// @encryption:hash(notes)
+  messageId     String
+  calendarId    String
+  orgImprint    OrgImprint            @relation(fields: [orgImprintId], references: [id])
+  userImprint   UserImprint           @relation(fields: [userImprintId], references: [id])
+  orgImprintId  String
+  userImprintId String
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+
+  @@unique([arrival, departure, orgImprintId, calendarId], name: "requestedBookingUnique")
+  @@index([arrival, departure])
+  @@index(calendarId)
+}
+
+model AttachedPMS {
+  id            String     @id @default(uuid())
+  pmsList       String[]
+  foreignIdList String[]
+  Property      Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId    String     @unique()
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+/**
+ * App Models
+ */
+model UserImprint {
+  id                String              @id @default(uuid())
+  firstName         String              @unique /// @encrypted
+  firstNameHash     String?             @unique /// @encryption:hash(firstName)
+  lastName          String              @unique /// @encrypted
+  lastNameHash      String?             @unique /// @encryption:hash(lastName)
+  fullName          String              @unique /// @encrypted
+  fullNameHash      String?             @unique /// @encryption:hash(fullName)
+  contactEmail      String              @unique /// @encrypted
+  contactEmailHash  String?             @unique /// @encryption:hash(contactEmail)
+  contactPhone      String              @unique /// @encrypted
+  contactPhoneHash  String?             @unique /// @encryption:hash(contactPhone)
+  appRole           String /// @encrypted
+  appRoleHash       String? /// @encryption:hash(appRole)
+  cid               String              @unique /// @encrypted
+  cidHash           String?             @unique /// @encryption:hash(cid)
+  OrgImprint        OrgImprint?         @relation(fields: [orgImprintId], references: [id])
+  orgImprintId      String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  UserAudit         UserAudit[]
+  ResolutionAudit   ResolutionAudit[]
+  ICalEntry         ICalEntry[]
+  DateBlock         DateBlock[]
+  DateBlockConflict DateBlockConflict[]
+  BookingRequest    BookingRequest[]
+}
+
+model OrgImprint {
+  id                 String               @id @default(uuid())
+  tier               OrgTierType          @default(TIER_0)
+  name               String /// @encrypted
+  nameHash           String? /// @encryption:hash(name)
+  coid               String /// @encrypted
+  coidHash           String? /// @encryption:hash(coid)
+  members            UserImprint[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  UserAudit          UserAudit[]
+  ResolutionAudit    ResolutionAudit[]
+  ScheduledJobsAudit ScheduledJobsAudit[]
+  BookingRequest     BookingRequest[]
+}
+
+// Audit Models
+model UserAudit {
+  id            String      @id @default(uuid())
+  actionsTaken  String[]
+  api           String
+  path          String
+  uec           String? /// @encrypted
+  uecHash       String? /// @encryption:hash(uec)
+  sessionId     String /// @encrypted
+  sessionIdHash String? /// @encryption:hash(sessionId)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  UserImprint   UserImprint @relation(fields: [userImprintId], references: [id])
+  OrgImprint    OrgImprint  @relation(fields: [orgImprintId], references: [id])
+  userImprintId String
+  orgImprintId  String
+}
+
+model ResolutionAudit {
+  id                       String             @id @default(uuid())
+  propertyName             String /// @encrypted
+  propertyNameHash         String? /// @encryption:hash(propertyName)
+  firstBookedBy            String /// @encrypted
+  firstBookedByHash        String? /// @encryption:hash(firstBookedBy)
+  conflictUploadedBy       String /// @encrypted
+  conflictUploadedByHash   String? /// @encryption:hash(conflictUploadedBy)
+  eventUID                 String
+  retainedBookingStartDate DateTime
+  retainedBookingEndDate   DateTime
+  removedBookingStartDate  DateTime
+  removedBookingEndDate    DateTime
+  resolved                 Boolean            @default(true)
+  resolutionAction         ConflictResolution @default(NONE)
+  propertyId               String
+  calendarId               String
+  icalEntryId              String
+  firstBlockId             String
+  oldConflictId            String
+  prodid                   String
+  version                  String
+  conflictDetectedOn       DateTime
+  UserImprint              UserImprint?       @relation(fields: [userImprintId], references: [id])
+  OrgImprint               OrgImprint?        @relation(fields: [orgImprintId], references: [id])
+  userImprintId            String
+  orgImprintId             String
+  createdAt                DateTime           @default(now())
+  updatedAt                DateTime           @updatedAt
+}
+
+model ScheduledJobsAudit {
+  id               String            @id @default(uuid())
+  scheduleType     String /// @encrypted
+  scheduleTypeHash String? /// @encryption:hash(scheduleType)
+  jobBeganAt       DateTime
+  jobEndedAt       DateTime
+  pcs              String[]
+  status           CronServiceStatus
+  errors           String[]
+  OrgImprint       OrgImprint        @relation(fields: [orgImprintId], references: [id])
+  orgImprintId     String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+/**
+ * ENUM Defs
+ */
+// Allowed ICal Uploads Per Property: Default is THREE. Paid Service for all others.
+enum ICalFileUploadLimit {
+  THREE
+  TEN
+  UNLIMITED
+}
+
+// Scheduled Jobs Statuses: Default is NOT_PROCESSED.
+enum CronServiceStatus {
+  PROCESSED
+  PROCESSING
+  NOT_PROCESSED
+  FAILED_PROCESSING
+}
+
+// Scheduled Jobs Types: Default is DAILY. Hourly to be a Paid Service.
+enum ScheduleType {
+  DAILY
+  HOURLY
+}
+
+enum ConflictResolution {
+  NONE
+  KEPT_PLA
+  KEPT_ALA
+  MERGE // No Usages for Merge yet.
+  SPLIT // No Usages for Split yet.
+}
+
+// Available Country Data for Address Related Dropdowns
+enum SupportedCountries {
+  USA
+  CAN
+  MEX
+  GBR
+  AUS
+  CYM
+}
+
+// Org Tiers for DateBlocks and Conflicts. Priority Assigned PLA > ALA > NO_PRIORITY
+enum OrgTierType {
+  TIER_0
+  TIER_1
+  TIER_3
+}
+
+// Priority Types for DateBlocks and Conflicts. Priority Assigned PLA > ALA > NO_PRIORITY
+enum PriorityType {
+  PRIORITY_0
+  PRIORITY_1
+  NO_PRIORITY
+}
+
+// Users Allowed To CRUD an ICal Source
+enum ICalOwnerType {
+  PLA
+  ALA
+  IND
+}
+
+// All Available App Roles
+enum AppRoles {
+  PLA
+  ALA
+  RLA
+  IND
+}
+
+// Booking Request Types
+enum BookingRequestStatus {
+  ACCEPTED
+  PENDING
+  REJECTED
+}
