@@ -12,14 +12,14 @@ import {
 } from "@/actions/property/read.action";
 import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";
 import {formatAddress, SupportedCountries} from "@/lib/utils/Address/address.utils";
-import {Address} from "@prisma/client";
+import {Address, Photo} from "@prisma/client";
 
 type PropertyViewProps = {
     id: string;
     name: string;
     homepageLink: string;
     Address?: Address;
-    Photo?: { title: string; thumbnailUrl: string; width: string; height: string } | null;
+    Photo?: Partial<Photo> | null;
 }
 
 export const PropertyView = ({
@@ -107,7 +107,7 @@ export const PropertyView = ({
                                 <CardContent>
                                     <PictureWrapper
                                         photo={!!property.Photo ? {
-                                            thumbnailUrl: property.Photo.srcUrl,
+                                            thumbnailUrl: property.Photo.srcUrl ?? property.Photo.thumbnailUrl,
                                             width: property.Photo.width,
                                             height: property.Photo.height,
                                             title: property.Photo.title

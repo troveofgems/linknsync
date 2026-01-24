@@ -1,5 +1,6 @@
 'use server';
 import db from "@/db/connect.db";
+import {SessionDataState} from "@/store/userStore";
 
 export interface CreateUserAuditActionState {
     message: string;
@@ -9,6 +10,7 @@ export interface CreateUserAuditActionState {
     errors?: {
         [p: string]: string[];
     }
+    pState: SessionDataState; // TODO: Change the name of this to better reflect its role in the code.
 }
 export type CreateUserAuditProps = {
     actionsTaken: string[];
@@ -32,7 +34,8 @@ export const createUserAuditAction = async (
         message: "User Action Audit Complete",
         response: {
             generatedUserActionAuditId
-        }
+        },
+        pState: prevState.pState
     }
 }
 

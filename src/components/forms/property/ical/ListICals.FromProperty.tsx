@@ -11,6 +11,7 @@ import {ICalUploader} from "@/components/forms/property/elements/ICalUploader";
 import {CreateICalAttachmentActionState} from "@/actions/ical/create.action";
 import {DialogShell} from "@/components/dialogs/DialogShell";
 import {ICalSource} from "@/components/forms/property/elements/CurrentSource";
+import {FormStatus} from "react-dom";
 
 export const ListICalsFromProperty = (
     {
@@ -117,7 +118,7 @@ export const ListICalsFromProperty = (
                                 implementChangeMainICalPropertyDialog: true,
                                 openChangeICalDialog,
                                 setOpenChangeICalDialog,
-                                icalList: sources,
+                                icalList: sources as [],
                                 icalId,
                             }}
                         />
@@ -155,7 +156,7 @@ export const ListICalsFromProperty = (
                                                         classNames={"button-87"}
                                                         btnLabel={"Link Your ICal to Property"}
                                                         pendingMessage={"Linking To Property..."}
-                                                        useFormStatus={useFormStatus as () => void}
+                                                        useFormStatus={useFormStatus as () => FormStatus}
                                                     />
                                                 </div>
                                             </>
@@ -181,7 +182,7 @@ export const ListICalsFromProperty = (
                                                         classNames={"button-87"}
                                                         btnLabel={"Link Your ICal to Property"}
                                                         pendingMessage={"Linking To Property..."}
-                                                        useFormStatus={useFormStatus as () => void}
+                                                        useFormStatus={useFormStatus as () => FormStatus}
                                                     />
                                                 </div>
                                             </>

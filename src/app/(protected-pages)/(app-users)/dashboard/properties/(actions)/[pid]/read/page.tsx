@@ -41,6 +41,11 @@ function ReadPropertyPage() {
                     />
                 )
             }
+            {
+                !!error && (
+                    <div>Error Loading Section {JSON.stringify(error)}</div>
+                )
+            }
         </div>
     )
 }

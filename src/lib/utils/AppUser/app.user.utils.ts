@@ -49,6 +49,7 @@ export const getUserRole = (
         orgRole: string;
     }
 ) => {
+    if(isAdmin) return AppRole.PLA as string;
     switch(orgRole) {
         case "org:super_admin":
         case "org:pla":

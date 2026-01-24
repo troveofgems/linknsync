@@ -18,75 +18,70 @@ import {
     SubscribedIcalList
 } from "@/components/structural/tooltip/elements/Cron.elements";
 import {SessionDataState} from "@/store/userStore";
-import {Address} from "@prisma/client";
-import {ColumnDef} from "@tanstack/react-table";
+import {Address, CronService, ICalEntry, Photo, Property} from "@prisma/client";
+import {
+    AccessorColumnDef,
+    DisplayColumnDef,
+    GroupColumnDef
+} from "@tanstack/react-table";
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 import {formatAddress} from "@/lib/utils/Address/address.utils";
 import {PictureWrapper} from "@/components/structural/picture/Picture.Wrapper";
 import {APP_PATHS} from "@/constants/nav.path.constants";
 
-type PropertyRowData = {
-    id: string;
-    name: string;
-    homePageLink: string;
-    thumbnail: string;
-    coid: string;
-    cid: string;
-    createdAt: Date;
-    updatedAt: Date;
-    Address: Address;
-    Calendar: any;
+function addEllipsis(str: string, maxLength = 10) {
+    if (str.length > maxLength) {
+        // Subtract 3 from maxLength to account for the "..."
+        return str.substring(0, maxLength - 3) + '...';
+    }
+    return str;
 }
+
+const {
+    viewPropertyById, updateProperty, manageIcalSourcesForProperty
+} = APP_PATHS.authenticatedPages.appUser.goToProperty;
 
 // Column Def List
 export const propertyListColumnDefs = (
-    user: SessionDataState,
-    controls: {
-        setICalId:  React.Dispatch<React.SetStateAction<string>>;
-        setICalList:  React.Dispatch<React.SetStateAction<SubscribedIcalList[]>>;
-        setPropertyId:  React.Dispatch<React.SetStateAction<string>>;
-        setOpenEditICalDialog:  React.Dispatch<React.SetStateAction<boolean>>;
-        setOpenDeleteICalDialog:  React.Dispatch<React.SetStateAction<boolean>>;
-        setOpenDeletePropertyDialog:  React.Dispatch<React.SetStateAction<boolean>>;
-        setOpenExportICalDialog:  React.Dispatch<React.SetStateAction<boolean>>;
-    } | object,
-): ColumnDef<unknown, any>[] => ([
-    thumbnailColumnDef(),
-    propertyNameColumnDef(),
-    locationColumnDef(),
-    holisticICalColumnDef(),
-    icalCountColumnDef(),
-    createdAtColumnDef(),
-    lastUpdateColumnDef(),
-    individualStateColumnDef(),
-    individualPostalCodeColumnDef(),
-    individualCountryColumnDef(),
-    actionsColumnDef(user, controls)
-]);
-
-// Individual Column Defs
-const thumbnailColumnDef = () => {
-    return {
+    {
+        user,
+        controls
+    }: {
+        user: SessionDataState,
+        controls: {
+            setICalId?:  React.Dispatch<React.SetStateAction<string>>;
+            setICalList?:  React.Dispatch<React.SetStateAction<SubscribedIcalList[]>>;
+            setPropertyId?:  React.Dispatch<React.SetStateAction<string>>;
+            setOpenEditICalDialog?:  React.Dispatch<React.SetStateAction<boolean>>;
+            setOpenDeleteICalDialog?:  React.Dispatch<React.SetStateAction<boolean>>;
+            setOpenDeletePropertyDialog?:  React.Dispatch<React.SetStateAction<boolean>>;
+            setOpenExportICalDialog?:  React.Dispatch<React.SetStateAction<boolean>>;
+    }
+    }
+): DisplayColumnDef<unknown> [] | GroupColumnDef<unknown> [] | AccessorColumnDef<unknown> [] => ([
+    {
         accessorKey: "thumbnail",
         header: () => (<div></div>),
         cell: ({ row }) => {
+            const
+                data = row.original as unknown as { Photo: Partial<Photo> },
+                photo = {
+                    title: data.Photo.title as string,
+                    srcUrl: data.Photo.srcUrl as string,
+                    thumbnailUrl: data.Photo.thumbnailUrl as string,
+                    width: `${data.Photo.width}`,
+                    height: `${data.Photo.height}`
+                };
+
             return (
                 <PictureWrapper
                     classNames={"w-full"}
-                    photo={!!row.original.Photo ? {
-                        thumbnailUrl: row.original.Photo.srcUrl,
-                        width: `${row.original.Photo.width}`,
-                        height: `${row.original.Photo.height}`,
-                        title: row.original.Photo.title
-                    } : undefined}
+                    photo={photo}
                 />
             );
         }
-    }
-};
-
-const propertyNameColumnDef = () => {
-    return  {
+    },
+    {
         accessorKey: "name",
         header: ({ column }) => {
             return (
@@ -100,18 +95,15 @@ const propertyNameColumnDef = () => {
             )
         },
         cell: ({ row }) => {
-            const data: PropertyRowData = row.original;
+            const data = row.original as unknown as Partial<Property>;
             return (
                 <div className="capitalize">
                     {data.name}
                 </div>
             );
         }
-    }
-};
-
-const locationColumnDef = () => {
-    return {
+    },
+    {
         accessorKey: "location",
         header: () => {
             return (
@@ -120,7 +112,7 @@ const locationColumnDef = () => {
         },
         cell: ({ row }) => {
             const
-                data: PropertyRowData = row.original,
+                data = row.original as { Address: Address },
                 { Address: propertyAddress } = data,
                 formattedAddress = formatAddress(propertyAddress);
 
@@ -130,17 +122,14 @@ const locationColumnDef = () => {
                 </pre>
             )
         },
-    };
-};
-
-const holisticICalColumnDef = () => {
-    return {
+    },
+    {
         accessorKey: "holisticIcalComposition",
         header: () => <div>Holistic ICal Composition</div>,
         cell: ({ row }) => {
-            const data: PropertyRowData = row.original;
-
-            const hasBeenArchived = data.archived;
+            const
+                data = row.original as unknown as { archived: boolean; Calendar: { icalSources: SubscribedIcalList[]; } },
+                hasBeenArchived = data.archived;
 
             return (
                 <div className={"text-start"}>
@@ -153,17 +142,14 @@ const holisticICalColumnDef = () => {
                 </div>
             )
         },
-    };
-};
-
-const icalCountColumnDef = () => {
-    return {
+    },
+    {
         accessorKey: "numAttachedICals",
         header: () => <div># Attached ICals</div>,
         cell: ({ row }) => {
             let showUnlimited = false;
             const
-                data = row.original,
+                data = row.original as unknown as { Calendar: { icalSources: Partial<ICalEntry>[], CronService: Partial<CronService> } },
                 icalCount = data.Calendar.icalSources?.length || 0,
                 maxAllowed =
                     data.Calendar.CronService.icalFileUploadLimit === "THREE" ? 3 :
@@ -185,11 +171,60 @@ const icalCountColumnDef = () => {
                 </div>
             )
         },
-    };
-};
+    },
+    {
+        accessorKey: "createdAt",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Created At
+                    <ArrowUpDown />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const
+                data = row.original as unknown as Property,
+                {createdAt} = data,
+                formattedLUATimestamp = datetimeConversionTo_String({ timestamp: createdAt as Date });
 
-const individualStateColumnDef = () => {
-    return {
+            return (
+                <div className="text-right">
+                    {formattedLUATimestamp}
+                </div>
+            )
+        },
+    },
+    {
+        accessorKey: "updatedAt",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Last Updated At
+                    <ArrowUpDown />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const
+                data = row.original as unknown as Property,
+                {updatedAt} = data,
+                formattedLUATimestamp = datetimeConversionTo_String({ timestamp: updatedAt as Date });
+
+            return (
+                <div className="text-right">
+                    {formattedLUATimestamp}
+                </div>
+            )
+        },
+    },
+    {
         accessorKey: "Address.state",
         header: ({ column }) => {
             return (
@@ -205,7 +240,7 @@ const individualStateColumnDef = () => {
         },
         cell: ({ row }) => {
             const
-                data: PropertyRowData = row.original,
+                data = row.original as unknown as { Address: Address },
                 { Address: propertyAddress } = data;
 
             return (
@@ -214,11 +249,8 @@ const individualStateColumnDef = () => {
                 </p>
             )
         },
-    }
-};
-
-const individualPostalCodeColumnDef = () => {
-    return {
+    },
+    {
         accessorKey: "Address.postalCode",
         header: ({ column }) => {
             return (
@@ -234,7 +266,7 @@ const individualPostalCodeColumnDef = () => {
         },
         cell: ({ row }) => {
             const
-                data: PropertyRowData = row.original,
+                data = row.original as unknown as { Address: Address; },
                 { Address: propertyAddress } = data;
 
             return (
@@ -243,11 +275,8 @@ const individualPostalCodeColumnDef = () => {
                 </p>
             )
         },
-    }
-};
-
-const individualCountryColumnDef = () => {
-    return {
+    },
+    {
         accessorKey: "Address.country",
         header: ({ column }) => {
             return (
@@ -263,7 +292,7 @@ const individualCountryColumnDef = () => {
         },
         cell: ({ row }) => {
             const
-                data: PropertyRowData = row.original,
+                data = row.original as unknown as { Address: Address; },
                 { Address: propertyAddress } = data;
 
             return (
@@ -272,94 +301,18 @@ const individualCountryColumnDef = () => {
                 </p>
             )
         },
-    }
-};
-
-const createdAtColumnDef = () => {
-    return {
-        accessorKey: "createdAt",
-        header: ({ column }: { column: never }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Created At
-                    <ArrowUpDown />
-                </Button>
-            )
-        },
-        cell: ({ row }) => {
-            const
-                data: PropertyRowData = row.original,
-                {createdAt} = data,
-                formattedLUATimestamp = datetimeConversionTo_String({ timestamp: createdAt as Date });
-
-            return (
-                <div className="text-right">
-                    {formattedLUATimestamp}
-                </div>
-            )
-        },
-    };
-};
-
-const lastUpdateColumnDef = () => {
-    return {
-        accessorKey: "updatedAt",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Last Updated At
-                    <ArrowUpDown />
-                </Button>
-            )
-        },
-        cell: ({ row }) => {
-            const
-                data: PropertyRowData = row.original,
-                {updatedAt} = data,
-                formattedLUATimestamp = datetimeConversionTo_String({ timestamp: updatedAt as Date });
-
-            return (
-                <div className="text-right">
-                    {formattedLUATimestamp}
-                </div>
-            )
-        },
-    };
-};
-
-const actionsColumnDef = (
-    user: SessionDataState,
-    controls: {
-        setICalId:  React.Dispatch<React.SetStateAction<string>>;
-        setICalList:  React.Dispatch<React.SetStateAction<SubscribedIcalList[]>>;
-        setPropertyId:  React.Dispatch<React.SetStateAction<string>>;
-        setOpenExportICalDialog: React.Dispatch<React.SetStateAction<boolean>>;
-        setOpenEditICalDialog: React.Dispatch<React.SetStateAction<boolean>>;
-        setOpenDeleteICalDialog: React.Dispatch<React.SetStateAction<boolean>>;
-        setOpenDeletePropertyDialog: React.Dispatch<React.SetStateAction<boolean>>;
-    }
-) => {
-    const { viewPropertyById, updateProperty, manageIcalSourcesForProperty } = APP_PATHS.authenticatedPages.appUser.goToProperty;
-
-    function addEllipsis(str: string, maxLength = 10) {
-        if (str.length > maxLength) {
-            // Subtract 3 from maxLength to account for the "..."
-            return str.substring(0, maxLength - 3) + '...';
-        }
-        return str;
-    }
-
-    return  {
-        id: "actions",
+    },
+    {
+        accessorKey: "actions",
         enableHiding: false,
         cell: ({ row }) => {
-            const data: PropertyRowData = row.original;
+            const data = row.original as unknown as {
+                Calendar: { icalSources: SubscribedIcalList[] };
+                createdAt: Date;
+                updatedAt: Date;
+                id: string;
+                name: string;
+            };
 
             const // Property Level
                 {createdAt: propertyCreatedAt, updatedAt: propertyUpdatedAt} = data,
@@ -368,7 +321,7 @@ const actionsColumnDef = (
                 propertyUpdatedOn = propertyNotYetUpdated ?
                     "No Updates Yet" :
                     datetimeConversionTo_String({ timestamp: propertyUpdatedAt as Date }),
-                propertyCannotExport = row.original.Calendar.icalSources.length <= 1;
+                propertyCannotExport = data.Calendar.icalSources.length <= 1;
 
             return (
                 <DropdownMenu>
@@ -418,13 +371,20 @@ const actionsColumnDef = (
                                                 <Button
                                                     className={`overrideActionBtnStyles ${propertyCannotExport ? "lnsExportDisable" : ""}`}
                                                     onClick={
-                                                    propertyCannotExport ? () => {} :
-                                                    () => {
-                                                        controls.setPropertyId(data.id);
-                                                        controls.setICalList(data.Calendar.icalSources);
-                                                        controls.setOpenExportICalDialog(true);
+                                                        propertyCannotExport ? () => {} :
+                                                            () => {
+                                                                if(
+                                                                    !!controls &&
+                                                                    !!controls.setPropertyId &&
+                                                                    !!controls.setICalList &&
+                                                                    !!controls.setOpenExportICalDialog
+                                                                ) {
+                                                                    controls.setPropertyId(data.id);
+                                                                    controls.setICalList(data.Calendar.icalSources);
+                                                                    controls.setOpenExportICalDialog(true);
+                                                                }
+                                                            }
                                                     }
-                                                }
                                                 >
                                                     LNS Export
                                                 </Button>
@@ -452,8 +412,14 @@ const actionsColumnDef = (
                                                     <Button
                                                         className={"overrideActionBtnStyles"}
                                                         onClick={() => {
-                                                            controls.setPropertyId(data.id);
-                                                            controls.setOpenDeletePropertyDialog(true);
+                                                            if(
+                                                                !!controls &&
+                                                                !!controls.setPropertyId &&
+                                                                !!controls.setOpenDeletePropertyDialog
+                                                            ) {
+                                                                controls.setPropertyId(data.id);
+                                                                controls.setOpenDeletePropertyDialog(true);
+                                                            }
                                                         }}
                                                     >
                                                         Delete Property
@@ -476,5 +442,5 @@ const actionsColumnDef = (
                 </DropdownMenu>
             )
         },
-    };
-};
+    }
+]);

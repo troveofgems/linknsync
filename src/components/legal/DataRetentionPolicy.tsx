@@ -4,7 +4,7 @@ export const DataRetentionPolicy = () => {
             DATA RETENTION POLICY
             Purpose
 
-            This Data Retention Policy outlines how [YOUR COMPANY NAME] manages and retains user data, ensuring compliance with legal requirements while respecting users' rights to control their information.
+            This Data Retention Policy outlines how [YOUR COMPANY NAME] manages and retains user data, ensuring compliance with legal requirements while respecting users&apos; rights to control their information.
             Scope
 
             This policy applies to all data collected, stored, and processed through [YOUR WEBSITE/MOBILE APPLICATION NAME].com, including but not limited to:

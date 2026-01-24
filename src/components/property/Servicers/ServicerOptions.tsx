@@ -22,6 +22,10 @@ export const ServicerOptions = (
         setShowTrackUnitId(!showTrackUnitId);
     };
 
+    if(attachedPMSList) {
+        console.log("PMS List attached...Logic Goes Here...")
+    }
+
     return (
         <div className={"flex flex-col w-full justify-start-safe"}>
             <div className={"flex flex-row justify-start"}>

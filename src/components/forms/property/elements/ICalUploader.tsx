@@ -13,7 +13,6 @@ import {
 } from "@/constants/SiteContent/TextBlocks.constants";
 import {CreatePropertyActionState} from "@/actions/property/create.action";
 import {UpdatePropertyActionState} from "@/actions/property/update.action";
-import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import {CreateICalAttachmentActionState} from "@/actions/ical/create.action";
 import {UpdateICalActionState} from "@/actions/ical/update.action";
 
@@ -120,10 +119,10 @@ export const ICalUploader = (
                                     placeholder={"https://pm.thetroveofgems.tech/property/somePID/ical.ics"}
                                     name={"ical.href"}
                                     id={"ical.href"}
-                                    defaultValue={formState?.response?.formData?.get("ical.href") || ""}
+                                    defaultValue={!!formState?.response.formData ? `${formState.response.formData!.get("ical.href")}` : ""}
                                     labelClassnames={"formLabel"}
                                     inputFieldClassnames={"formInput w-fit"}
-                                    fieldErrorMessage={formState?.errors?.icalSource?.join("\n") || undefined}
+                                    fieldErrorMessage={!!formState?.errors?.icalSource ? formState.errors.icalSource!.join("\n") : undefined}
                                 />
                             </>
                         ) : (
@@ -136,7 +135,7 @@ export const ICalUploader = (
                                 id={"ical.file"}
                                 labelClassnames={"formLabel"}
                                 inputFieldClassnames={"formInput uploadFit"}
-                                fieldErrorMessage={formState?.errors?.icalSource?.join("\n") || undefined}
+                                fieldErrorMessage={!!formState?.errors?.icalSource ? formState.errors.icalSource.join("\n") : undefined}
                             />
                         )
                     }

@@ -23,7 +23,8 @@ export type UpdatePropertyActionState = {
         };
         generated?: {
             updated: boolean;
-        }
+        };
+        formData?: FormData;
     };
     errors?: {
         name?: string[];
@@ -35,6 +36,7 @@ export type UpdatePropertyActionState = {
         state?: string[];
         city?: string[];
         postalCode?: string[];
+        icalSource?: string[];
     };
     pState?: SessionDataState | null;
     pid?: string;

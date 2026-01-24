@@ -3,6 +3,7 @@ import {persist} from 'zustand/middleware';
 import {fetchSessionData} from "@/actions/user/auth.actions";
 import {AppRole} from "@/lib/utils/AppUser/app.user.utils";
 import { UserResource } from "@clerk/types";
+import {ZodError} from "zod";
 
 export interface LoggedInUserState {
     cid?: string;
@@ -38,6 +39,7 @@ export interface UserProfileState {
 export interface SessionDataState {
     loggedInUser?: LoggedInUserState;
     profile?: UserProfileState;
+    errors?: object | ZodError | Error | Error[];
 }
 
 export interface UserState {

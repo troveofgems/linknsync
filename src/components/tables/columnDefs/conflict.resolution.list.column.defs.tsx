@@ -1,9 +1,9 @@
 import {Button} from "@/components/ui/button";
 import {ArrowUpDown} from "lucide-react";
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
-import {ColumnDef} from "@tanstack/react-table";
+import {AccessorColumnDef, DisplayColumnDef, GroupColumnDef} from "@tanstack/react-table";
 
-export const ConflictResolutionListColumnDefs: ColumnDef<unknown, any>[] = ([
+export const ConflictResolutionListColumnDefs: DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] = ([
     {
         accessorKey: "name",
         header: ({ column }) => {

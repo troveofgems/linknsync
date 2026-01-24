@@ -65,8 +65,6 @@ export const fetchCronServiceListAction = async(
     }
 };
 
-
-
 type ScheduledJob = {
     id: string;
     urlSources: {
@@ -98,7 +96,7 @@ export const fetchSystemScheduledJobs = async () => {
         dailyProcessing: ScheduledJob[] = [],
         hourlyProcessing: ScheduledJob[] = [];
 
-    let allEntries: any[] = [];
+    let allEntries: unknown[] = [];
 
     try {
         allEntries = await db.cronService.findMany({
@@ -137,11 +135,12 @@ export const fetchSystemScheduledJobs = async () => {
 
     const fullProcessing = [dailyProcessing, hourlyProcessing, errata];
 
-    console.log("All Entries: ", allEntries)
+    console.log("All Entries: ", allEntries) // Use this to replace unknown
 
     // Sort Everything
     allEntries.forEach((item) => {
-        switch(item.scheduleType) {
+        const {scheduleType} = item as unknown as { scheduleType: string; };
+        switch(scheduleType) {
             case "DAILY":
                 dailyProcessing.push(item as ScheduledJob);
                 break;

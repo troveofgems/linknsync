@@ -10,6 +10,7 @@ import {DeletePropertyForm} from "@/components/forms/property/DeleteProperty.For
 import {SessionDataState} from "@/store/userStore";
 import {JobOpportunityForm} from "@/components/forms/jobOpp/JobOpportunityForm";
 import {ICalSource} from "@/components/forms/property/elements/CurrentSource";
+import {SubscribedIcalList} from "@/components/structural/tooltip/elements/Cron.elements";
 
 export const DialogShell = (
     {
@@ -49,7 +50,7 @@ export const DialogShell = (
             setOpenJobOpportunityDialog?: Dispatch<SetStateAction<boolean>>;
 
             // Pseudo Global Extras
-            icalList?: Partial<ICalSource>[];
+            icalList?: Partial<SubscribedIcalList>[];
             icalId?: string;
             propertyId?: string;
         };
@@ -63,7 +64,7 @@ export const DialogShell = (
             user as SessionDataState,
             openExportICalDialog as boolean,
             setOpenExportICalDialog as Dispatch<SetStateAction<boolean>>,
-            icalList as ICalSource[],
+            icalList as SubscribedIcalList[],
             icalId as string
         ));
     }
@@ -74,7 +75,7 @@ export const DialogShell = (
             user as SessionDataState,
             openEditICalDialog as boolean,
             setOpenEditICalDialog as Dispatch<SetStateAction<boolean>>,
-            icalList as ICalSource[],
+            icalList as SubscribedIcalList[],
             icalId as string
         ));
     }
@@ -85,7 +86,7 @@ export const DialogShell = (
             user as SessionDataState,
             openDeleteICalDialog as boolean,
             setOpenDeleteICalDialog as Dispatch<SetStateAction<boolean>>,
-            icalList as ICalSource[],
+            icalList as SubscribedIcalList[],
             icalId as string
         ));
     }
@@ -106,7 +107,7 @@ export const DialogShell = (
             user as SessionDataState,
             openChangeICalDialog as boolean,
             setOpenChangeICalDialog as Dispatch<SetStateAction<boolean>>,
-            icalList as ICalSource[],
+            icalList as SubscribedIcalList[],
             icalId as string
         ));
     }
@@ -127,7 +128,7 @@ const exportICalDialog = (
     user: SessionDataState,
     openExportICalDialog: boolean,
     setOpenExportICalDialog: Dispatch<SetStateAction<boolean>>,
-    icalList: ICalSource[],
+    icalList: ICalSource[] | SubscribedIcalList[],
     icalId: string
 ) => {
     return (
@@ -140,7 +141,7 @@ const exportICalDialog = (
         >
             <ExportLNSICSForPropertyForm
                 user={user}
-                icalList={icalList}
+                icalList={icalList as ICalSource[]}
                 icalId={icalId}
                 handleDialogClose={setOpenExportICalDialog}
             />
@@ -152,7 +153,7 @@ const editICalDialog = (
     user: SessionDataState,
     openEditICalDialog: boolean,
     setOpenEditICalDialog: Dispatch<SetStateAction<boolean>>,
-    icalList: ICalSource[],
+    icalList: ICalSource[] | SubscribedIcalList[],
     icalId: string
 ) => {
     return (
@@ -165,7 +166,7 @@ const editICalDialog = (
         >
             <UpdateICalForPropertyForm
                 user={user}
-                icalList={icalList}
+                icalList={icalList as ICalSource[]}
                 icalId={icalId}
                 handleDialogClose={setOpenEditICalDialog}
             />
@@ -177,7 +178,7 @@ const deleteICalDialog = (
     user: SessionDataState,
     openDeleteICalDialog: boolean,
     setOpenDeleteICalDialog: Dispatch<SetStateAction<boolean>>,
-    icalList: ICalSource[],
+    icalList: SubscribedIcalList[],
     icalId: string
 ) => {
     return (
@@ -190,7 +191,7 @@ const deleteICalDialog = (
         >
             <DeleteICalFromPropertyForm
                 user={user}
-                icalList={icalList}
+                icalList={icalList as SubscribedIcalList[]}
                 icalId={icalId}
                 handleDialogClose={setOpenDeleteICalDialog}
             />
@@ -202,7 +203,7 @@ const changeICalDialog = (
     user: SessionDataState,
     openChangeICalDialog: boolean,
     setOpenChangeICalDialog: Dispatch<SetStateAction<boolean>>,
-    icalList: ICalSource[],
+    icalList: ICalSource[] | SubscribedIcalList[],
     icalId: string
 ) => {
     return (
@@ -215,7 +216,7 @@ const changeICalDialog = (
         >
             <ChangeMainICalForPropertyForm
                 user={user}
-                icalList={icalList}
+                icalList={icalList as ICalSource[]}
                 icalId={icalId}
                 closeDialogAction={setOpenChangeICalDialog}
             />

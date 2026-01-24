@@ -58,8 +58,9 @@ export const useScheduledJobsStore = create<ScheduledJobs, [["zustand/persist", 
     )
 );
 
+/*
 export const setInitializedScheduledJobData = (
-    data: any
+    data
 ) => {
     useUserStore.getState().runQuery(); // Resets User Attributes For Query
     try {
@@ -67,7 +68,7 @@ export const setInitializedScheduledJobData = (
             test = null;
 
         if(true) {
-            /*useUserStore.setState({
+            /!*useUserStore.setState({
                 user: {
                     attrs: {
                         loggedInUser,
@@ -77,7 +78,7 @@ export const setInitializedScheduledJobData = (
                     isLoading: false,
                     error: undefined
                 }
-            });*/
+            });*!/
         } else {
             const { message } = result as Error;
             console.error(`Unable To Initialize Scheduled Jobs: ${message}`);
@@ -96,4 +97,4 @@ export const setInitializedScheduledJobData = (
             }
         });
     }
-};
+};*/

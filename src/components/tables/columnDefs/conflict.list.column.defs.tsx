@@ -1,12 +1,13 @@
-import {ColumnDef} from "@tanstack/react-table";
+import {AccessorColumnDef, DisplayColumnDef, GroupColumnDef} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button";
 import {ArrowUpDown} from "lucide-react";
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 import Link from "next/link";
 
 import {APP_PATHS} from "@/constants/nav.path.constants";
+import {DateBlock, DateBlockConflict, UserImprint} from "@prisma/client";
 
-export const ConflictListColumnDefs: ColumnDef<unknown, any>[] = ([
+export const ConflictListColumnDefs: DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] = ([
     {
         accessorKey: "name",
         header: ({ column }) => {
@@ -21,7 +22,7 @@ export const ConflictListColumnDefs: ColumnDef<unknown, any>[] = ([
             )
         },
         cell: ({ row }) => {
-            const data = row.original;
+            const data = row.original as { propertyId: string; propertyName: string; };
             console.log("Convert to Linkable: ", data);
 
             return (
@@ -50,7 +51,7 @@ export const ConflictListColumnDefs: ColumnDef<unknown, any>[] = ([
             )
         },
         cell: ({ row }) => {
-            const data = row.original;
+            const data = row.original as unknown as { firstBlock: { UserImprint: Partial<UserImprint>; } };
             return (
                 <div className="capitalize">{data.firstBlock.UserImprint.fullName}</div>
             )
@@ -70,7 +71,7 @@ export const ConflictListColumnDefs: ColumnDef<unknown, any>[] = ([
             )
         },
         cell: ({ row }) => {
-            const data = row.original;
+            const data = row.original as unknown as { UserImprint: Partial<UserImprint>; };
             return (
                 <div className="capitalize">{data.UserImprint.fullName}</div>
             )
@@ -78,26 +79,19 @@ export const ConflictListColumnDefs: ColumnDef<unknown, any>[] = ([
     },
     {
         accessorKey: "existingBookingDates",
-        header: (/*{ column }*/) => {
+        header: () => {
             return (
-                /*<Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Existing Booking Dates
-                    <ArrowUpDown/>
-                </Button>*/
                 <h2>Existing Booking Dates</h2>
             )
         },
         cell: ({ row }) => {
             const
-                data = row.original,
+                data = row.original as unknown as { firstBlock: Partial<DateBlock>; },
                 convertedStartTime = datetimeConversionTo_String({
-                    timestamp: data.firstBlock.startDate as number
+                    timestamp: data.firstBlock.startDate as Date
                 }),
                 convertedEndTime = datetimeConversionTo_String({
-                    timestamp: data.firstBlock.endDate as number
+                    timestamp: data.firstBlock.endDate as Date
                 }),
                 formattedStartTime = convertedStartTime.split(",")[0],
                 formattedEndTime = convertedEndTime.split(",")[0];
@@ -109,21 +103,14 @@ export const ConflictListColumnDefs: ColumnDef<unknown, any>[] = ([
     },
     {
         accessorKey: "conflictBookingDates",
-        header: ({ column }) => {
+        header: () => {
             return (
                 <h2>Conflict Booking Dates</h2>
-                /*<Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Conflict Booking Dates
-                    <ArrowUpDown/>
-                </Button>*/
             )
         },
         cell: ({ row }) => {
             const
-                data = row.original,
+                data = row.original as unknown as { startDate: string; endDate: string },
                 convertedStartTime = datetimeConversionTo_String({ timestamp: data.startDate }),
                 convertedEndTime = datetimeConversionTo_String({ timestamp: data.endDate }),
                 formattedStartTime = convertedStartTime.split(",")[0],
@@ -149,7 +136,7 @@ export const ConflictListColumnDefs: ColumnDef<unknown, any>[] = ([
         },
         cell: ({ row }) => {
             const
-                data = row.original,
+                data = row.original as unknown as { firstBlock: Partial<DateBlock> },
                 priorityFallsTo = data.firstBlock.priority === "PRIORITY_0" ? "PLA" :
                     data.firstBlock.priority === "PRIORITY_1" ? "ALA" : "NO PRIORITY"
 
@@ -172,10 +159,10 @@ export const ConflictListColumnDefs: ColumnDef<unknown, any>[] = ([
             )
         },
         cell: ({ row }) => {
-            const conflictDetectedOn = row.original;
+            const conflictDetectedOn = row.original as unknown as Partial<DateBlockConflict>;
             return (
                 <div className="capitalize text-right">
-                    {datetimeConversionTo_String({ timestamp: conflictDetectedOn.createdAt })}
+                    {datetimeConversionTo_String({ timestamp: conflictDetectedOn.createdAt as Date })}
                 </div>
             )
         },

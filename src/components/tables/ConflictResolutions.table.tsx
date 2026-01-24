@@ -31,7 +31,7 @@ export const ConflictResolutionsTable = (
             ).then((result) => {
                 if(!!result.response) {
                     setIsLoadingList(false);
-                    setConflictResolutionsTableData(result.response);
+                    setConflictResolutionsTableData(result.response as []);
                 }
             })
         }

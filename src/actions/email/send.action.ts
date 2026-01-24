@@ -20,9 +20,6 @@ export interface CreateSendEmailActionState {
     }
     pState?: SessionDataState | null;
 }
-/*export type CreateSendEmailActionProps = {
-    propertyName: string;
-}*/
 
 // Booking Request Email(s)
 export const createSendEmailActionFromForm = async(
@@ -149,7 +146,7 @@ export const createSendEmailActionFromForm = async(
 };
 
 // Conflict Email(s)
-type ConflictEmailData = {
+export type ConflictEmailData = {
     processedConflictCount: number;
     inputData: {
         propertyName: string;
@@ -181,10 +178,8 @@ type ConflictEmailData = {
 export const createSendConflictsDetectedEmailAction = async(
     prevState: CreateSendEmailActionState,
     data: ConflictEmailData,
-    generateAudit = true
+    /*generateAudit = true*/
 ): Promise<CreateSendEmailActionState> => {
-    console.log("Try to send Email for Conflict: ", prevState, data);
-
     const
         userList = data.inputData.map((item) => item.cid),
         propertyIdList = data.inputData.map((item) => item.propertyId);
@@ -226,8 +221,6 @@ export const createSendConflictsDetectedEmailAction = async(
                 Address: true
             }
         });
-
-    console.log("Fix Email: ", users);
 
     // Build Email Object
     const requestData = {

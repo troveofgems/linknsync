@@ -11,7 +11,10 @@ import {propertyListColumnDefs} from "@/components/tables/columnDefs/property.li
 import {DialogShell} from "@/components/dialogs/DialogShell";
 import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";
 import {propertyListColumnDefsRLA} from "@/components/tables/columnDefs/property.list.column.defs.rla";
-import {ICalSource} from "@/components/forms/property/elements/CurrentSource";
+import {Property} from "@prisma/client";
+import {ReadPropertyActionState} from "@/actions/property/read.action";
+import {SubscribedIcalList} from "@/components/structural/tooltip/elements/Cron.elements";
+import {AccessorColumnDef} from "@tanstack/react-table";
 
 export const PropertyListTable = (
     {
@@ -23,10 +26,10 @@ export const PropertyListTable = (
         updatePropertyCount: (c: number) => void;
     }) => {
     const // Component States
-        [propertyList, setPropertyList] = useState<[]>([]),
+        [propertyList, setPropertyList] = useState<Partial<Property>[]>([]),
         [loadingPropertyList, setLoadingPropertyList] = useState<boolean>(true),
         [icalId, setICalId] = useState<string>(""),
-        [icalList, setICalList] = useState<ICalSource[]>([]),
+        [icalList, setICalList] = useState<SubscribedIcalList[]>([]),
         [propertyId, setPropertyId] = useState<string>(""),
         [openDeletePropertyDialog, setOpenDeletePropertyDialog] = useState(false),
         [openEditICalDialog, setOpenEditICalDialog] = useState(false),
@@ -35,10 +38,10 @@ export const PropertyListTable = (
 
     const
         columns = user.loggedInUser?.orgRole === "RLA" ?
-            propertyListColumnDefsRLA(user, {}) :
-            propertyListColumnDefs(
+            propertyListColumnDefsRLA() :
+            propertyListColumnDefs({
                 user,
-                {
+                controls: {
                     setICalId,
                     setICalList,
                     setPropertyId,
@@ -46,7 +49,7 @@ export const PropertyListTable = (
                     setOpenDeleteICalDialog,
                     setOpenDeletePropertyDialog,
                     setOpenExportICalDialog
-                }),
+                }}),
         filters = user.loggedInUser?.orgRole === "RLA" ?
             ['name', 'Address_state', 'Address_postalCode', 'Address_country'] :
             ['name', 'Address_state', 'Address_postalCode', 'Address_country'];
@@ -58,9 +61,13 @@ export const PropertyListTable = (
         ) {
             fetchPropertyList(user)
                 .then((result)=> {
-                    const { propertyList } = result.response;
+                    const { response } = result as Partial<ReadPropertyActionState>;
+                    const { propertyList } = response as {
+                        propertyList?: Property[]
+                        propertyById?: Property
+                    };
                     if(!!propertyList) {
-                        setPropertyList(result.response.propertyList);
+                        setPropertyList(propertyList);
                         updatePropertyCount(propertyList.length);
                     }
                     setLoadingPropertyList(false);
@@ -82,7 +89,7 @@ export const PropertyListTable = (
                         <TableShell
                             tableNameId={"propertyList"}
                             listData={propertyList}
-                            columns={columns}
+                            columns={columns as AccessorColumnDef<unknown>[]}
                             filters={filters}
                             orgRole={user.loggedInUser?.orgRole as string}
                         />

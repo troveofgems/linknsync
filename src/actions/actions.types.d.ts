@@ -1,6 +1,7 @@
-import {PriorityType} from "@prisma/client";
+import {PriorityType, UserImprint} from "@prisma/client";
 
 export type DateBlock = {
+    id?: string;
     propertyName?: string;
     calendarId: string;
     calendarType: string;
@@ -20,4 +21,5 @@ export type DateBlock = {
     propertyId: string;
     iCalEntryId?: string;
     userImprintId: string;
+    UserImprint?: Partial<UserImprint>;
 }

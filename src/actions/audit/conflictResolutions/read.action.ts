@@ -44,9 +44,10 @@ export const fetchConflictResolutionsAuditListAction = async(
         });
         return {
             message: "Conflict Resolutions Audit List Fetch Successful!",
-            response: fetchConflictResolutionsAuditListResponse
+            response: fetchConflictResolutionsAuditListResponse,
+            pState: prevState.pState
         };
     } catch(error) {
-        return { message: 'Error Fetching User Audit List', error };
+        return { message: 'Error Fetching User Audit List', error, pState: prevState.pState };
     }
 };

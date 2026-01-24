@@ -1,76 +1,44 @@
 "use client";
 import React from "react";
 import {Button} from "@/components/ui/button";
-import {ArrowUpDown, LinkIcon, View, MoreHorizontal, Settings, Trash2, FileSymlink} from "lucide-react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel, DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
+import {ArrowUpDown, View} from "lucide-react";
 import Link from "next/link";
 
 // Utils
-import {HOLISTIC_ICAL_COMPOSITION, SubscribedIcalList} from "@/components/structural/tooltip/elements/Cron.elements";
-import {SessionDataState} from "@/store/userStore";
 import {Address} from "@prisma/client";
-import {Calendar} from "@prisma/client";
-import {ColumnDef} from "@tanstack/react-table";
-import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
-import {formatAddress} from "@/lib/utils/Address/address.utils";
 import {PictureWrapper} from "@/components/structural/picture/Picture.Wrapper";
 import {APP_PATHS} from "@/constants/nav.path.constants";
+import {AccessorColumnDef, DisplayColumnDef, GroupColumnDef} from "@tanstack/react-table";
 
-type PropertyRowData = {
-    id: string;
-    name: string;
-    homePageLink: string;
-    thumbnail: string;
-    coid: string;
-    cid: string;
-    createdAt: Date;
-    updatedAt: Date;
-    Address: Address;
-    Calendar: Calendar;
-}
+const { viewPropertyById } = APP_PATHS.authenticatedPages.appUser.goToProperty;
 
 // Column Def List
-export const propertyListColumnDefsRLA = (
-    user: SessionDataState,
-    controls: {
-        setICalId:  React.Dispatch<React.SetStateAction<string>>;
-        setICalList:  React.Dispatch<React.SetStateAction<SubscribedIcalList[]>>;
-        setPropertyId:  React.Dispatch<React.SetStateAction<string>>;
-    } | object
-): ColumnDef<unknown, any>[] => ([
-    thumbnailColumnDef(),
-    propertyNameColumnDef(),
-    locationStateColumnDef(),
-    locationPostalCodeColumnDef(),
-    locationCountryColumnDef(),
-    multiUnitColumnDef(),
-    actionsColumnDef()
-]);
-
-// Individual Column Defs
-const thumbnailColumnDef = () => {
-    return {
+export const propertyListColumnDefsRLA = (): DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] => ([
+    {
         accessorKey: "thumbnail",
         header: () => (<div></div>),
         cell: ({ row }) => {
-            const data: PropertyRowData = row.original;
+            const data = row.original as unknown as { Photo:  {
+                    title?: string
+                    srcUrl?: string
+                    thumbnailUrl?: string
+                    width: string
+                    height: string
+                }};
+
+
+            let photo = undefined;
+            if (data !== undefined && data !== null) {
+                photo = data.Photo;
+            }
             return (
                 <PictureWrapper
-                    photo={data.Photo}
+                    photo={photo}
                 />
             );
         }
-    }
-};
-
-const propertyNameColumnDef = () => {
-    return  {
+    },
+    {
         accessorKey: "name",
         header: ({ column }) => {
             return (
@@ -83,19 +51,16 @@ const propertyNameColumnDef = () => {
                 </Button>
             )
         },
-        cell: ({ row }: { row }) => {
-            const data: PropertyRowData = row.original;
+        cell: ({ row }) => {
+            const data = row.original as unknown as { name: string;};
             return (
                 <div className="capitalize">
                     {data.name}
                 </div>
             );
         }
-    }
-};
-
-const locationStateColumnDef = () => {
-    return {
+    },
+    {
         accessorKey: "Address.state",
         header: ({ column }) => {
             return (
@@ -110,7 +75,7 @@ const locationStateColumnDef = () => {
         },
         cell: ({ row }) => {
             const
-                data: PropertyRowData = row.original,
+                data = row.original as { Address: Address; },
                 { Address: propertyAddress } = data;
 
             return (
@@ -119,11 +84,8 @@ const locationStateColumnDef = () => {
                 </p>
             )
         },
-    };
-};
-
-const locationPostalCodeColumnDef = () => {
-    return {
+    },
+    {
         accessorKey: "Address.postalCode",
         header: ({ column }) => {
             return (
@@ -138,7 +100,7 @@ const locationPostalCodeColumnDef = () => {
         },
         cell: ({ row }) => {
             const
-                data: PropertyRowData = row.original,
+                data = row.original as unknown as { Address: Address; },
                 { Address: propertyAddress } = data;
 
             return (
@@ -147,11 +109,8 @@ const locationPostalCodeColumnDef = () => {
                 </p>
             )
         },
-    };
-};
-
-const locationCountryColumnDef = () => {
-    return {
+    },
+    {
         accessorKey: "Address.country",
         header: ({ column }) => {
             return (
@@ -166,7 +125,7 @@ const locationCountryColumnDef = () => {
         },
         cell: ({ row }) => {
             const
-                data: PropertyRowData = row.original,
+                data = row.original as unknown as { Address: Address; },
                 { Address: propertyAddress } = data;
 
             return (
@@ -175,11 +134,8 @@ const locationCountryColumnDef = () => {
                 </p>
             )
         },
-    };
-};
-
-const multiUnitColumnDef = () => {
-    return {
+    },
+    {
         accessorKey: "Address.street2",
         header: ({ column }) => {
             return (
@@ -194,23 +150,18 @@ const multiUnitColumnDef = () => {
         },
         cell: ({ row }) => {
             const
-                data: PropertyRowData = row.original,
+                data = row.original as unknown as { Address: Address; },
                 { Address: propertyAddress } = data;
 
             return (
                 <p>
-                    {propertyAddress.street2?.length > 0 ? "Multi-Unit" : "Single Unit"}
+                    {!!propertyAddress.street2 && propertyAddress.street2.length > 0 ? "Multi-Unit" : "Single Unit"}
                 </p>
             )
         },
-    };
-};
-
-const actionsColumnDef = () => {
-    const { viewPropertyById } = APP_PATHS.authenticatedPages.appUser.goToProperty;
-
-    return  {
-        id: "actions",
+    },
+    {
+        accessorKey: "actions",
         enableHiding: false,
         header: () => {
             return (
@@ -220,7 +171,7 @@ const actionsColumnDef = () => {
             )
         },
         cell: ({ row }) => {
-            const data: PropertyRowData = row.original;
+            const data = row.original as { id: string; };
 
             return (
                 <div className={"flex justify-end"}>
@@ -233,5 +184,5 @@ const actionsColumnDef = () => {
                 </div>
             )
         },
-    };
-};
+    }
+]);

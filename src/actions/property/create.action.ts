@@ -61,14 +61,14 @@ export interface CreatePropertyActionState {
     errors?: {
         name?: string[];
         homepageLink?: string[];
-        icalSource?: string[] | undefined;
+        icalSource?: string[];
         street?: string[];
         street2?: string[];
         street3?: string[];
         state?: string[];
         city?: string[];
         postalCode?: string[];
-        processing?: Error | PrismaClientValidationError
+        processing?: Error | PrismaClientValidationError,
     };
     pState?: SessionDataState | null;
     formState?: never;

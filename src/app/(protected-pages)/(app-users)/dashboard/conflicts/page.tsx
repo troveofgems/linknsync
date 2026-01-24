@@ -24,6 +24,11 @@ const CollisionDetectionPage = () => {
                     <CollisionListTable user={attrs as SessionDataState} />
                 )
             }
+            {
+                !!error && (
+                    <div>Error Loading Section: {JSON.stringify(error)}</div>
+                )
+            }
         </Container>
     );
 };

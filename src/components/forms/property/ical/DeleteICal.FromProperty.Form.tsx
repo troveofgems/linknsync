@@ -10,6 +10,7 @@ import {Alert} from "@/components/misc/Sonner.Alerter";
 import {useRouter} from "next/navigation";
 import {APP_PATHS} from "@/constants/nav.path.constants";
 import {CurrentSource, ICalSource} from "@/components/forms/property/elements/CurrentSource";
+import {SubscribedIcalList} from "@/components/structural/tooltip/elements/Cron.elements";
 
 export const DeleteICalFromPropertyForm = (
     {
@@ -19,7 +20,7 @@ export const DeleteICalFromPropertyForm = (
         handleDialogClose,
     } : {
         user: SessionDataState;
-        icalList: ICalSource[];
+        icalList: SubscribedIcalList[];
         icalId: string;
         handleDialogClose: React.Dispatch<React.SetStateAction<boolean>>;
     }) => {
@@ -58,7 +59,7 @@ export const DeleteICalFromPropertyForm = (
             {
                 formFullyLoaded && (
                     <div>
-                        { CurrentSource(icalSource, icalList) }
+                        { CurrentSource(icalSource, icalList as SubscribedIcalList[]) }
                     </div>
                 )
             }
@@ -70,7 +71,7 @@ export const DeleteICalFromPropertyForm = (
             </pre>
             {
                 !!user &&
-                ICalDeletion(state as DeleteICalActionState, icalSource, user, lastSegmentOfId)
+                ICalDeletion(state as DeleteICalActionState, icalSource as unknown as ICalSource, user, lastSegmentOfId)
             }
             <div className={"hidden"}>
                 <GenericTextInput

@@ -21,7 +21,7 @@ export const CollisionListTable = (
     useEffect(() => {
         if(isLoadingConflictList) {
             CollisionList({ user }).then((res)=> {
-                setConflictList(res.response.conflictList.response);
+                setConflictList(res.response.conflictList.response as []);
                 setIsLoadingConflictList(false);
             });
         }

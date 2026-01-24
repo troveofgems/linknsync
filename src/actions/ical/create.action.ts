@@ -62,15 +62,13 @@ export const createICalAttachmentActionFromForm = async(
         return {
             message: "Unable to Attach ICal Resource...",
             response: {
-                formData: form
+                formData: form,
             },
             errors: {
                 icalSource: ["No PID Received From System For Attachment..."]
             }
         }
     }
-
-    console.log("Form: ", form.get("ical.file") as File);
 
     const fileFilename = (form.get("ical.file") as File) ?? undefined;
 
@@ -101,8 +99,6 @@ export const createICalAttachmentActionFromForm = async(
             }
         });
 
-        console.log("Have property: ", property);
-
         const icalCount = await db.iCalEntry.count(
             {
                 where: {
@@ -111,8 +107,6 @@ export const createICalAttachmentActionFromForm = async(
                 }
             }
         );
-
-        console.log("ICal Count For Property: ", icalCount);
 
         const inputData = {
             importType,
@@ -180,13 +174,10 @@ export const createICalAttachmentAction = async(
     coid: string,
     importFile?: File
 ): Promise<CreateICalAttachmentActionState> => {
-    console.log("Inside Create Ical...", importFile)
     const // Process ICal Resource
         { id: generatedICalResourceId } = await db.iCalEntry.create({
             data: icalResource as CreateICalAttachmentProps
         });
-
-    console.log("Generated Ical Id: ", generatedICalResourceId);
 
     // Process DateBlocks[] & Conflicts[] From the ICal Resource
     const { response: dateBlockResponse } = await createDateBlockAction(

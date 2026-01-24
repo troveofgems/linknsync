@@ -1,10 +1,21 @@
-import {ColumnDef} from "@tanstack/react-table";
+import {AccessorColumnDef, DisplayColumnDef, GroupColumnDef} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button";
 import {ArrowUpDown} from "lucide-react";
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
-import {ICalOwnerType} from "@prisma/client";
+import {ICalOwnerType, UserImprint} from "@prisma/client";
 
-export const UserActionsColumnDefs: ColumnDef<unknown, any>[] = ([
+type UserActionAudit = {
+    id: string;
+    fullName: string;
+    userType: ICalOwnerType;
+    actionsTaken: string[];
+    api: string;
+    path: string;
+    uec: string;
+    createdAt: string | Date | null | undefined;
+}
+
+export const UserActionsColumnDefs:  DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] = ([
     {
         accessorKey: "userImprint.fullName",
         header: ({ column }) => {
@@ -19,7 +30,7 @@ export const UserActionsColumnDefs: ColumnDef<unknown, any>[] = ([
             )
         },
         cell: ({ row }) => {
-            const data = row.original;
+            const data = row.original as unknown as { UserImprint: Partial<UserImprint> };
             return (
                 <div className="capitalize">{data.UserImprint.fullName}</div>
             );
@@ -39,7 +50,7 @@ export const UserActionsColumnDefs: ColumnDef<unknown, any>[] = ([
             )
         },
         cell: ({ row }) => {
-            const data = row.original;
+            const data = row.original as unknown as { UserImprint: Partial<UserImprint> };
             return (
                 <div className="capitalize text-left">{data.UserImprint.appRole}</div>
             )
@@ -152,7 +163,7 @@ export const UserActionsColumnDefs: ColumnDef<unknown, any>[] = ([
             };
 
             const
-                data = row.original,
+                data = row.original as unknown as UserActionAudit,
                 compiledJSX = renderActionsTakenFormatted(data);
 
             return (
@@ -177,8 +188,8 @@ export const UserActionsColumnDefs: ColumnDef<unknown, any>[] = ([
         },
         cell: ({ row }) => {
             const
-                data = row.original,
-                finalLabel = data.api.split(".")[0];
+                data = row.original as unknown as Partial<UserActionAudit>,
+                finalLabel = !!data.api && data.api.split(".")[0];
 
             return (
                 <div className="text-right">{finalLabel}</div>
@@ -199,7 +210,7 @@ export const UserActionsColumnDefs: ColumnDef<unknown, any>[] = ([
             )
         },
         cell: ({ row }) => {
-            const data = row.original;
+            const data = row.original as unknown as Partial<UserActionAudit>;
 
             return (
                 <div className="text-right">{data.path}</div>
@@ -221,9 +232,9 @@ export const UserActionsColumnDefs: ColumnDef<unknown, any>[] = ([
         },
         cell: ({ row }) => {
             const
-                data = row.original,
+                data = row.original as unknown as Partial<UserActionAudit>,
                 uecIsNull = data.uec === null,
-                finalLabel = uecIsNull ? "-" : uec;
+                finalLabel = uecIsNull ? "-" : data.uec;
 
             return (
                 <div className="capitalize text-right">{finalLabel}</div>
@@ -245,8 +256,8 @@ export const UserActionsColumnDefs: ColumnDef<unknown, any>[] = ([
         },
         cell: ({ row }) => {
             const
-                data = row.original,
-                finalConversion = datetimeConversionTo_String({ timestamp: data.createdAt });
+                data = row.original as unknown as Partial<UserActionAudit>,
+                finalConversion = datetimeConversionTo_String({ timestamp: data.createdAt as string });
             return (
                 <div className="capitalize text-right">{finalConversion}</div>
             )

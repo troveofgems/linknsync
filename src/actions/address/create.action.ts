@@ -20,6 +20,7 @@ export interface CreateAddressActionState {
     },
     pState?: SessionDataState
 }
+
 export type CreateAddressProps = {
     isMUA: boolean;
     city: string;

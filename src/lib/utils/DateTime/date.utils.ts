@@ -1,22 +1,31 @@
+import {DateTimeOptions} from "@/components/calendar/Calendar.1";
+
 /**
  * This File exports Custom Date Helpers For the App
  * */
 const
-    defaultLocale = "en-US",
-    defaultFormat = {
+    defaultLocale = "en-US"
+    /*defaultFormat = {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-    };
+    }*/;
+
+const dfo: DateTimeOptions = {
+    weekday: 'long', // Full weekday name (e.g., "Wednesday")
+    month: 'long',   // Full month name (e.g., "November")
+    day: 'numeric',   // Day of the month (e.g., "10")
+    year: 'numeric',
+};
 
 export const datetimeConversionTo_String = (
     {
         timestamp,
         locale = defaultLocale,
-        format = defaultFormat,
+        /*format = defaultFormat,*/
     }:
     {
         timestamp: number | Date | string;
@@ -34,7 +43,7 @@ export const datetimeConversionTo_String = (
     if(!timestamp) return `Invalid/No Date Provided ${timestamp}`;
     if(typeof timestamp === "string") return timestamp; // Already a string.
 
-    const formatter = new Intl.DateTimeFormat(locale, format);
+    const formatter = new Intl.DateTimeFormat(locale, dfo);
 
     if(timestamp instanceof Date) {
         return formatter.format(timestamp.getTime());
@@ -43,7 +52,7 @@ export const datetimeConversionTo_String = (
     return formatter.format(timestamp);
 };
 
-export const getDateString = (
+/*export const getDateString = (
     {
         dateStr
     }:
@@ -52,7 +61,7 @@ export const getDateString = (
     }
 ) => {
     const
-        stringConversion = datetimeConversionTo_String(dateStr),
+        stringConversion = datetimeConversionTo_String(dateStr as number),
         datePart = stringConversion.split(",")[0];
 
     if(!datePart) {
@@ -60,7 +69,7 @@ export const getDateString = (
     }
 
     return datePart;
-};
+};*/
 
 export const lnsExportDateToICSFormat = (
     {

@@ -1,6 +1,7 @@
 "use client";
 import Image, {StaticImageData} from "next/image";
 import JiufenImgPlaceholder from "@/public/images/pexels-marek-piwnicki-3907296-27852891.jpg";
+import {Photo} from "@prisma/client";
 
 const
     DEFAULT_LOADING_TYPE = 'lazy',
@@ -16,13 +17,7 @@ export const PictureWrapper = (
         isSplashImg = false
     }:
     {
-        photo?: {
-            title?: string;
-            srcUrl?: string;
-            thumbnailUrl?: string;
-            width: string;
-            height: string;
-        };
+        photo?: Partial<Photo>;
         staticImage?: StaticImageData;
         classNames?: string;
         overrideLoadingType?: "eager" | "lazy";

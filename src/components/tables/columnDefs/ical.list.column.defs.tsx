@@ -10,18 +10,19 @@ import {
 import {Button} from "@/components/ui/button";
 import {
     ArrowUpDown,
+    CheckIcon,
     FileCog,
     HardDriveDownload,
+    Key,
     MoreHorizontal,
     ShredderIcon,
-    Key,
-    CheckIcon,
     XIcon
 } from "lucide-react";
 import TooltipShell from "@/components/structural/tooltip/Tooltip";
 import {
     DropdownMenu,
-    DropdownMenuContent, DropdownMenuItem,
+    DropdownMenuContent,
+    DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger
@@ -29,13 +30,18 @@ import {
 import Link from "next/link";
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 import {SessionDataState} from "@/store/userStore";
-import {ColumnDef} from "@tanstack/react-table";
+import {AccessorColumnDef, DisplayColumnDef, GroupColumnDef} from "@tanstack/react-table";
 
 export const IcalListColumnDefs = (
     user: SessionDataState,
-    controls,
+    controls: {
+        setICalId:  React.Dispatch<React.SetStateAction<string>>,
+        setOpenEditICalDialog: React.Dispatch<React.SetStateAction<boolean>>
+        setOpenDeleteICalDialog: React.Dispatch<React.SetStateAction<boolean>>
+        setOpenChangeICalDialog: React.Dispatch<React.SetStateAction<boolean>>
+    },
     page: string,
-): ColumnDef<unknown, any>[] => ([
+): DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] => ([
     {
         accessorKey: "UserImprint.fullName",
         header: ({column}) => {
@@ -140,7 +146,7 @@ export const IcalListColumnDefs = (
         },
     },
     {
-        id: "actions",
+        accessorKey: "actions",
         enableHiding: false,
         cell: ({row}) => {
             let label = "...";
@@ -164,10 +170,9 @@ export const IcalListColumnDefs = (
 
             if (data !== undefined && data !== null) {
                 icalUrl = data.icalUrl as string;
-                const
-                    icalFilenameParts = icalUrl.split("/"),
-                    icalFilename = icalFilenameParts[icalFilenameParts.length - 1];
-                label = icalFilename;
+                const icalFilenameParts = icalUrl.split("/");
+
+                label = icalFilenameParts[icalFilenameParts.length - 1];
 
                 createdOn = datetimeConversionTo_String({timestamp: data.createdAt as Date});
                 if (data.createdAt.getTime() !== data.updatedAt.getTime()) {

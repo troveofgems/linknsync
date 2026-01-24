@@ -3,7 +3,7 @@ import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import {
     FILE_STASIS_TRIGGER,
     LINKED_TO_CRON_TRIGGER,
-    LOAD_ERROR_CONTENT
+    LOAD_ERROR_CONTENT, SubscribedIcalList
 } from "@/components/structural/tooltip/elements/Cron.elements";
 import {DateBlock} from "@prisma/client";
 import {addEllipsis} from "@/lib/utils/misc/string.utils";
@@ -25,16 +25,16 @@ export type ICalSource = {
 }
 
 export const CurrentSource = (
-    passedICalSource: ICalSource,
-    icalList?: ICalSource[],
+    passedICalSource: ICalSource | SubscribedIcalList,
+    icalList?: ICalSource[] | SubscribedIcalList[],
     formKey?: string
 ) => {
     const
         showChangeMainSrc = formKey === "changeMain",
-        mainSource = icalList?.filter((item: { id: string; isMainSrc: boolean; }) => item.isMainSrc)[0];
+        mainSource = icalList?.filter((item) => item.isMainSrc)[0];
 
     const sourceShell = (
-        source?: ICalSource,
+        source?: ICalSource | SubscribedIcalList,
     ) => (
             <div className={"w-full flex justify-between items-center flex-row-reverse"}>
                 <div>

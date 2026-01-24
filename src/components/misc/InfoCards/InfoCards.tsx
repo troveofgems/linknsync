@@ -1,5 +1,5 @@
 import "./InfoCards.css";
-import Link from "next/link";
+/*import Link from "next/link";*/
 export const InfoCards = () => {
     return (
         <section id={"info-cards-user-types"}>

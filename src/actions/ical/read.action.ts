@@ -8,8 +8,8 @@ import {SessionDataState} from "@/store/userStore";
 export interface ReadEventsByPropertyIdActionState {
     message: string;
     response: {
-        propertyById: any;
-        events?: any[];
+        propertyById: object;
+        events?: object[];
     };
     error?: Error | null;
     pState?: SessionDataState;
@@ -94,10 +94,3 @@ export const fetchEventsByPropertyIdAction = async(
         };
     }
 };
-
-export const fetchLNSExport = async(
-    prevState,
-    searchParams
-) => {
-
-}

@@ -1,8 +1,13 @@
 "use server";
-import {DateBlock, DateBlockConflict} from "@prisma/client";
+import {DateBlock, DateBlockConflict, /*DateBlockConflict*/} from "@prisma/client";
 import db from "@/db/connect.db";
 import {SessionDataState} from "@/store/userStore";
-import {createSendConflictsDetectedEmailAction, CreateSendEmailActionState} from "@/actions/email/send.action";
+import {
+    ConflictEmailData,
+    createSendConflictsDetectedEmailAction,
+    CreateSendEmailActionState
+} from "@/actions/email/send.action";
+import {DateBlockConflictList} from "@/actions/dateblock/create.action";
 
 /**
  * This File Contains the Logic for Creating a Property
@@ -20,7 +25,7 @@ export interface CreateConflictActionState {
 
 export const createConflictAction = async(
     prevState: CreateConflictActionState,
-    conflicts: DateBlockConflict[],
+    conflicts: DateBlockConflictList[],
 ): Promise<CreateConflictActionState> => {
     if(!conflicts || conflicts?.length === 0) {
         return {
@@ -35,15 +40,17 @@ export const createConflictAction = async(
     const processedConflicts = processConflicts(conflicts);
 
     const createConflictResponse = await db.dateBlockConflict.createMany({
-        data: processedConflicts.inputData,
+        data: processedConflicts.inputData as DateBlockConflict[],
         skipDuplicates: true
     });
 
     if(createConflictResponse.count > 0) {
         createSendConflictsDetectedEmailAction(
             {} as CreateSendEmailActionState,
-            processedConflicts
-        ).then(() => {});
+            processedConflicts as ConflictEmailData
+        ).then(() => {
+            // TODO: Possibly add audit track here...
+        });
     }
 
     return {
@@ -56,11 +63,9 @@ export const createConflictAction = async(
 }
 
 const processConflicts = (
-    conflicts: DateBlock[]
+    conflicts: DateBlockConflictList[]
 ) => {
-    console.log("Conflicts To Process: ", conflicts);
-
-    const mappedData = conflicts.map((conflict, index) => {
+    const mappedData = conflicts.map((conflict: DateBlockConflictList) => {
         return {
             ...conflict.second,
             priority: conflict.first.priority,

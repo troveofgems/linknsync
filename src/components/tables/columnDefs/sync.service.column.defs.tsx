@@ -1,9 +1,9 @@
-import {ColumnDef} from "@tanstack/react-table";
+import {AccessorColumnDef, DisplayColumnDef, GroupColumnDef} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button";
 import {ArrowUpDown} from "lucide-react";
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 
-export const SyncServiceListColumnDefs: ColumnDef<unknown, any>[] = ([
+export const SyncServiceListColumnDefs: DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] = ([
     {
         accessorKey: "id",
         header: () => {

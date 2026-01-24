@@ -1,8 +1,9 @@
 'use client';
 import {FC} from "react";
+import {useFormStatus} from "react-dom";
 
 interface FormButtonProps {
-    useFormStatus: Function;
+    useFormStatus: typeof useFormStatus;
     btnType: "button" | "submit" | "reset";
     btnLabel?: string;
     pendingMessage?: string;

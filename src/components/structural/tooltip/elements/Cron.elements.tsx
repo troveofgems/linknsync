@@ -17,6 +17,7 @@ import {UserImprint} from "@prisma/client";
 
 export interface SubscribedIcalList {
     id: string;
+    isMainSrc: boolean;
     icalFilename: string;
     importType: string;
     cronSchedule: Date | null;

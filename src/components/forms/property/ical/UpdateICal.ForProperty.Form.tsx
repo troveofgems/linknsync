@@ -27,7 +27,7 @@ export const UpdateICalForPropertyForm = (
         icalId: string;
         handleDialogClose: React.Dispatch<React.SetStateAction<boolean>>;
     }) => {
-    const checkTimelockStatus = (icalSource) => {
+    const checkTimelockStatus = (icalSource: ICalSource) => {
         if(icalSource.createdAt.getTime() === icalSource.updatedAt.getTime()) {
             return {
                 actionIsTimelocked: false,
@@ -54,7 +54,6 @@ export const UpdateICalForPropertyForm = (
         };
     }
 
-
     const
         { viewPropertyList } = APP_PATHS.authenticatedPages.appUser.goToProperty,
         router = useRouter(),
@@ -63,7 +62,7 @@ export const UpdateICalForPropertyForm = (
             updateICalAction,
             { pState: user } as UpdateICalActionState
         ),
-        [timelockStatus, setTimelockStatus] = useState(checkTimelockStatus(icalSource));
+        [timelockStatus] = useState(checkTimelockStatus(icalSource));
 
     useEffect(() => {
         if(!!state && !isPending) {

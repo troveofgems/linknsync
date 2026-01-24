@@ -3,7 +3,7 @@ import {DateBlock} from "@/actions/actions.types";
 import db from "@/db/connect.db";
 import {DateBlockConflict, PriorityType, Prisma} from "@prisma/client";
 import {createConflictAction, CreateConflictActionState} from "@/actions/conflict/create.action";
-import {processConflictResolutions} from "@/actions/cronService/update.action";
+import {ConflictResolutions, processConflictResolutions} from "@/actions/cronService/update.action";
 import {SessionDataState} from "@/store/userStore";
 import DateBlockCreateManyInput = Prisma.DateBlockCreateManyInput;
 
@@ -35,6 +35,11 @@ export type CreateDateBlockActionProps = {
     importType: string;
     importFile?: File;
     generatedICalResourceId: string;
+}
+
+export interface DateBlockConflictList {
+    first: Partial<DateBlock>,
+    second: Partial<DateBlock>,
 }
 
 export const createDateBlockAction = async(
@@ -89,10 +94,12 @@ export const createDateBlockAction = async(
         skipDuplicates: true
     });
 
+    console.log("Conflicts are: ", conflicts)
+
     // Process Conflicts
     const generatedConflictBlocks = await createConflictAction(
         {} as CreateConflictActionState,
-        conflicts as DateBlockConflict[]
+        conflicts as DateBlockConflictList[]
     );
 
     return {
@@ -353,7 +360,7 @@ export const addNewEvents = async (
     if(addConflicts) {
         const { response: createManyConflictsResponse } = await createConflictAction(
             {} as CreateConflictActionState,
-            conflicts as DateBlockConflict[]
+            conflicts as DateBlockConflictList[]
         );
         actionsTaken.push(`New Conflicts Recorded: ${createManyConflictsResponse?.processedConflictCount}`);
     } else {
@@ -437,7 +444,7 @@ export const removeExistingEvents = async (
             }
         });
         actionsTaken.push(`Existing Conflicts Removed: ${deleteManyConflictsResponse.count}`);
-        await processConflictResolutions(fetchConflictsResponse);
+        await processConflictResolutions(fetchConflictsResponse as unknown as ConflictResolutions[]);
     } else {
         actionsTaken.push("Existing Events Removed: 0");
         actionsTaken.push("Existing Conflicts Removed: 0");

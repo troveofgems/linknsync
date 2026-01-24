@@ -1,10 +1,12 @@
-import {ColumnDef} from "@tanstack/react-table";
+import {AccessorColumnDef, DisplayColumnDef, GroupColumnDef} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button";
 import {ArrowUpDown} from "lucide-react";
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
+import {ICalEntry, Property, UserImprint} from "@prisma/client";
+import {SubscribedIcalList} from "@/components/structural/tooltip/elements/Cron.elements";
 
-export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
+export const LinkedPropertiesListColumnDefs: DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] = ([
     {
         accessorKey: "Property.name",
         header: ({ column }) => {
@@ -19,7 +21,7 @@ export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
             )
         },
         cell: ({ row }) => {
-            const data = row.original;
+            const data = row.original as unknown as { Property: Partial<Property> };
             return (
                 <div className="capitalize">{data.Property.name}</div>
             );
@@ -27,14 +29,14 @@ export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
     },
     {
         accessorKey: "icalLimit",
-        header: ({ column }) => {
+        header: () => {
             return (
                 <h2 className={"font-extrabold"}>Limit</h2>
             )
         },
         cell: ({ row }) => {
             const
-                data = row.original,
+                data = row.original as unknown as { icalFileUploadLimit: string; urlSources: Partial<ICalEntry>[] },
                 limitLabel = data.icalFileUploadLimit === "THREE" ? "3" :
                     data.icalFileUploadLimit === "TEN" ? "10" : "UNLIMITED",
                 finalLabel = `${data.urlSources.length} of ${limitLabel} max`;
@@ -46,13 +48,13 @@ export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
     },
     {
         accessorKey: "syncSchedule",
-        header: ({ column }) => {
+        header: () => {
             return (
                 <h2 className={"font-extrabold"}>Schedule</h2>
             )
         },
         cell: ({ row }) => {
-            const data = row.original;
+            const data = row.original as unknown as { scheduleType: string; };
             return (
                 <div className="capitalize">{data.scheduleType}</div>
             )
@@ -60,21 +62,13 @@ export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
     },
     {
         accessorKey: "icalData",
-        header: ({ column }) => {
+        header: () => {
             return (
-                /*<Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Attached ICals
-                    <ArrowUpDown/>
-                </Button>*/
                 <h2 className={"font-extrabold"}>Attached ICals</h2>
             )
         },
         cell: ({ row }) => {
-            const data = row.original;
-
+            const data = row.original as unknown as { urlSources: Partial<SubscribedIcalList>[]; UserImprint: Partial<UserImprint>; id: string; };
             return (
                 <div className="capitalize text-center">
                     <div className={"flex flex-col py-1"}>
@@ -93,7 +87,7 @@ export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
                                                 <div>
                                                     <div key={`source_${source.icalFilename}`} className={"flex flex-col"}>
                                                         <div className={"flex justify-start text-gray-500"}>
-                                                            {source.UserImprint.appRole} - {source.UserImprint.fullName}
+                                                            {source.UserImprint!.appRole} - {source.UserImprint!.fullName}
                                                         </div>
                                                         <div className={"flex justify-start ml-10"}>
                                                             {source.icalFilename}
@@ -117,7 +111,7 @@ export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
                                                         <DropdownMenuSeparator className={"my-2"} />
                                                         <div key={`source_${source.icalFilename}`} className={"flex flex-col"}>
                                                             <div className={"flex justify-start text-gray-500"}>
-                                                                {source.UserImprint.appRole} - {source.UserImprint.fullName}
+                                                                {source.UserImprint!.appRole} - {source.UserImprint!.fullName}
                                                             </div>
                                                             <div className={"flex justify-start ml-10"}>
                                                                 {source.icalFilename}
@@ -140,7 +134,7 @@ export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
                                                         <DropdownMenuSeparator className={"my-2"} />
                                                         <div key={`source_${source.icalFilename}`} className={"flex flex-col"}>
                                                             <div className={"flex justify-start text-gray-500"}>
-                                                                {source.UserImprint.appRole} - {source.UserImprint.fullName}
+                                                                {source.UserImprint!.appRole} - {source.UserImprint!.fullName}
                                                             </div>
                                                             <div className={"flex justify-start ml-10"}>
                                                                 {source.icalFilename}
@@ -171,23 +165,16 @@ export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
     },
     {
         accessorKey: "lastRun",
-        header: ({ column }) => {
+        header: () => {
             return (
-                /*<Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Last Run
-                    <ArrowUpDown/>
-                </Button>*/
                 <h2 className={"font-extrabold"}>Last Sync Run</h2>
             )
         },
         cell: ({ row }) => {
             const
-                data = row.original,
+                data = row.original as unknown as { lastRun?: Date | string; urlSources: Partial<ICalEntry>[]; id: string; },
                 lastRunIsNull = data.lastRun === null,
-                finalLabel = lastRunIsNull ? "Not Yet Run" : datetimeConversionTo_String({ timestamp: data.lastRun }),
+                finalLabel = lastRunIsNull ? "Not Yet Run" : datetimeConversionTo_String({ timestamp: data.lastRun as Date }),
                 runValues = data.urlSources.map((source) => source.importType === "file"),
                 runNotPossible = runValues.every((val: boolean) => val);
 
@@ -213,22 +200,15 @@ export const LinkedPropertiesListColumnDefs: ColumnDef<unknown, any>[] = ([
     },
     {
         accessorKey: "nextRun",
-        header: ({ column }) => {
+        header: () => {
             return (
-                /*<Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Next Run
-                    <ArrowUpDown/>
-                </Button>*/
                 <h2 className={"font-extrabold"}>Next Sync Run</h2>
             )
         },
         cell: ({ row }) => {
             const
-                data = row.original,
-                convertedStartTime = datetimeConversionTo_String({ timestamp: data.nextRun }),
+                data = row.original as { nextRun?: Date | string; urlSources: Partial<ICalEntry>[]; },
+                convertedStartTime = datetimeConversionTo_String({ timestamp: data.nextRun as Date }),
                 runValues = data.urlSources.map((source) => source.importType === "file"),
                 runNotPossible = runValues.every((val: boolean) => val);
 

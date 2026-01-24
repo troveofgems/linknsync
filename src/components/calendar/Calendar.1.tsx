@@ -13,7 +13,7 @@ import {SessionDataState} from "@/store/userStore";
 import {SubscribedIcalList} from "@/components/structural/tooltip/elements/Cron.elements";
 import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";
 import {fetchEventsByPropertyIdAction, ReadEventsByPropertyIdActionState} from "@/actions/ical/read.action";
-import {BookingRequest} from "@prisma/client";
+import {BookingRequest, UserImprint} from "@prisma/client";
 import {
     fetchBookingRequestsByPropertyIdAction,
     ReadBookingRequestsByPropertyIdActionState
@@ -31,10 +31,22 @@ interface Day {
     dayInPast: boolean;
     isFirstOfMonth: boolean;
     btnActionType: string;
-    events: [];
+    events: Array<{
+        markedAsRequestedBooking: boolean;
+        markedAsArrival: boolean;
+        markedAsDeparture: boolean;
+        markedAsBooked: boolean;
+    }>;
 }
 
-const dfo = {
+export type DateTimeOptions = {
+    weekday: "long" | "short" | "narrow" | undefined;
+    month: "long" | "short" | "narrow" | undefined;
+    day: "numeric" | undefined;
+    year: "numeric" | undefined;
+}
+
+const dfo: DateTimeOptions = {
     weekday: 'long', // Full weekday name (e.g., "Wednesday")
     month: 'long',   // Full month name (e.g., "November")
     day: 'numeric',   // Day of the month (e.g., "10")
@@ -51,9 +63,9 @@ export const Calendar1 = (
         [loadingEvents, setLoadingEvents] = useState(true),
         [loadingBookingRequests, setLoadingBookingRequests] = useState(true),
         [processingEvents, setProcessingEvents] = useState(false),
-        [events, setEvents] = useState([]),
+        [events, setEvents] = useState<ScheduledEvent[]>([]),
         [bookingRequests, setBookingRequests] = useState([]),
-        [calendar, setCalendar] = useState<unknown>(null),
+        [calendar, setCalendar] = useState<[][] | null>(null),
         [activeView, setActiveView] = useState<'calendar' | 'schedule'>('calendar'),
         [viewingEvents, setViewingEvents] = useState<object[] | null>(null),
         [viewingDay, setViewingDay] = useState<Date | string>("No Data"),
@@ -70,7 +82,7 @@ export const Calendar1 = (
             })
         });
 
-        setEvents(compiledEvents);
+        setEvents(compiledEvents as unknown as []);
         setProcessingEvents(false);
     };
 
@@ -96,11 +108,12 @@ export const Calendar1 = (
                 isBookedDay = false,
                 isArrivalAndDeparture = false;
 
-            if(day.events.length === 1) {
-                isBookingRequest = day.events[0].markedAsRequestedBooking;
-                isArrival = day.events[0].markedAsArrival;
-                isDeparture = day.events[0].markedAsDeparture;
-                isBookedDay = day.events[0].markedAsBooked;
+            const eventExists = (day.events.length >= 1);
+            if(eventExists) {
+                isBookingRequest = day.events[0]!.markedAsRequestedBooking;
+                isArrival = day.events[0]!.markedAsArrival;
+                isDeparture = day.events[0]!.markedAsDeparture;
+                isBookedDay = day.events[0]!.markedAsBooked;
             } else {
                 isArrivalAndDeparture =
                     (day.events[0].markedAsArrival && day.events[1].markedAsDeparture) ||
@@ -175,7 +188,7 @@ export const Calendar1 = (
                     if(result?.response?.events) {
                         setLoadingEvents(false);
                         setProcessingEvents(true);
-                        compileEvents(result.response.events);
+                        compileEvents(result.response.events as unknown as []);
                     }
                 })
                 .catch(e => console.error(e));
@@ -190,7 +203,7 @@ export const Calendar1 = (
                 .then((result) => {
                 if(result?.response?.bookingRequests) {
                     setLoadingBookingRequests(false);
-                    setBookingRequests(result.response.bookingRequests);
+                    setBookingRequests(result.response.bookingRequests as []);
                 }
             })
                 .catch(e => console.error(e));
@@ -202,7 +215,7 @@ export const Calendar1 = (
                     bookingRequests as BookingRequest[]
                 ),
                 calendarCoupledToEventsAndRequests = calendarProcessor.calendarWithProcessedEventsAndBookingRequests();
-            setCalendar(calendarCoupledToEventsAndRequests);
+            setCalendar(calendarCoupledToEventsAndRequests as []);
         }
     }, [
         events, loadingEvents, processingEvents,
@@ -275,7 +288,8 @@ export const Calendar1 = (
                                         <div className="grid grid-cols-7 gap-px">
                                             {
                                                 !!calendar && calendar.map((week: unknown[], weekIndex: number) => {
-                                                    return week.map((day, dayIndex: number) => {
+                                                    return week.map((d, dayIndex: number) => {
+                                                        const day = d as Day;
                                                         return (
                                                             <button
                                                                 aria-label={day.ariaLabel}
@@ -310,21 +324,31 @@ export const Calendar1 = (
                                             <CardContent className={"w-full"}>
                                                 {
                                                     (!!viewingEvents && viewingEvents.length > 0) &&
-                                                    (viewingEvents.map((event, index) => (
+                                                    (viewingEvents.map((event, index, eventArray) => {
+                                                        console.log("Event Array: ", eventArray);
+                                                        const evt = event as unknown as ScheduledEvent;
+                                                        const evtArray = eventArray as {
+                                                            markedAsArrival: boolean;
+                                                            markedAsRequestedBooking: boolean;
+                                                            markedAsDeparture: boolean;
+                                                            daysBetweenArrivalAndDeparture: number;
+                                                            UserImprint?: Partial<UserImprint>;
+                                                        }[];
+                                                        return (
                                                             <div className={`flex ${index > 0 && 'py-15'}`} key={`evt_entry_${index}`}>
-                                                                <div className={"flex mr-4"} key={`${event.id}_viewing_${index}`}>
+                                                                <div className={"flex mr-4"} key={`${evt.id}_viewing_${index}`}>
                                                                     <span>Event</span>
                                                                 </div>
                                                                 <div className={"flex flex-col"}>
                                                                     <span>
                                                                         {
-                                                                            viewingEvents[index].markedAsArrival && !viewingEvents[index]?.markedAsRequestedBooking ? (
-                                                                                    `Expected Arrival - Booked For ${viewingEvents[index].daysBetweenArrivalAndDeparture} Nights`
+                                                                            evtArray[index].markedAsArrival && !evtArray[index]?.markedAsRequestedBooking ? (
+                                                                                    `Expected Arrival - Booked For ${evtArray[index].daysBetweenArrivalAndDeparture} Nights`
                                                                                 ) :
-                                                                                viewingEvents[index].markedAsDeparture && !viewingEvents[index]?.markedAsRequestedBooking ?
+                                                                                evtArray[index].markedAsDeparture && !evtArray[index]?.markedAsRequestedBooking ?
                                                                                     (
-                                                                                        `Expected Departure - Concludes ${viewingEvents[index].daysBetweenArrivalAndDeparture} Night Stay`
-                                                                                    ) : viewingEvents[index]?.markedAsRequestedBooking ? (
+                                                                                        `Expected Departure - Concludes ${evtArray[index].daysBetweenArrivalAndDeparture} Night Stay`
+                                                                                    ) : evtArray[index]?.markedAsRequestedBooking ? (
                                                                                         "Booking Requested - Pending PLA Approval"
                                                                                     ) : (
                                                                                         `All Day Booking`
@@ -333,26 +357,26 @@ export const Calendar1 = (
                                                                     </span>
                                                                     <DropdownMenuSeparator className={"mb-3"} />
                                                                     {
-                                                                        !viewingEvents[index]?.markedAsRequestedBooking && (
+                                                                        !evtArray[index]?.markedAsRequestedBooking && (
                                                                             <span>
-                                                                                Booking Source - {viewingEvents[index]?.UserImprint?.fullName}&#39;s ics - ({viewingEvents[index]?.UserImprint?.appRole})
+                                                                                Booking Source - {evtArray[index]?.UserImprint?.fullName}&#39;s ics - ({evtArray[index]?.UserImprint?.appRole})
                                                                             </span>
                                                                         )
                                                                     }
                                                                     {
-                                                                        viewingEvents[index]?.markedAsRequestedBooking && (
+                                                                        evtArray[index]?.markedAsRequestedBooking && (
                                                                             <span>
                                                                                 {
-                                                                                    viewingEvents[index].daysBetweenArrivalAndDeparture} Day Stay - {
-                                                                                    viewingEvents[index].markedAsArrival ? ("Arrival") : viewingEvents[index].markedAsDeparture ? ("Departure") : ("Booked All Day")
-                                                                                }
+                                                                                    evtArray[index].daysBetweenArrivalAndDeparture} Day Stay - {
+                                                                                evtArray[index].markedAsArrival ? ("Arrival") : evtArray[index].markedAsDeparture ? ("Departure") : ("Booked All Day")
+                                                                            }
                                                                             </span>
                                                                         )
                                                                     }
                                                                 </div>
                                                             </div>
-                                                        ))
-                                                    )
+                                                        )
+                                                    }))
                                                 }
                                             </CardContent>
                                         </Card>

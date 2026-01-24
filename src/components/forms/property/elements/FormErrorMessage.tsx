@@ -11,8 +11,7 @@ export const FormErrorMessage = (
         overrideDefaultError = false
     }: {
         formState:
-            CreatePropertyActionState | UpdatePropertyActionState |
-            DeletePropertyActionState |
+            CreatePropertyActionState | UpdatePropertyActionState | DeletePropertyActionState |
             UpdateICalActionState | DeleteICalActionState,
         overrideDefaultError?: boolean;
     }

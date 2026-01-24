@@ -9,6 +9,7 @@ import {
     DEFAULT_CITY_NOT_LISTED_LABEL, MEX_CITY_NOT_LISTED_LABEL
 } from "@/constants/Address/Labels/address.label.constants";
 import {getParishFullName} from "@/constants/Address/Countries/USA_States_and_Cities";
+import {Address} from "@prisma/client";
 
 /**
  * This File exports the Address Helper Functions For the App
@@ -44,9 +45,9 @@ type Countries = {
     };
 }
 
-export const formatAddress = (address): string => {
+export const formatAddress = (address: Partial<Address>): string => {
     const
-        countryCode = getCountryCode(address.country),
+        countryCode = getCountryCode(address.country as string),
         countryData: {
             name: string;
             residentialFormat: string;
@@ -56,7 +57,7 @@ export const formatAddress = (address): string => {
             exampleWithUnits: AddressFormatterProps;
         } = COUNTRIES[`${countryCode}`];
 
-    const addressLines = enforceAddressLineFormat(countryData, address);
+    const addressLines = enforceAddressLineFormat(`${countryCode}` as SupportedCountries, address, countryData);
 
     return addressLines.filter((line) => !!line).join("\n");
 };
@@ -339,8 +340,8 @@ export const getCityNotListedLabelForCountry = (
 // Internal Helper Functions
 const enforceAddressLineFormat = (
     country: SupportedCountries,
-    address,
-    countryData: {
+    address: Partial<Address>,
+    countryData?: {
         name: string;
         residentialFormat: string;
         withUnitsFormat: string;
@@ -352,16 +353,16 @@ const enforceAddressLineFormat = (
 ) => {
     const
         addressBlock = [],
-        isMultiUnit = address.street2?.length > 0 || false,
+        isMultiUnit = !!address.street2 && address.street2?.length > 0 ? address.street2 : false,
         {street, street2, street3, city, state, postalCode, country: inputCountry} = address;
 
     switch(inputCountry) {
         case "USA":
             if(state === "LA") {
-                addressBlock.push(`${getParishFullName(street3)} Parish`);
+                addressBlock.push(`${getParishFullName(street3 as string)} Parish`);
             }
             addressBlock.push(isMultiUnit ? `${street},` : street);
-            if(street2?.length > 0) {
+            if(!!street2?.length && street2.length > 0) {
                 addressBlock.push(street2);
             }
             addressBlock.push(`${city}, ${state} ${postalCode}`);
@@ -415,9 +416,9 @@ const enforceAddressLineFormat = (
         addressBlock.push(`\n`);
         addressBlock.push(`Format Applied:`);
         if(isMultiUnit) {
-            addressBlock.push(countryData.withUnitsFormat);
+            addressBlock.push(countryData!.withUnitsFormat);
         } else {
-            addressBlock.push(countryData.residentialFormat);
+            addressBlock.push(countryData!.residentialFormat);
         }
     }
 

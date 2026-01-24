@@ -21,9 +21,10 @@ import { fileURLToPath } from 'url';
 /**
  * This File Contains the Logic for Updating An ICal File
  * */
-export type UpdateICalActionState = {
+export interface UpdateICalActionState {
     message: string;
     response: {
+        formData?: FormData;
         exported?: object;
         mainSource?: {
             oldSource?: object;

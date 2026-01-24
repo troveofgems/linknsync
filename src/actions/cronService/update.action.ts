@@ -38,7 +38,7 @@ export type UpdateCronServiceActionListByOrgIdParams = {
     }
 };
 
-export const processConflictResolutions = async (resolvedConflicts: {
+export type ConflictResolutions = {
     id: string;
     propertyName: string;
     firstBlock: {
@@ -65,30 +65,33 @@ export const processConflictResolutions = async (resolvedConflicts: {
     version: string;
     createdAt: Date;
     coid: string;
-}[]) => {
-    const resolvedConflictsToStore = resolvedConflicts.map((item) => ({
-        propertyName: item.propertyName,
-        firstBookedBy: item.firstBlock.UserImprint.fullName,
-        conflictUploadedBy: item.UserImprint.fullName,
-        eventUID: item.eventUID,
-        retainedBookingStartDate: item.firstBlock.startDate,
-        retainedBookingEndDate: item.firstBlock.endDate,
-        removedBookingStartDate: item.startDate,
-        removedBookingEndDate: item.endDate,
-        resolutionAction: item.priority === "PRIORITY_0" ? ConflictResolution.KEPT_PLA :
-            item.firstBlock.priority === "PRIORITY_1" ? ConflictResolution.KEPT_ALA : ConflictResolution.NONE,
-        propertyId: item.propertyId,
-        calendarId: item.calendarId,
-        icalEntryId: item.iCalEntryId,
-        firstBlockId: item.firstBlockId,
-        oldConflictId: item.id,
-        prodid: item.prodid,
-        version: item.version,
-        conflictDetectedOn:  item.createdAt,
-        orgImprintId: item.coid,
-        userImprintId: item.UserImprint.id,
-        updatedAt: new Date()
-    }));
+}
+
+export const processConflictResolutions = async (resolvedConflicts: ConflictResolutions[]) => {
+    const resolvedConflictsToStore = resolvedConflicts
+        .map((item) => ({
+            propertyName: item.propertyName,
+            firstBookedBy: item.firstBlock.UserImprint.fullName,
+            conflictUploadedBy: item.UserImprint.fullName,
+            eventUID: item.eventUID,
+            retainedBookingStartDate: item.firstBlock.startDate,
+            retainedBookingEndDate: item.firstBlock.endDate,
+            removedBookingStartDate: item.startDate,
+            removedBookingEndDate: item.endDate,
+            resolutionAction: item.priority === "PRIORITY_0" ? ConflictResolution.KEPT_PLA :
+                item.firstBlock.priority === "PRIORITY_1" ? ConflictResolution.KEPT_ALA : ConflictResolution.NONE,
+            propertyId: item.propertyId,
+            calendarId: item.calendarId,
+            icalEntryId: item.iCalEntryId,
+            firstBlockId: item.firstBlockId,
+            oldConflictId: item.id,
+            prodid: item.prodid,
+            version: item.version,
+            conflictDetectedOn:  item.createdAt,
+            orgImprintId: item.coid,
+            userImprintId: item.UserImprint.id,
+            updatedAt: new Date()
+        }));
 
     let response = null;
     if(resolvedConflicts.length > 0) {

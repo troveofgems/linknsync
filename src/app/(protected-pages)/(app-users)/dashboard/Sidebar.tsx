@@ -16,7 +16,7 @@ type SidebarLink = {
     permissions: string[];
 };
 
-const { goToProfile, goToCalendar, goToConflicts, goToProperty, goToLogs } = APP_PATHS.authenticatedPages.appUser;
+const { goToProfile, /*goToCalendar,*/ goToConflicts, goToProperty, goToLogs } = APP_PATHS.authenticatedPages.appUser;
 
 const linkList: SidebarLink[] = [ // Move to Another File
     goToProfile,

@@ -24,6 +24,9 @@ function UpdatePropertyPage() {
                     )
                 }
             </div>
+            {!!error && (
+                <div>Error Loading Section {JSON.stringify(error)}</div>
+            )}
         </section>
     )
 }

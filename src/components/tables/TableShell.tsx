@@ -1,13 +1,13 @@
 "use client";
 import React, {useState} from "react";
 import {
-    ColumnDef,
-    ColumnFiltersState, flexRender,
+    AccessorColumnDef,
+    ColumnFiltersState, DisplayColumnDef, flexRender,
     getCoreRowModel, getFilteredRowModel,
-    getPaginationRowModel, getSortedRowModel,
+    getPaginationRowModel, getSortedRowModel, GroupColumnDef,
     SortingState,
     useReactTable,
-    VisibilityState
+    VisibilityState,
 } from "@tanstack/react-table";
 import {Input} from "@/components/ui/input";
 import {
@@ -19,6 +19,7 @@ import {
 import {Button} from "@/components/ui/button";
 import {ChevronDown} from "lucide-react";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import type {Table as TableType} from "@tanstack/react-table";
 
 export const TableShell = (
     {
@@ -30,7 +31,7 @@ export const TableShell = (
     }: {
         tableNameId: string;
         listData: unknown[];
-        columns: ColumnDef<unknown, never>[];
+        columns: DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [];
         filters?: string[];
         orgRole?: string;
     }
@@ -121,7 +122,7 @@ export const TableShell = (
             table
         }: {
             filters: string[];
-            table: typeof Table
+            table: Partial<TableType<unknown>>;
         }
     ) => {
         const tableFilters: React.JSX.Element[] = filters.map((item, index) => {
@@ -129,9 +130,11 @@ export const TableShell = (
                 <Input
                     key={"filter-" + index}
                     placeholder={`Filter By ${translateHeaderIdToLabel(item)}`}
-                    value={(table.getColumn(item)?.getFilterValue() as string) ?? ""}
+                    value={!!table.getColumn ? (table.getColumn(item)?.getFilterValue() as string) : ""}
                     onChange={(event) =>
-                        table.getColumn(item)?.setFilterValue(event.target.value)
+                        !!table.getColumn ?
+                            table.getColumn(item)?.setFilterValue(event.target.value) :
+                            null
                     }
                     className="w-1/5"
                 />
@@ -200,7 +203,7 @@ export const TableShell = (
         [rowSelection, setRowSelection] = useState({}),
         table = useReactTable({
             data: listData,
-            columns: columns as unknown as ColumnDef<unknown, any>[],
+            columns: columns as unknown as AccessorColumnDef<unknown>[],
             onSortingChange: setSorting,
             onColumnFiltersChange: setColumnFilters,
             getCoreRowModel: getCoreRowModel(),
@@ -299,7 +302,8 @@ export const TableShell = (
                                 ) : (
                                     <TableRow>
                                         <TableCell
-                                            colSpan={columns?.length || 0}
+                                            //@ts-expect-error Columns do have lengths
+                                            colSpan={columns.length ?? 0}
                                             className="h-24 text-center"
                                         >
                                             No results.

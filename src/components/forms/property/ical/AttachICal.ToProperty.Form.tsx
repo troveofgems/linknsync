@@ -69,7 +69,7 @@ export const AttachICalToPropertyForm = (
                 pid={urlParams.pid as string}
                 user={user}
                 page={"manage"}
-                formState={state}
+                formState={{ pState: state.pState as SessionDataState}}
                 useFormStatus={useFormStatus}
             />
 
