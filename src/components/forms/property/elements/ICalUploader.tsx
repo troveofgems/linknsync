@@ -119,10 +119,10 @@ export const ICalUploader = (
                                     placeholder={"https://pm.thetroveofgems.tech/property/somePID/ical.ics"}
                                     name={"ical.href"}
                                     id={"ical.href"}
-                                    defaultValue={!!formState?.response.formData ? `${formState.response.formData!.get("ical.href")}` : ""}
+                                    defaultValue={(!!formState?.response?.formData) ? `${formState.response.formData!.get("ical.href")}` : ""}
                                     labelClassnames={"formLabel"}
                                     inputFieldClassnames={"formInput w-fit"}
-                                    fieldErrorMessage={!!formState?.errors?.icalSource ? formState.errors.icalSource!.join("\n") : undefined}
+                                    fieldErrorMessage={(!!formState?.errors?.icalSource) ? formState.errors.icalSource!.join("\n") : undefined}
                                 />
                             </>
                         ) : (

@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect} from "react";
+import React/*, {useEffect}*/ from "react";
 import { Providers } from "./providers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -12,7 +12,7 @@ import Navbar from "@/components/structural/navbar/Navbar";
 import {Container} from "@/components/structural/container/Container";
 import MainContainer from "@/components/structural/main/Main";
 import Footer from "@/components/structural/footer/Footer";
-import {initializeAppJobScheduler} from "@/cron/app.system.actions";
+/*import {initializeAppJobScheduler} from "@/cron/app.system.actions";*/
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +29,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    useEffect(() => {
+/*    useEffect(() => {
         initializeAppJobScheduler();
-    });
+    });*/
 
     return (
         <ClerkProvider appearance={{
