@@ -3,8 +3,8 @@ import {persist} from 'zustand/middleware';
 
 interface ScheduledJobs {
     scheduledJobs: ScheduledJobState;
-    runJob: (jobId: number) => void | undefined;
-    stopJob: (jobId: number) => void | undefined;
+    runJob: (jobId: number) => unknown;
+    stopJob: (jobId: number) => unknown;
     getError: () => Error | undefined;
 }
 

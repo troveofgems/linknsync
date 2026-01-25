@@ -1,7 +1,7 @@
 "use server";
 import db from "../../db/connect.db";
 import {SessionDataState} from "@/store/userStore";
-import {BookingRequest} from "@prisma/client";
+import { BookingRequest } from "@prisma/client";
 
 /**
  * This File Contains the Logic for Reading Property List or Individual Data By ID
@@ -9,7 +9,7 @@ import {BookingRequest} from "@prisma/client";
 export interface ReadBookingRequestsByPropertyIdActionState {
     message: string;
     response: {
-        bookingRequests: BookingRequest[];
+        bookingRequests: Partial<BookingRequest>[];
     };
     error?: Error | null;
     pState?: SessionDataState;

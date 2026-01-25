@@ -53,7 +53,7 @@ export interface AuthenticationState {
     user: UserState;
     logout: () => void;
     sessionLoaded: () => boolean | undefined;
-    runQuery: () => void | undefined;
+    runQuery: () => void | unknown | undefined;
     getUserProfile: () => UserProfileState | undefined;
     getLoggedInUser: () => LoggedInUserState | undefined;
     getError: () => Error | string | undefined;
@@ -61,7 +61,7 @@ export interface AuthenticationState {
         sessionElapsed: boolean;
         remainingSessionTime: string;
     };
-    rejectRequest: () => void | undefined;
+    rejectRequest: () => void | unknown | undefined;
     reloadSession: () => void | undefined;
 }
 
