@@ -6,3 +6,11 @@
 .about-section {
     min-height: 35rem;
 }
+
+@media screen and (max-width: 600px) {
+    .mobile-override-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
