@@ -10,6 +10,7 @@ const
         '/about',
         '/contact',
         '/roadmap',
+        '/pricing',
         // Customers
         '/ourCustomers',
         // Further Information
