@@ -54,6 +54,7 @@ export const Footer = () => {
                         <p className="copyright">
                             &reg; <small>2025 - {currentYear}</small>
                         </p>
+                        <small>BETA 0.1.0</small>
                     </div>
                     <hr className={"footerHR"} />
                     <div className={"xl:flex"}>

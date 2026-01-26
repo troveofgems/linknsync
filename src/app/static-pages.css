@@ -1,0 +1,8 @@
+.tech-stack-section,
+.privacy-policy-section,
+.toc-section,
+.our-customers-section,
+.futureRoadmap-section,
+.about-section {
+    min-height: 35rem;
+}
