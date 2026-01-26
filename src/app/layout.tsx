@@ -29,10 +29,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-/*    useEffect(() => {
-        initializeAppJobScheduler();
-    });*/
-
     return (
         <ClerkProvider appearance={{
             elements: {
