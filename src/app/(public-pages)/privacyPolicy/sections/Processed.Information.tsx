@@ -14,7 +14,8 @@ const pageContents: StaticPageContent = [{
         "To send administrative information to you. This could include a Collision Detection email between icals of " +
         "various users.",
         "To enable user-to-user communications.",
-        "To evaluate and improve our Services, product, and your experience."
+        "To evaluate and improve our Services, product, and your experience.",
+        "To Comply With Our Legal Obligations"
     ],
     inShort: "We process your information to provide, improve, and administer our Services, communicate with you, for " +
         "security and fraud prevention. We may also process your information for other purposes with your consent."

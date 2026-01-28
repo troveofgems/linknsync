@@ -14,6 +14,7 @@ import {DNTControls} from "@/app/(public-pages)/privacyPolicy/sections/DNT.Contr
 import {USAUsers} from "@/app/(public-pages)/privacyPolicy/sections/USA.Users";
 import {PolicyUpdates} from "@/app/(public-pages)/privacyPolicy/sections/Policy.Updates";
 import {ManageYourData} from "@/app/(public-pages)/privacyPolicy/sections/ManageYourData";
+import {ContactUs} from "@/app/(public-pages)/privacyPolicy/sections/Contact.Us";
 
 const
     lastUpdate = new Date("1/28/2026")
@@ -58,6 +59,7 @@ const PrivacyPolicyPage = () => {
             <DNTControls />
             <USAUsers />
             <PolicyUpdates />
+            <ContactUs />
             <ManageYourData />
         </section>
     );
