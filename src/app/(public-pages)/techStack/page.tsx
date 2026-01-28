@@ -1,12 +1,41 @@
-function TechStackPage() {
+import {StaticPageContent, PageContent, printSection} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+
+const
+    PageLabel = "Technology Stack",
+    pageContents: StaticPageContent = [
+        {
+            key: "front-end",
+            label: "Frontend",
+            verbiage: "The following Frontend Technologies are leveraged by Link-N-Sync",
+            listData: [
+                "Next.JS (React/Typescript)",
+                "Vercel"
+            ]
+        },
+        {
+            key: "back-end",
+            label: "Backend",
+            verbiage: "The following Backend Technologies are leveraged by Link-N-Sync",
+            listData: [
+                "NodeJS",
+                "Supabase-PostgreSQL / Prisma ORM",
+                "ImgBB, ClerkJS, ImitateEmail",
+                ""
+            ]
+        }
+    ];
+
+const TechStackPage = () => {
     return (
-        <section className={"tech-stack-section"}>
+        <section key={"tech-stack-page"} className={"mb-15"}>
             <h1 className={"flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center text-4xl font-bold leading-none tracking-wide sm:text-6xl"}>
-                Technology Stack
+                {PageLabel}
             </h1>
-            <p className={"mt-6 text-lg tracking-wide leading-8 max-w-2xl mx-auto text-muted-foreground"}>
-                Lorem Ipsum...
-            </p>
+            <div className={"flex flex-col w-1/2 m-auto"}>
+                {
+                    pageContents.map((pageContent: PageContent) => printSection(pageContent))
+                }
+            </div>
         </section>
     );
 }

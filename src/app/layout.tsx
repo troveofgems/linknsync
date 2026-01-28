@@ -50,7 +50,7 @@ export default function RootLayout({
                 <meta property="og:title" content="Link-N-Sync Service"/>
                 <meta property="og:description"
                       content="Link-N-Sync, the ICal Consolidation for Short Term Vacation Rental Property Managers."/>
-                <meta property="og:url" content="https://linknsync-yvxh.vercel.app"/>
+                <meta property="og:url" content="https://linknsync.app"/>
             </head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}

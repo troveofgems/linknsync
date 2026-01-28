@@ -1,0 +1,21 @@
+import {PageContent, printSection, StaticPageContent} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+
+const pageContents: StaticPageContent = [{
+    key: "privacy-policy-cookies-and-tracking",
+    label: "4. Do We Use Cookies and Other Tracking Technologies?",
+    verbiage: "We may use cookies and similar tracking technologies to gather information when you interact with " +
+        "our Services. Some online tracking technologies help us maintain the security of our Services and your account " +
+        "prevent crashes, fix bugs, save your preferences, and assist with basic site functions.",
+    listData: [
+        ""
+    ],
+    inShort: "We may use cookies and other tracking technologies to collect and store your information."
+}];
+
+export const CookiesAndTracking = () => (
+    <div className={"flex flex-col w-1/2 m-auto"}>
+        {
+            pageContents.map((pageContent: PageContent) => printSection(pageContent))
+        }
+    </div>
+);
