@@ -83,7 +83,7 @@ export const printSection = ({ key, label, verbiage, listData, inShort, paragrap
         {
             !!showContact && (
                 <div className={"mt-3"}>
-                    <Link href="/contact">linknsyncdev@gmail.com</Link>
+                    <Link href="mailto:linknsyncdev@gmail.com" className={"staticPageLink"}>linknsyncdev@gmail.com</Link>
                 </div>
             )
         }

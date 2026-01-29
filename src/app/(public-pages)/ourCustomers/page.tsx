@@ -19,6 +19,9 @@ const AboutPage = () => {
             <h1 className={"w-1/2 m-auto flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center text-4xl font-bold leading-none tracking-wide sm:text-6xl"}>
                 {PageLabel}
             </h1>
+            <PrimaryListingAgent />
+            <AdditionalListingAgent />
+            <ReferralListingAgent />
             <h2 className={"w-1/2 m-auto mt-5 flex flex-col"}>
                 <span className={"font-bold"}>Last Revised</span> {lastUpdate}
                 <div className={"mt-5"}>
@@ -30,9 +33,6 @@ const AboutPage = () => {
                     If you still have any questions or concerns please contact us at <a href={"mailto:linknsyncdev@gmail.com"} className={"link"}>linknsyncdev@gmail.com</a>
                 </div>
             </h2>
-            <PrimaryListingAgent />
-            <AdditionalListingAgent />
-            <ReferralListingAgent />
         </section>
     );
 }

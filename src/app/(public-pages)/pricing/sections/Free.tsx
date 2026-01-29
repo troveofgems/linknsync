@@ -1,16 +1,17 @@
 import {PageContent, printSection, StaticPageContent} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
 const pageContents: StaticPageContent = [{
-    key: "customers-rla",
-    label: "Referral Listing Agents",
-    verbiage: "What Can You Do?",
+    key: "pricing-free",
+    label: "Free Tier",
+    verbiage: "The Free Tier Offers the Following Benefits: ",
     listData: [
-        "View an Attached Organization's Properties",
-        "Send a Booking Request for a Block of Dates",
+        "3 Properties Max",
+        "3 ICal Files Per Property",
+        "Daily (Every 24 Hours) Synchronization of ICal Files",
     ]
 }];
 
-export const ReferralListingAgent = () => (
+export const FreeOption = () => (
     <div className={"flex flex-col w-1/2 m-auto"}>
         {
             pageContents.map((pageContent: PageContent) => printSection(pageContent))

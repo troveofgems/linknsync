@@ -399,3 +399,7 @@ button.w-full.text-left {
 .lightDarkFormTextInverted {
     color: #000;
 }
+
+.staticPageLink {
+    color: var(--chart-1);
+}
