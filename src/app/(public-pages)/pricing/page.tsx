@@ -1,7 +1,7 @@
 import {PricingCards} from "@/components/misc/PricingCards/PricingCards";
 import {FreeOption} from "@/app/(public-pages)/pricing/sections/Free";
 import {EnterpriseOption} from "@/app/(public-pages)/pricing/sections/Enterprise";
-import {BasicOption} from "@/app/(public-pages)/pricing/sections/Basic";
+import {ProOption} from "@/app/(public-pages)/pricing/sections/Pro";
 
 const PageLabel = "Our Pricing Plans";
 
@@ -12,7 +12,7 @@ const PricingPage = () => {
                 {PageLabel}
             </h1>
             <FreeOption />
-            <BasicOption />
+            <ProOption />
             <EnterpriseOption />
             <PricingCards />
         </section>
