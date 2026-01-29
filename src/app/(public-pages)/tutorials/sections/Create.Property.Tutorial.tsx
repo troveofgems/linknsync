@@ -14,7 +14,7 @@ const pageContents: StaticPageContent = [{
 
 const CreatePropertyTutorial = () => {
     return (
-        <section key={"tutorials-page-create-property"} className={"mb-15"}>
+        <section key={"tutorials-page-create-property"} className={"lg:w-2/3 lg:m-auto"}>
             <div className={StaticPageAlignment}>
                 {
                     pageContents.map((pageContent: PageContent) => printSection(pageContent))

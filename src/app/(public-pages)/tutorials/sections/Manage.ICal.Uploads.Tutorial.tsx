@@ -1,21 +1,20 @@
 import {VideoShell} from "@/app/(public-pages)/tutorials/video-shell/VideoShell";
 import {
-    PageContent,
-    printSection,
+    PageContent, printSection,
     StaticPageAlignment,
     StaticPageContent
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
 const pageContents: StaticPageContent = [{
-    key: "tutorials-login",
-    label: "Login",
-    verbiage: "Learn how to log into your account with this video!",
-    inShort: "Shows how to login to your account the application using Clerk."
+    key: "tutorials-manage-icals",
+    label: "Manage ICals",
+    verbiage: "Learn how to manage your icals with this video!",
+    inShort: "Shows how to manage icals within the application."
 }];
 
-const LoginTutorial = () => {
+const ManageICalsTutorial = () => {
     return (
-        <section key={"tutorials-page"} className={"lg:w-2/3 lg:m-auto"}>
+        <section key={"tutorials-page-create-property"} className={"lg:w-2/3 lg:m-auto"}>
             <div className={StaticPageAlignment}>
                 {
                     pageContents.map((pageContent: PageContent) => printSection(pageContent))
@@ -26,4 +25,4 @@ const LoginTutorial = () => {
     );
 }
 
-export default LoginTutorial;
+export default ManageICalsTutorial;

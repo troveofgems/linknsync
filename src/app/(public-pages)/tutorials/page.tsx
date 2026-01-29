@@ -5,6 +5,9 @@ import CreatePropertyTutorial from "@/app/(public-pages)/tutorials/sections/Crea
 import CreateOrganizationTutorial from "@/app/(public-pages)/tutorials/sections/Create.Organization.Tutorial";
 import ManageOrganizationalUsersTutorial
     from "@/app/(public-pages)/tutorials/sections/Manage.Organization.Users.Tutorial";
+import DeletePropertyTutorial from "@/app/(public-pages)/tutorials/sections/Delete.Property.Tutorial";
+import UpdatePropertyTutorial from "@/app/(public-pages)/tutorials/sections/Update.Property.Tutorial";
+import ManageICalsTutorial from "@/app/(public-pages)/tutorials/sections/Manage.ICal.Uploads.Tutorial";
 
 const
     lastUpdate = new Date("1/28/2026")
@@ -26,11 +29,23 @@ const TutorialsPage = () => {
             <h2 className={StaticPageAlignment}>
                 <span className={"font-bold"}>Last Revised</span> {lastUpdate}
             </h2>
-            <div className={"flex flex-col lg:flex-row lg:flex-wrap"}>
-                <LoginTutorial />
-                <CreateOrganizationTutorial />
-                <ManageOrganizationalUsersTutorial />
-                <CreatePropertyTutorial />
+            <div>
+                <div className={"flex flex-col lg:flex-row lg:m-auto lg:w-2/3"}>
+                    <LoginTutorial />
+                    <CreateOrganizationTutorial />
+                </div>
+                <div className={"flex flex-col lg:flex-row lg:m-auto lg:w-2/3"}>
+                    <ManageOrganizationalUsersTutorial />
+                    <CreatePropertyTutorial />
+                </div>
+                <div className={"flex flex-col lg:flex-row lg:m-auto lg:w-2/3"}>
+                    <UpdatePropertyTutorial />
+                    <DeletePropertyTutorial />
+                </div>
+                <div className={"flex flex-col lg:flex-row lg:m-auto lg:w-2/3"}>
+                    <ManageICalsTutorial />
+                    <></>
+                </div>
             </div>
 
             <QuestionsOrConcerns/>
