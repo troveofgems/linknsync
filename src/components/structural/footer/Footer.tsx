@@ -4,6 +4,7 @@ import "./Footer.scss";
 import {DialogShell} from "@/components/dialogs/DialogShell";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge"
 
 import {APP_PATHS} from "@/constants/nav.path.constants";
 
@@ -55,7 +56,7 @@ export const Footer = () => {
                         <p className="copyright">
                             &reg; <small>2025 - {currentYear}</small>
                         </p>
-                        <small>BETA 0.1.0</small>
+                        <Badge variant="destructive">BETA 0.1.0</Badge>
                     </div>
                     <hr className={"footerHR"} />
                     <div className={"xl:flex"}>
