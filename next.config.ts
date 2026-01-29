@@ -1,3 +1,4 @@
+import { withNextVideo } from "next-video/process";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -26,6 +27,12 @@ const nextConfig: NextConfig = {
             },
             {
                 protocol: "https",
+                hostname: "pixabay.com",
+                port: "",
+                pathname: "/**"
+            },
+            {
+                protocol: "https",
                 hostname: "reservations.emeraldislerealty.com",
                 port: "",
                 pathname: "/**"
@@ -40,4 +47,4 @@ const nextConfig: NextConfig = {
     }
 };
 
-export default nextConfig;
+export default withNextVideo(nextConfig);

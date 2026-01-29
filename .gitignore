@@ -44,3 +44,24 @@ next-env.d.ts
 archive
 .idea
 /src/generated/prisma
+
+# next-video
+src/public/videos/*
+!videos/*.json
+!videos/*.js
+!videos/*.ts
+public/_next-video
+
+# next-video
+src/public/videos/*
+!src/public/videos/*.json
+!src/public/videos/*.js
+!src/public/videos/*.ts
+public/_next-video
+
+# next-video
+src/public/videos/*
+!src/public/videos/*.json
+!src/public/videos/*.js
+!src/public/videos/*.ts
+public/_next-video
