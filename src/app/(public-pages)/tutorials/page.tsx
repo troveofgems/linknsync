@@ -1,5 +1,10 @@
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
 import {StaticPageAlignment} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+import LoginTutorial from "@/app/(public-pages)/tutorials/sections/Login.Tutorial";
+import CreatePropertyTutorial from "@/app/(public-pages)/tutorials/sections/Create.Property.Tutorial";
+import CreateOrganizationTutorial from "@/app/(public-pages)/tutorials/sections/Create.Organization.Tutorial";
+import ManageOrganizationalUsersTutorial
+    from "@/app/(public-pages)/tutorials/sections/Manage.Organization.Users.Tutorial";
 
 const
     lastUpdate = new Date("1/28/2026")
@@ -21,7 +26,14 @@ const TutorialsPage = () => {
             <h2 className={StaticPageAlignment}>
                 <span className={"font-bold"}>Last Revised</span> {lastUpdate}
             </h2>
-            <QuestionsOrConcerns />
+            <div className={"flex flex-col lg:flex-row lg:flex-wrap"}>
+                <LoginTutorial />
+                <CreateOrganizationTutorial />
+                <ManageOrganizationalUsersTutorial />
+                <CreatePropertyTutorial />
+            </div>
+
+            <QuestionsOrConcerns/>
         </section>
     );
 }
