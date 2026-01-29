@@ -30,6 +30,7 @@ export const Footer = () => {
         goToDataPolicy,
         goToTermsAndConditions,
         goToTechStack,
+        goToTutorials,
     } = APP_PATHS.generalPages;
 
     return (
@@ -63,6 +64,9 @@ export const Footer = () => {
                             <ul className="flex flex-col items-center-safe links">
                                 <Link href={goToCustomer.path} className={"footerLink py-2"}>
                                     {goToCustomer.label}
+                                </Link>
+                                <Link href={goToTutorials.path} className={"footerLink py-2"}>
+                                    {goToTutorials.label}
                                 </Link>
                             </ul>
                         </div>

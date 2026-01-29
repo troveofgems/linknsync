@@ -1,4 +1,9 @@
-import {PageContent, printSection, StaticPageContent} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+import {
+    PageContent,
+    printSection,
+    StaticPageAlignment,
+    StaticPageContent
+} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
 const pageContents: StaticPageContent = [{
     key: "privacy-policy-usa-users",
@@ -39,22 +44,43 @@ const pageContents: StaticPageContent = [{
         },
         {
             paragraph: "How to Exercise Your Rights",
-            desc: "To exercise your rights: ",
+            desc: "To exercise these rights, you can contact us by submitting a data subject access request, by emailing us, " +
+                "or by referring to the contact details at the bottom of this document. Under certain US state data protection " +
+                "laws, you can designate an authorized agent to make a request on your behalf. We may deny a request from " +
+                "an authorized agent that does not submit proof that they have been validly authorized to act on your behalf " +
+                "in accordance with applicable laws.",
             list: []
         },
         {
             paragraph: "Request Verification",
-            desc: "To request verification: ",
-            list: []
+            desc: "Upon receiving your request, we will need to verify your identity to determine you are the same " +
+                "person about whom we have the information in our system. We will only use personal information provided " +
+                "in your request to verify your identity or authority to make the request. However, if we cannot verify " +
+                "your identity from the information already maintained by us, we may request that you provide additional " +
+                "information for the purposes of verifying your identity and for security or fraud-prevention purposes.",
+            list: [
+                "If you submit the request through an Authorized Agent, we may need to collect additional information " +
+                "to verify your identity before processing your request and the agent will need to provide a written " +
+                "and signed permission from you to submit such a request on your behalf."
+            ]
         },
         {
             paragraph: "Appeals",
-            desc: "To appeal: ",
+            desc: "Under certain US State data protection laws, if we decline to take action regarding your request " +
+                "you may appeal our decision by emailing us. We will inform you in writing of any action taken or not " +
+                "taken in response to the appeal, including a written explanation of the reasons for the decisions. " +
+                "If your appeal is denied, you may submit a complaint to your state attorney general.",
             list: []
         },
         {
             paragraph: "California's 'Shine the Light' Law",
-            desc: "California's 'Shine the Light' Law: ",
+            desc: "California Civil Code Section 1798.83, also known as the 'Shine the Light' Law, permits our users " +
+                "who are California residents to request and obtain from us, once a year and free of charge, information " +
+                "about certain categories of personal information (if any) we disclosed to third parties for direct " +
+                "marketing purposes and the names and addresses of all third parties with which we shared personal " +
+                "information in the immediately preceding calendar year. If you are a California resident and would " +
+                "like to make such a request, please submit your request to us by using the contact details provided in " +
+                "the section 'How Can You Contact Us About This Policy?'",
             list: []
         },
     ],
@@ -68,7 +94,7 @@ const pageContents: StaticPageContent = [{
 }];
 
 export const USAUsers = () => (
-    <div className={"flex flex-col w-1/2 m-auto"}>
+    <div className={StaticPageAlignment}>
         {
             pageContents.map((pageContent: PageContent) => printSection(pageContent))
         }

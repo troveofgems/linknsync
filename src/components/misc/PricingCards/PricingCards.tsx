@@ -2,61 +2,46 @@ import "./PricingCards.css";
 export const PricingCards = () => {
     return (
         <>
-            <div className="frame">
+            <div className="frame lg:mt-0 lg:mb-0 lg:m-0">
                 <div className="plan basic">
                     <div className="title">Free</div>
-                    <div className="price">$0<span>per month</span></div>
-                    <div className="lines">
-                        <div className="line pricingCardLine1"></div>
-                        <div className="line pricingCardLine2"></div>
-                        <div className="line pricingCardLine3"></div>
-                        <div className="line pricingCardLine4"></div>
-                    </div>
+                    <div className="price text-muted-foreground">$0<span>per month</span></div>
                 </div>
                 <div className="plan pro">
                     <div className="title">Pro</div>
                     <div className="price">$25<span>per month</span></div>
-                    <div className="lines">
-                        <div className="line pricingCardLine1"></div>
-                        <div className="line pricingCardLine2"></div>
-                        <div className="line pricingCardLine3"></div>
-                        <div className="line pricingCardLine4"></div>
-                    </div>
                 </div>
 
                 <div className="plan premium">
-                    <div className="title">Enterprise</div>
+                    <div className="title text-black">Enterprise</div>
                     <div className="price enterprisePrice">Contact Us</div>
-                    <div className="lines">
-                        <div className="line pricingCardLine1"></div>
-                        <div className="line pricingCardLine2"></div>
-                        <div className="line pricingCardLine3"></div>
-                        <div className="line pricingCardLine4"></div>
-                    </div>
                 </div>
                 <div className="datas">
                     <div className="data users">
-                        <div className="text">
-                            <span className="left">4 Users</span>
-                            <span className="right">Enterprise Team</span>
+                        <div className="text flex flex-row justify-between">
+                            <span className="left text-amber-700">3 Users</span>
+                            <span className="text-amber-700 pl-4">5 Users</span>
+                            <span className="right text-amber-700">Enterprise Team</span>
                         </div>
                         <div className="line">
                             <div className="fill"></div>
                         </div>
                     </div>
                     <div className="data gb">
-                        <div className="text">
-                            <span className="left">5 Properties</span>
-                            <span className="right">Unlimited Properties</span>
+                        <div className="text flex flex-row justify-between">
+                            <span className="left text-amber-700">3 Properties</span>
+                            <span className="text-amber-700 pl-4">50 Properties</span>
+                            <span className="right text-amber-700">Unlimited Properties</span>
                         </div>
                         <div className="line">
                             <div className="fill"></div>
                         </div>
                     </div>
                     <div className="data projects">
-                        <div className="text">
-                            <span className="left">Daily Sync @ Midnight</span>
-                            <span className="right">Hourly Sync</span>
+                        <div className="text flex flex-row justify-between">
+                            <span className="left text-amber-700">Daily Sync</span>
+                            <span className="text-amber-700">Hourly Sync</span>
+                            <span className="right text-amber-700">Hourly Sync</span>
                         </div>
                         <div className="line">
                             <div className="fill"></div>

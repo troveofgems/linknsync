@@ -13,4 +13,9 @@
         flex-direction: row;
         justify-content: space-between;
     }
+
+    .frame {
+        top: 0!important;
+        right: 8%!important;
+    }
 }

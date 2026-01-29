@@ -1,4 +1,9 @@
-import {StaticPageContent, PageContent, printSection} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+import {
+    StaticPageContent,
+    PageContent,
+    printSection,
+    StaticPageAlignment
+} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 import {Card, CardContent} from "@/components/ui/card";
 import {PictureWrapper} from "@/components/structural/picture/Picture.Wrapper";
 import BrettAndDustin from "@/public/images/brettanddustin.jpg";
@@ -21,7 +26,7 @@ const AboutPage = () => {
             <h1 className={"flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center text-4xl font-bold leading-none tracking-wide sm:text-6xl"}>
                 {PageLabel}
             </h1>
-            <div className={"flex flex-col w-1/2 m-auto"}>
+            <div className={StaticPageAlignment}>
                 {
                     pageContents.map((pageContent: PageContent) => printSection(pageContent))
                 }

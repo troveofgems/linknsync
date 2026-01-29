@@ -12,6 +12,8 @@ export type PageContent = {
 }
 export type StaticPageContent = PageContent[];
 
+export const StaticPageAlignment = "flex flex-col lg:w-1/2 lg:m-auto";
+
 export const printSection = ({ key, label, verbiage, listData, inShort, paragraphs, showContact, paragraphList }: PageContent) => (
     <div key={key}>
         <h2

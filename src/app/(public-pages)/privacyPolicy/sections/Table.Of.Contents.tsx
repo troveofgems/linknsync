@@ -1,5 +1,10 @@
 import Link from "next/link";
-import {PageContent, printSection, StaticPageContent} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+import {
+    PageContent,
+    printSection,
+    StaticPageAlignment,
+    StaticPageContent
+} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
 const pageContents: StaticPageContent = [{
     key: "privacy-policy-table-of-contents",
@@ -8,7 +13,7 @@ const pageContents: StaticPageContent = [{
 }];
 
 export const TableOfContents = () => (
-    <div className={"flex flex-col w-1/2 m-auto"}>
+    <div className={StaticPageAlignment}>
         <div>
             {
                 pageContents.map((pageContent: PageContent) => printSection(pageContent))

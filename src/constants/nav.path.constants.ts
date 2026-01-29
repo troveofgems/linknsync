@@ -31,6 +31,7 @@ const // Hardcoded Constants
     // General Segments
     about = "about",
     ourCustomers = "ourCustomers",
+    tutorials = "tutorials",
     contact = "contact",
     roadmap = "roadmap",
     pricing = "pricing",
@@ -63,6 +64,7 @@ const // Hardcoded Labels
     label_Homepage = "Home",
     label_About = "About Us",
     label_OurCustomers = "STVR Property Managers",
+    label_Tutorials = "Tutorials",
     label_Contact = "Contact Us",
     label_Roadmap = "Our Future Roadmap",
     label_Pricing = "Pricing",
@@ -101,6 +103,7 @@ export const APP_PATHS = (() => {
     const // Un-Authenticated General Pages
         aboutPage = `${BASE_URL}${about}`,
         customerPage = `${BASE_URL}${ourCustomers}`,
+        tutorialsPage = `${BASE_URL}${tutorials}`,
         contactPage = `${BASE_URL}${contact}`,
         roadmapPage = `${BASE_URL}${roadmap}`,
         pricingPage = `${BASE_URL}${pricing}`;
@@ -236,6 +239,10 @@ export const APP_PATHS = (() => {
             goToCustomer: {
                 path: customerPage,
                 label: label_OurCustomers
+            },
+            goToTutorials: {
+                path: tutorialsPage,
+                label: label_Tutorials
             },
             goToContact: {
                 path: contactPage,

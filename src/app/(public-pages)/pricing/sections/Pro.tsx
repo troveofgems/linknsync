@@ -1,8 +1,13 @@
-import {PageContent, printSection, StaticPageContent} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+import {
+    PageContent,
+    printSection,
+    StaticPageAlignment,
+    StaticPageContent
+} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
 const pageContents: StaticPageContent = [{
     key: "pricing-pro",
-    label: "Pro Tier",
+    label: "Pro Tier - 25$",
     verbiage: "The Pro Tier Offers the Following Benefits: ",
     listData: [
         "50 Properties Max",
@@ -12,7 +17,7 @@ const pageContents: StaticPageContent = [{
 }];
 
 export const ProOption = () => (
-    <div className={"flex flex-col w-1/2 m-auto"}>
+    <div className={StaticPageAlignment}>
         {
             pageContents.map((pageContent: PageContent) => printSection(pageContent))
         }

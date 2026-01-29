@@ -13,6 +13,7 @@ const
         '/pricing',
         // Customers
         '/ourCustomers',
+        '/tutorials',
         // Further Information
         '/toc',
         '/privacyPolicy',
