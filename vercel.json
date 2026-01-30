@@ -3,10 +3,6 @@
     {
       "path": "/app/cron/route",
       "schedule": "0 5 * * *"
-    },
-    {
-      "path": "/api/hello",
-      "schedule": "0 5 * * *"
     }
   ]
 }
