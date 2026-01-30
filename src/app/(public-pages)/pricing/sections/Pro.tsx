@@ -7,7 +7,7 @@ import {
 
 const pageContents: StaticPageContent = [{
     key: "pricing-pro",
-    label: "Pro Tier - 25$",
+    label: "Pro Tier - $50/Month",
     verbiage: "The Pro Tier Offers the Following Benefits: ",
     listData: [
         "50 Properties Max",

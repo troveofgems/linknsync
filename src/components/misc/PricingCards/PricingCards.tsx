@@ -9,7 +9,7 @@ export const PricingCards = () => {
                 </div>
                 <div className="plan pro">
                     <div className="title">Pro</div>
-                    <div className="price">$25<span>per month</span></div>
+                    <div className="price">$50<span>per month</span></div>
                 </div>
 
                 <div className="plan premium">

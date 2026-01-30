@@ -7,7 +7,7 @@ import {
 
 const pageContents: StaticPageContent = [{
     key: "pricing-enterprise",
-    label: "Enterprise Tier *$",
+    label: "Enterprise Tier $*/Month",
     verbiage: "The Enterprise Tier Offers the Following Benefits: ",
     listData: [
         "Unlimited Properties",
