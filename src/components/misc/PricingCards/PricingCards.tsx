@@ -31,7 +31,7 @@ export const PricingCards = () => {
                         <div className="text flex flex-row justify-between">
                             <span className="left text-amber-700">3 Properties</span>
                             <span className="text-amber-700 pl-4">50 Properties</span>
-                            <span className="right text-amber-700">Unlimited Properties</span>
+                            <span className="right text-amber-700">Per Property</span>
                         </div>
                         <div className="line">
                             <div className="fill"></div>
@@ -40,7 +40,7 @@ export const PricingCards = () => {
                     <div className="data projects">
                         <div className="text flex flex-row justify-between">
                             <span className="left text-amber-700">Daily Sync</span>
-                            <span className="text-amber-700">Hourly Sync</span>
+                            <span className="text-amber-700"></span>
                             <span className="right text-amber-700">Hourly Sync</span>
                         </div>
                         <div className="line">

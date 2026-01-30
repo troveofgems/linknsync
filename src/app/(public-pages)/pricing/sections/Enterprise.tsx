@@ -10,8 +10,8 @@ const pageContents: StaticPageContent = [{
     label: "Enterprise Tier $*/Month",
     verbiage: "The Enterprise Tier Offers the Following Benefits: ",
     listData: [
-        "Unlimited Properties",
-        "Unlimited Linked ICals",
+        "Priced Per Property",
+        "Priced Per Linked ICal Per Property",
         "Hourly Synchronization of ICal Files",
         "Please Contact Us If You're Looking For an Enterprise Solution.",
     ]
