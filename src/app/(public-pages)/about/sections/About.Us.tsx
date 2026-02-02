@@ -4,16 +4,10 @@ import {
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
 const
-    HEADER = "Additional Listing Agents",
-    INTRODUCTION_VERBIAGE = "What Can You Do?",
-    LIST =  [
-        "View Your Organization",
-        "View Your Organization Members",
-        "View Your Organization's Properties",
-        "Link and Sync Your Ical to a Property",
-        "Send a Booking Request for a Block of Dates",
-        "Export a Consolidated ICal File For All or Some ICal Files Attached to a Property"
-    ];
+    HEADER = "Who Are We?",
+    INTRODUCTION_VERBIAGE = "Link-N-Sync is the product of Brett Wright and Dustin Greco. We are a couple living in Arizona. " +
+        "Brett has a passion for the Vacation Rental Industry and Dustin is an avid programmer. We have our four " +
+        "pets: Bailey, Mister, Vandal, and Louie; they're a handful and keep us busy!";
 
 const pageContents = (
     pageKey: PageKey,
@@ -23,11 +17,11 @@ const pageContents = (
     sectionLabel,
     label: HEADER,
     verbiage: INTRODUCTION_VERBIAGE,
-    list: LIST
+    showCreators: true
 }]);
 
 // DO NOT CHANGE TEMPLATE CODE BELOW
-export const AdditionalListingAgent = (
+export const AboutUs = (
     { pageKey, sectionLabel }:
     { pageKey: PageKey, sectionLabel: SectionLabel }) => (
     printSectionWrapper(pageContents(pageKey, sectionLabel))

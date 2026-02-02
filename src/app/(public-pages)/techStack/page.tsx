@@ -4,31 +4,31 @@ import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/Quest
 import {StaticPageAlignment} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
 const
-    lastUpdate = new Date("1/28/2026")
-        .toLocaleDateString(
-            "en-US",
-            {
-                month: "long",
-                day: "numeric",
-                year: "numeric"
-            }),
-    PageLabel = "Technology Stack";
+    PAGE_LABEL = "Technology Stack",
+    LAST_UPDATE = "1/28/2026";
 
-const TechStackPage = () => {
+const
+    lastUpdate = new Date(LAST_UPDATE)
+        .toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        }),
+    pageLabel = PAGE_LABEL,
+    pageKey = pageLabel.replaceAll(" ", "-").toLowerCase();
 
-    return (
-        <section key={"tech-stack-page"} className={"mb-15"}>
-            <h1 className={"flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center text-4xl font-bold leading-none tracking-wide sm:text-6xl"}>
-                {PageLabel}
-            </h1>
-            <h2 className={StaticPageAlignment}>
-                <span className={"font-bold"}>Last Revised</span> {lastUpdate}
-            </h2>
-            <FrontEnd />
-            <BackEnd />
-            <QuestionsOrConcerns />
-        </section>
-    );
-}
+const TechStackPage = () => (
+    <section key={pageKey} className={"mb-15"}>
+        <h1 className={"flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center text-4xl font-bold leading-none tracking-wide sm:text-6xl"}>
+            {pageLabel}
+        </h1>
+        <h2 className={StaticPageAlignment}>
+            <span className={"font-bold"}>Last Revised</span> {lastUpdate}
+        </h2>
+        <FrontEnd pageKey={pageKey} sectionLabel={"Front End"} />
+        <BackEnd pageKey={pageKey} sectionLabel={"Back End"} />
+        <QuestionsOrConcerns pageKey={pageKey} sectionLabel={"Questions or Concerns"} />
+    </section>
+);
 
 export default TechStackPage;

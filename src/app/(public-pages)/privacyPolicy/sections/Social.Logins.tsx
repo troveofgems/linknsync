@@ -1,14 +1,13 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "privacy-policy-social-logins",
-    label: "5. How Do We Handle Your Social Logins?",
-    paragraphs: [
+const
+    HEADER = "5. How Do We Handle Your Social Logins?",
+    IN_SHORT = "If you choose to register or log in to our Services using a Social Media Account, we may have access to " +
+        "certain information about you.",
+    MAIN_LIST = [
         "Our Services offer you the ability to register and log in using a third party tool called Clerk. Where you choose " +
         "to do this, we will receive certain profile information about you from your social media provider. This profile " +
         "information we receive may vary depending on the social media provider concerned, but will often include your " +
@@ -19,15 +18,23 @@ const pageContents: StaticPageContent = [{
         "responsible for, other uses of your personal information by your third-party social media provider. We reccommend " +
         "that you review their privacy policies or notices to understand how they collect, use and share your personal " +
         "information, and how you can set your privacy preferences on their sites and apps."
-    ],
-    inShort: "If you choose to register or log in to our Services using a Social Media Account, we may have access to " +
-        "certain information about you."
-}];
+    ];
 
-export const SocialLogins = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    inShort: IN_SHORT,
+    paragraphs: MAIN_LIST
+}]);
+
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const SocialLogins = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

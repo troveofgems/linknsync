@@ -18,43 +18,46 @@ import {ContactUs} from "@/app/(public-pages)/privacyPolicy/sections/Contact.Us"
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
 
 const
-    lastUpdate = new Date("1/28/2026")
-        .toLocaleDateString(
-            "en-US",
-            {
-                month: "long",
-                day: "numeric",
-                year: "numeric"
-            }),
-    PageLabel = "Privacy Policy";
+    PAGE_LABEL = "Privacy Policy",
+    LAST_UPDATE = "1/28/2026";
+
+const
+    lastUpdate = new Date(LAST_UPDATE)
+        .toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        }),
+    pageLabel = PAGE_LABEL,
+    pageKey = pageLabel.replaceAll(" ", "-").toLowerCase();
 
 const PrivacyPolicyPage = () => {
     return (
-        <section key={"data-policy-page"} className={"mb-15"}>
+        <section key={pageKey} className={"mb-15"}>
             <h1 className={"flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center text-4xl font-bold leading-none tracking-wide sm:text-6xl"}>
-                {PageLabel}
+                {pageLabel}
             </h1>
             <h2 className={"lg:w-1/2 m-auto mt-5 flex flex-col"}>
                 <span className={"font-bold"}>Last Revised</span> {lastUpdate}
             </h2>
-            <Introduction />
-            <SummaryOfKeyPointsSection />
-            <TableOfContents />
-            <CollectedInformation />
-            <ProcessedInformation />
-            <SharedInformation />
-            <CookiesAndTracking />
-            <SocialLogins />
-            <RetainedInformation />
-            <SafetyInformation />
-            <SafetyMinors />
-            <UserRights />
-            <DNTControls />
-            <USAUsers />
-            <PolicyUpdates />
-            <ContactUs />
-            <ManageYourData />
-            <QuestionsOrConcerns />
+            <Introduction pageKey={pageKey} sectionLabel={"Introduction"} />
+            <SummaryOfKeyPointsSection pageKey={pageKey} sectionLabel={"Introduction"} />
+            <TableOfContents pageKey={pageKey} sectionLabel={"Table of Contents"} />
+            <CollectedInformation pageKey={pageKey} sectionLabel={"Collected Information"} />
+            <ProcessedInformation pageKey={pageKey} sectionLabel={"Processed Information"} />
+            <SharedInformation pageKey={pageKey} sectionLabel={"Shared Information"} />
+            <CookiesAndTracking pageKey={pageKey} sectionLabel={"Cookies and Tracking"}/>
+            <SocialLogins pageKey={pageKey} sectionLabel={"Social Logins"} />
+            <RetainedInformation pageKey={pageKey} sectionLabel={"Retained Information"} />
+            <SafetyInformation pageKey={pageKey} sectionLabel={"Safety Information"}/>
+            <SafetyMinors pageKey={pageKey} sectionLabel={"Safety Minors"}/>
+            <UserRights pageKey={pageKey} sectionLabel={"User Rights"}/>
+            <DNTControls pageKey={pageKey} sectionLabel={"DNT Controls"}/>
+            <USAUsers pageKey={pageKey} sectionLabel={"USA Users"}/>
+            <PolicyUpdates pageKey={pageKey} sectionLabel={"Policy Updates"}/>
+            <ContactUs pageKey={pageKey} sectionLabel={"Contact Us"}/>
+            <ManageYourData pageKey={pageKey} sectionLabel={"Manage Your Data"}/>
+            <QuestionsOrConcerns pageKey={pageKey} sectionLabel={"Questions or Concerns"} />
         </section>
     );
 };

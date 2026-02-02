@@ -3,17 +3,13 @@ import {
     printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
+import lnsPoster from '@/public/videos/lns-poster.mp4.json';
+import type {Asset} from "../../../../../node_modules/next-video/dist/assets.d.ts";
+
 const
-    HEADER = "Additional Listing Agents",
-    INTRODUCTION_VERBIAGE = "What Can You Do?",
-    LIST =  [
-        "View Your Organization",
-        "View Your Organization Members",
-        "View Your Organization's Properties",
-        "Link and Sync Your Ical to a Property",
-        "Send a Booking Request for a Block of Dates",
-        "Export a Consolidated ICal File For All or Some ICal Files Attached to a Property"
-    ];
+    HEADER = "Organization",
+    IN_SHORT = "Tour your organization within the application.",
+    INTRODUCTION_VERBIAGE =  "Learn how to create and manage your organization with this video!";
 
 const pageContents = (
     pageKey: PageKey,
@@ -23,12 +19,15 @@ const pageContents = (
     sectionLabel,
     label: HEADER,
     verbiage: INTRODUCTION_VERBIAGE,
-    list: LIST
+    inShort: IN_SHORT,
+    video: lnsPoster as unknown as Asset,
 }]);
 
 // DO NOT CHANGE TEMPLATE CODE BELOW
-export const AdditionalListingAgent = (
+export const OrganizationTutorial = (
     { pageKey, sectionLabel }:
     { pageKey: PageKey, sectionLabel: SectionLabel }) => (
     printSectionWrapper(pageContents(pageKey, sectionLabel))
 );
+
+export default OrganizationTutorial;

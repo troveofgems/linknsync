@@ -1,28 +1,35 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "privacy-policy-safety-information",
-    label: "7. How Do We Keep Your Information Safe?",
-    verbiage: "We have implemented appropriate and reasonable technical and organizational security measures designed to " +
+
+const
+    HEADER = "7. How Do We Keep Your Information Safe?",
+    IN_SHORT = "We aim to protect your personal information through a system of organizational and technical security " +
+        "measures (e.g. Data encrypted at rest in the DB).",
+    INTRODUCTION_VERBIAGE =  "We have implemented appropriate and reasonable technical and organizational security measures designed to " +
         "protect the security of any personal information we process. However, despite our safeguards and efforts to secure " +
         "your information, no electronic transmission over the internet or information storage technology can be " +
         "guaranteed to be 100% secure, so we cannot promise to guarantee that hackers, cybercriminals, or other unauthorized " +
         "third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information. " +
         "Although we will do our best to protect your personal information, transmission of personal information to " +
-        "and from our services is at your own risk. you should only access the Services within a secure environment.",
-    inShort: "We aim to protect your personal information through a system of organizational and technical security " +
-        "measures (e.g. Data encrypted at rest in the DB)."
-}];
+        "and from our services is at your own risk. you should only access the Services within a secure environment.";
 
-export const SafetyInformation = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    inShort: IN_SHORT
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const SafetyInformation = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

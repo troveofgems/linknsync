@@ -1,25 +1,31 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "pricing-pro",
-    label: "Pro Tier - $50/Month",
-    verbiage: "The Pro Tier Offers the Following Benefits: ",
-    listData: [
+const
+    HEADER = "Pro Tier - $50 / Month",
+    INTRODUCTION_VERBIAGE = "The Pro Tier Offers the Following Benefits: ",
+    LIST = [
         "50 Properties Max",
         "5 ICal Files Per Property",
         "Hourly Synchronization of ICal Files",
-    ]
-}];
+    ];
 
-export const ProOption = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    list: LIST
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const ProOption = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

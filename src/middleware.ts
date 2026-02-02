@@ -21,6 +21,7 @@ const
         '/techStack'
     ]),
     isAuthenticatedRoute = createRouteMatcher(['/dashboard(.*)']),
+    isAPICronRoute = createRouteMatcher(['/api(.*)']),
     isAdminRoute = createRouteMatcher(['/admin(.*)']);
 
 export default clerkMiddleware(async (auth, req) => {
@@ -30,6 +31,12 @@ export default clerkMiddleware(async (auth, req) => {
     // Send Non-Authenticated Requests to Admin Resources Back to Home
     if(isAdminRoute(req) && !isAdminUser) {
         return NextResponse.redirect(new URL(goToHomepage.path, req.url));
+    }
+
+    // Pass APIs
+    if(isAPICronRoute(req)) {
+        console.log("Route to API Folder: ", req.url)
+        return NextResponse.redirect(new URL("/api/hello", req.url));
     }
 
     // Lockdown all non-public routes

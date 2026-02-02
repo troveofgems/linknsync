@@ -1,14 +1,13 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [ {
-    key: "privacy-policy-retained-information",
-    label: "6. How Long Do We Keep Your Information?",
-    paragraphs: [
+const
+    HEADER = "6. How Long Do We Keep Your Information?",
+    IN_SHORT = "We keep your information for as long as necessary to fulfill the purposes outlined in this Privacy " +
+        "Policy unless otherwise required by law.",
+    MAIN_LIST = [
         "We will only keep your personal information for as long as it is necessary for the purposes set out in this" +
         "Privacy Policy, unless a longer retention period is required or necessitated by law (such as tax, accounting) " +
         "or other legal requirements). No purpose in this policy will require us keeping your personal information for " +
@@ -17,15 +16,22 @@ const pageContents: StaticPageContent = [ {
         "or anonymize such information, or if this is not possible (for example, because your personal information " +
         "has been stored in backup archives), then we will securely store your personal information and isolate it " +
         "from any further processing until deletion is possible."
-    ],
-    inShort: "We keep your information for as long as necessary to fulfill the purposes outlined in this Privacy " +
-        "Policy unless otherwise required by law."
-}];
+    ];
 
-export const RetainedInformation = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    inShort: IN_SHORT,
+    paragraphs: MAIN_LIST
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const RetainedInformation = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

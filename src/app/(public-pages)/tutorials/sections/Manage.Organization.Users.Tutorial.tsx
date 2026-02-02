@@ -1,28 +1,33 @@
-import {VideoShell} from "@/app/(public-pages)/tutorials/video-shell/VideoShell";
 import {
-    PageContent, printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "tutorials-create-property",
-    label: "Manage Org Users",
-    verbiage: "Learn how to manage your users with this video!",
-    inShort: "Shows how to manage users within the application."
-}];
+import lnsPoster from '@/public/videos/lns-poster.mp4.json';
+import type {Asset} from "../../../../../node_modules/next-video/dist/assets.d.ts";
 
-const ManageOrganizationalUsersTutorial = () => {
-    return (
-        <section key={"tutorials-page-create-property"} className={"lg:w-2/3 lg:m-auto"}>
-            <div className={StaticPageAlignment}>
-                {
-                    pageContents.map((pageContent: PageContent) => printSection(pageContent))
-                }
-                <VideoShell />
-            </div>
-        </section>
-    );
-}
+const
+    HEADER = "User Types",
+    IN_SHORT = "Learn about PLA|ALA|RLA Roles for your organization within the application.",
+    INTRODUCTION_VERBIAGE =  "Learn about Org User Types for your organization within the application.";
+
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    inShort: IN_SHORT,
+    video: lnsPoster as unknown as Asset,
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const ManageOrganizationalUsersTutorial = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
+);
 
 export default ManageOrganizationalUsersTutorial;

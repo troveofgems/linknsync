@@ -1,95 +1,40 @@
-import Link from "next/link";
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "privacy-policy-table-of-contents",
-    label: "Table of Contents",
-    verbiage: ""
-}];
+const
+    HEADER = "Table of Contents",
+    TOC = [
+        "1. What Information Do We Collect?",
+        "2. How Do We Process Your Information?",
+        "3. When and With Whom Do We Share Your Personal Information?",
+        "4. Do We Use Cookies and Other Tracking Technologies?",
+        "5. How Do We Handle Social Logins?",
+        "6. How Long Do We Keep Your Information?",
+        "7. How Do We Keep Your Information Safe?",
+        "8. Do We Collect Information From Minors?",
+        "9. What Are Your Privacy Rights?",
+        "10. Controls For Do-Not-Track Features",
+        "11. Do United States Residents Have Specific Privacy Rights?",
+        "12. Do We Make Updates To This Policy?",
+        "13. How Can You Contact Us About This Policy",
+        "14. How Can You Review, Update, or Delete the Data We Collect From You?",
+    ];
 
-export const TableOfContents = () => (
-    <div className={StaticPageAlignment}>
-        <div>
-            {
-                pageContents.map((pageContent: PageContent) => printSection(pageContent))
-            }
-            <ol type={"1"}>
-                <li className={"link"}>
-                    <Link href={""}>
-                        1. What Information Do We Collect?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        2. How Do We Process Your Information?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        3. When and With Whom Do We Share Your Personal Information?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        4. Do We Use Cookies and Other Tracking Technologies?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        5. How Do We Handle Social Logins?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        6. How Long Do We Keep Your Information?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        7. How Do We Keep Your Information Safe?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        8. Do We Collect Information From Minors?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        9. What Are Your Privacy Rights?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        10. Controls For Do-Not-Track Features
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        11. Do United States Residents Have Specific Privacy Rights?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        12. Do We Make Updates To This Policy?
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        13. How Can You Contact Us About This Policy
-                    </Link>
-                </li>
-                <li>
-                    <Link href={""}>
-                        14. How Can You Review, Update, or Delete the Data We Collect From You?
-                    </Link>
-                </li>
-            </ol>
-        </div>
-    </div>
-)
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    TOC,
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const TableOfContents = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
+);

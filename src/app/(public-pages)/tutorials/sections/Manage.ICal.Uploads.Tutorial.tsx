@@ -1,28 +1,33 @@
-import {VideoShell} from "@/app/(public-pages)/tutorials/video-shell/VideoShell";
 import {
-    PageContent, printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "tutorials-manage-icals",
-    label: "Manage ICals",
-    verbiage: "Learn how to manage your icals with this video!",
-    inShort: "Shows how to manage icals within the application."
-}];
+const
+    HEADER = "Manage ICals",
+    IN_SHORT = "Learn how to manage your icals with this video!",
+    INTRODUCTION_VERBIAGE =  "Shows how to manage icals within the application.";
 
-const ManageICalsTutorial = () => {
-    return (
-        <section key={"tutorials-page-create-property"} className={"lg:w-2/3 lg:m-auto"}>
-            <div className={StaticPageAlignment}>
-                {
-                    pageContents.map((pageContent: PageContent) => printSection(pageContent))
-                }
-                <VideoShell />
-            </div>
-        </section>
-    );
-}
+import lnsPoster from '@/public/videos/lns-poster.mp4.json';
+import type {Asset} from "../../../../../node_modules/next-video/dist/assets.d.ts";
+
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    inShort: IN_SHORT,
+    video: lnsPoster as unknown as Asset,
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const ManageICalsTutorial = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
+);
 
 export default ManageICalsTutorial;

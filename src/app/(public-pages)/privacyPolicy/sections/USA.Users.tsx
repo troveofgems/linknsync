@@ -1,15 +1,18 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "privacy-policy-usa-users",
-    label: "11. Do United States Residents Have Specific Privacy Rights?",
-    verbiage: "",
-    paragraphList: [
+const
+    HEADER = "11. Do United States Residents Have Specific Privacy Rights?",
+    IN_SHORT = "If you are a resident of California, Colorado, Connecticut, Delaware, Florida, Indiana, Iowa, " +
+        "Kentucky, Maryland, Minnesota, Montana, Nebraska, New Hampshire, New Jersey, Oregon, Rhode Island, " +
+        "Tennessee, Texas, Utah, or Virginia, you may have the right to request access to and receive details about " +
+        "the personal information we maintain about you and how we have processed it, correct inaccuracies, " +
+        "get a copy of, or delete your personal information. You may also have the right to withdraw your consent to " +
+        "our processing of your personal information. These rights may be limited in some circumstances by applicable law. " +
+        "More information is provided below.",
+    SUB_LIST = [
         {
             paragraph: "Categories of Personal Information We Collect",
             desc: "The table below shows the categories of personal information we have collected in the past (12) " +
@@ -83,20 +86,22 @@ const pageContents: StaticPageContent = [{
                 "the section 'How Can You Contact Us About This Policy?'",
             list: []
         },
-    ],
-    inShort: "If you are a resident of California, Colorado, Connecticut, Delaware, Florida, Indiana, Iowa, " +
-        "Kentucky, Maryland, Minnesota, Montana, Nebraska, New Hampshire, New Jersey, Oregon, Rhode Island, " +
-        "Tennessee, Texas, Utah, or Virginia, you may have the right to request access to and receive details about " +
-        "the personal information we maintain about you and how we have processed it, correct inaccuracies, " +
-        "get a copy of, or delete your personal information. You may also have the right to withdraw your consent to " +
-        "our processing of your personal information. These rights may be limited in some circumstances by applicable law. " +
-        "More information is provided below."
-}];
+    ];
 
-export const USAUsers = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    inShort: IN_SHORT,
+    paragraphList: SUB_LIST
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const USAUsers = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

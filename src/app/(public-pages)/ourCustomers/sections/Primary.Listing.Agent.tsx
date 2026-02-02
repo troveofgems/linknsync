@@ -1,15 +1,12 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "customers-pla",
-    label: "Primary Listing Agents",
-    verbiage: "What Can You Do?",
-    listData: [
+const
+    HEADER = "Primary Listing Agents",
+    INTRODUCTION_VERBIAGE = "What Can You Do?",
+    LIST = [
         "Create and Manage Your Organization",
         "Create and Manage Your Organization Members",
         "Create and Manage (Update/Delete) Your Properties",
@@ -17,13 +14,22 @@ const pageContents: StaticPageContent = [{
         "Link and Sync A Team Member's Ical to a Property",
         "Set an ICal as a Main Source for Cron Processing Priority",
         "Export a Consolidated ICal File For All or Some ICal Files Attached to a Property"
-    ]
-}];
+    ];
 
-export const PrimaryListingAgent = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    list: LIST
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const PrimaryListingAgent = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

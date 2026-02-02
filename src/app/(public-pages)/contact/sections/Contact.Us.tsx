@@ -1,10 +1,11 @@
 import {
-    PageKey, SectionLabel, StaticPageContent,
-    printSectionWrapper
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const CONTACT_EMAIL = "linknsyncdev@gmail.com";
-//const CONTACT_EMAIL_QandA = "linknsyncdev@gmail.com";
+const
+    HEADER = "Get In Touch!",
+    INTRODUCTION_VERBIAGE = "Questions, concerns, or just want to get in touch? Send us an email at: ";
 
 const pageContents = (
     pageKey: PageKey,
@@ -12,13 +13,13 @@ const pageContents = (
 ): StaticPageContent => ([{
     key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
     sectionLabel,
-    showQuestionsOrConcerns: true,
-    contactEmail: CONTACT_EMAIL,
-    contactSubject: sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    showContact: true,
 }]);
 
 // DO NOT CHANGE TEMPLATE CODE BELOW
-export const QuestionsOrConcerns = (
+export const ContactUs = (
     { pageKey, sectionLabel }:
     { pageKey: PageKey, sectionLabel: SectionLabel }) => (
     printSectionWrapper(pageContents(pageKey, sectionLabel))

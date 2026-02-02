@@ -1,27 +1,34 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "roadmap-beta",
-    label: "Beta",
-    verbiage: "Our goal for Beta is to onboard a set of Test Users to test the experience and make any final " +
+const
+    HEADER = "Beta",
+    IN_SHORT = "Onboard Test Users to test the User Experience",
+    INTRODUCTION_VERBIAGE = "Our goal for Beta is to onboard a set of Test Users to test the experience and make any final " +
         "changes prior to releasing the first official version of the application. Our goals will focus on:",
-    listData: [
+    LIST = [
         "Prioritizing and fixing bugs reported during this time",
         "Gathering user feedback about the functionality of the application",
         "Gathering user feedback about the views of the application pages"
-    ],
-    inShort: "Onboard Test Users to test the User Experience"
-}];
+    ];
 
-export const BetaVersion = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    inShort: IN_SHORT,
+    verbiage: INTRODUCTION_VERBIAGE,
+    list: LIST
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const Beta = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

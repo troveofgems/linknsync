@@ -1,23 +1,26 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [
-    {
-        key: "data-policy-enforcement-and-training",
-        label: "Enforcement & Training",
-        verbiage: "Compliance with this policy is mandatory. Violations may result in disciplinary action up to " +
-            "termination of services. Ongoing training ensures all stakeholders understand their responsibilities."
-    }
-];
+const
+    HEADER = "Enforcement & Training",
+    INTRODUCTION_VERBIAGE = "Compliance with this policy is mandatory. Violations may result in disciplinary action up to " +
+        "termination of services. Ongoing training ensures all stakeholders understand their responsibilities.";
 
-export const Enforcement = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const Enforcement = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

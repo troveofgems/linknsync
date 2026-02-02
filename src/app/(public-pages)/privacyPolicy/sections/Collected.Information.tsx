@@ -1,22 +1,19 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "privacy-policy-collected-information",
-    label: "1. What Information Do We Collect?",
-    verbiage: "We collect personal information that you voluntarily provide to us when you register on the " +
+const
+    HEADER = "1. What Information Do We Collect?",
+    IN_SHORT = "We collect personal information that you provide to us.",
+    INTRODUCTION_VERBIAGE = "We collect personal information that you voluntarily provide to us when you register on the " +
         "Application, express an interest in obtaining information about us or our product and services, when you " +
         "participate in activities on the Services, or otherwise when you contact us.",
-    paragraphs: [
+    MAIN_LIST = [
         "All personal information that you provide to us must be true, complete, and accurate, and you must notify " +
         "us of any changes to such personal information."
     ],
-    inShort: "We collect personal information that you provide to us.",
-    paragraphList: [
+    SUB_LIST = [
         {
             paragraph: "Personal Information Provided By You",
             desc: "The personal information that we collect depends on the context of your interactions with us and the " +
@@ -50,13 +47,24 @@ const pageContents: StaticPageContent = [{
                 "'How Do We Handle Your Social Logins?' below.",
             list: []
         }
-    ]
-}];
+    ];
 
-export const CollectedInformation = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    inShort: IN_SHORT,
+    paragraphs: MAIN_LIST,
+    paragraphList: SUB_LIST
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const CollectedInformation = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

@@ -1,24 +1,30 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "customers-rla",
-    label: "Referral Listing Agents",
-    verbiage: "What Can You Do?",
-    listData: [
+const
+    HEADER = "Additional Listing Agents",
+    INTRODUCTION_VERBIAGE = "What Can You Do?",
+    LIST =  [
         "View an Attached Organization's Properties",
         "Send a Booking Request for a Block of Dates",
-    ]
-}];
+    ];
 
-export const ReferralListingAgent = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    list: LIST
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const ReferralListingAgent = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

@@ -1,36 +1,40 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    PageKey, SectionLabel,
+    printSectionWrapper, StaticPageContent,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [
-    {
-        key: "tech-stack-front-end",
-        label: "Front End",
-        verbiage: "The following technologies are leveraged by the frontend:",
-        inShort: "The frontend is built with NextJS, React, React-Router-Dom, and Typescript",
-        paragraphList: [
-            {
-                paragraph: "Next.JS (React/Typescript)",
-                desc: "Next.JS is bundled with React and Typescript",
-                list: [
-                    "Next.JS",
-                    "React",
-                    "Typescript",
-                    "ShadCN UI/Tailwind CSS",
-                    "Vercel"
-                ]
-            }
-        ]
-    }
-];
+const
+    HEADER = "Front End",
+    IN_SHORT = "The frontend is built with NextJS, React, React-Router-Dom, and Typescript",
+    INTRODUCTION_VERBIAGE = "The following technologies are leveraged by the frontend:";
 
-export const FrontEnd = () => (
-    <div className={StaticPageAlignment}>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    inShort: IN_SHORT,
+    paragraphList: [
         {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
+            paragraph: "Next.JS (React/Typescript)",
+            desc: "Next.JS is bundled with React and Typescript",
+            list: [
+                "Next.JS",
+                "React",
+                "Typescript",
+                "ShadCN UI/Tailwind CSS",
+                "Vercel"
+            ]
         }
-    </div>
+    ]
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const FrontEnd = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

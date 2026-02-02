@@ -3,8 +3,11 @@ import {
     printSectionWrapper
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const CONTACT_EMAIL = "linknsyncdev@gmail.com";
-//const CONTACT_EMAIL_QandA = "linknsyncdev@gmail.com";
+const
+    HEADER = "Contact Us",
+    INTRODUCTION_VERBIAGE = "If you have questions or comments about this policy, you may email us at: ",
+    CONTACT_EMAIL = "linknsyncdev@gmail.com",
+    CONTACT_SUBJECT = "Contacted From Terms and Conditions"
 
 const pageContents = (
     pageKey: PageKey,
@@ -12,13 +15,15 @@ const pageContents = (
 ): StaticPageContent => ([{
     key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
     sectionLabel,
-    showQuestionsOrConcerns: true,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    showContact: true,
     contactEmail: CONTACT_EMAIL,
-    contactSubject: sectionLabel,
+    contactSubject: CONTACT_SUBJECT,
 }]);
 
 // DO NOT CHANGE TEMPLATE CODE BELOW
-export const QuestionsOrConcerns = (
+export const ContactUs = (
     { pageKey, sectionLabel }:
     { pageKey: PageKey, sectionLabel: SectionLabel }) => (
     printSectionWrapper(pageContents(pageKey, sectionLabel))

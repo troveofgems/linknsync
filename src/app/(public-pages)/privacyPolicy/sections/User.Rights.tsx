@@ -1,14 +1,20 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [{
-    key: "privacy-policy-user-rights",
-    label: "9. What Are Your Privacy Rights?",
-    paragraphList: [
+const
+    HEADER = "9. What Are Your Privacy Rights?",
+    IN_SHORT = "You may review, change, or terminate your account at any time, depending on your country, province, or " +
+        "state of residence.",
+    INTRODUCTION_VERBIAGE =  "We process your personal information for a variety of reasons, depending on how you interact with our " +
+        "Services, including:",
+    MAIN_LIST = [
+        "Upon your request to terminate your account, we will deactivate or delete your account and information from " +
+        "our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, " +
+        "enforce our legal terms and/or comply with applicable legal requirements."
+    ],
+    SUB_LIST =  [
         {
             paragraph: "Withdrawing your consent",
             desc: "If we are relying on your consent to process your personal information, which may be express and/or implied " +
@@ -38,20 +44,24 @@ const pageContents: StaticPageContent = [{
                 "certain features or services of our Product.",
             list: []
         },
-    ],
-    inShort: "You may review, change, or terminate your account at any time, depending on your country, province, or " +
-        "state of residence.",
-    paragraphs: [
-        "Upon your request to terminate your account, we will deactivate or delete your account and information from " +
-        "our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, " +
-        "enforce our legal terms and/or comply with applicable legal requirements."
-    ]
-}];
+    ];
 
-export const UserRights = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    inShort: IN_SHORT,
+    paragraphs: MAIN_LIST,
+    paragraphList: SUB_LIST
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const UserRights = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );

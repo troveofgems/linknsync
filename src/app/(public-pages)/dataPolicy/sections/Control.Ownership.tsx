@@ -1,23 +1,31 @@
 import {
-    PageContent,
-    printSection,
-    StaticPageAlignment,
-    StaticPageContent
+    StaticPageContent, PageKey, SectionLabel,
+    printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-const pageContents: StaticPageContent = [
-    {
-        key: "data-policy-access-control-ownership",
-        label: "Who Accesses and Controls My Data?",
-        verbiage: "Access to data is granted on a least‑privilege basis. Ownership of data resides with the " +
-            "business function that created it and the application role assigned to a user (PLA|ALA|RLA)"
-    }
-];
+const
+    HEADER = "Who Accesses and Controls My Data?",
+    INTRODUCTION_VERBIAGE = "Access to data is granted on a least‑privilege basis. Ownership of data resides with the " +
+        "business function that created it and the application role assigned to a user (PLA|ALA|RLA).",
+    LIST = [
+        "Covers User Data, Organization Data, Property Data, PMS Data, and ICAL Data.",
+        "Applies to production, staging, and development environments."
+    ];
 
-export const ControlOwnership = () => (
-    <div className={StaticPageAlignment}>
-        {
-            pageContents.map((pageContent: PageContent) => printSection(pageContent))
-        }
-    </div>
+const pageContents = (
+    pageKey: PageKey,
+    sectionLabel: SectionLabel,
+): StaticPageContent => ([{
+    key: `${pageKey}-${sectionLabel.replaceAll(" ", "-").toLowerCase()}`,
+    sectionLabel,
+    label: HEADER,
+    verbiage: INTRODUCTION_VERBIAGE,
+    list: LIST
+}]);
+
+// DO NOT CHANGE TEMPLATE CODE BELOW
+export const ControlOwnership = (
+    { pageKey, sectionLabel }:
+    { pageKey: PageKey, sectionLabel: SectionLabel }) => (
+    printSectionWrapper(pageContents(pageKey, sectionLabel))
 );
