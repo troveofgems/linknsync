@@ -403,20 +403,3 @@ button.w-full.text-left {
 .staticPageLink {
     color: var(--chart-1);
 }
-
-.row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-@media screen and (min-width: 800px) {
-    .column {
-        flex: 1
-    }
-
-    .double-column {
-        flex: 2
-    }
-}
