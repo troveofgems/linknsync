@@ -6,7 +6,9 @@ import {
 const
     HEADER = "10. Governing Law",
     MAIN_LIST = [
-        ""
+        "These Legal Terms shall be governed by and defined following standardized laws.",
+        "You yourself irrevocably consent that the courts of Arizona shall have exclusive jurisdiction to " +
+        "resolve any dispute which may arise in connection with these Legal Terms."
     ]
 
 const pageContents = (
