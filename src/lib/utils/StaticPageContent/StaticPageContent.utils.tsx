@@ -19,7 +19,7 @@ export type PageContent = {
     listData?: string[];
     inShort?: string;
     paragraphs?: string[];
-    paragraphList?: { paragraph: string; desc: string; list: string[]; printTable?: boolean; }[];
+    paragraphList?: { paragraph: string; desc: string; list: string[]; printTable?: boolean; finalParagraph?: string; }[];
     TOC?: string[];
     showContact?: boolean;
     contactEmail?: string;
@@ -74,6 +74,7 @@ type ParagraphWithListSection = {
         paragraph?: string;
         desc?: string;
         list?: string[];
+        finalParagraph?: string;
     }[];
 };
 type ContactUsSection = {
@@ -150,6 +151,13 @@ const _SectionParagraphWithList = ({pageKey, sectionLabel, paragraphWithList}: P
                         <li key={`${pageKey}-paragraph-${index}`} className={"my-2 mx-10"}>{listData}</li>
                     ))}
                 </ul>
+                {
+                    !!paragraphData?.finalParagraph && (
+                        <p className={"mt-4"}>
+                            {paragraphData.finalParagraph}
+                        </p>
+                    )
+                }
             </div>
         ))}
     </div>

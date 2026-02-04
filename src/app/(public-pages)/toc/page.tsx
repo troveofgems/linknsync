@@ -23,7 +23,7 @@ import {Miscellaneous} from "@/app/(public-pages)/toc/sections/Miscellaneous";
 
 const
     PAGE_LABEL = "Terms and Conditions",
-    LAST_UPDATE = "1/28/2026";
+    LAST_UPDATE = "2/4/2026";
 const
     lastUpdate = new Date(LAST_UPDATE)
         .toLocaleDateString("en-US", {
