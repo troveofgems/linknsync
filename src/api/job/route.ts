@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import {fetchSystemScheduledJobs} from "@/actions/cronService/read.action";
+//import {fetchSystemScheduledJobs} from "@/actions/cronService/read.action";
 
 export function INITIATE_JOB(request: NextRequest) {
     const authHeader = request.headers.get('authorization');
@@ -10,11 +10,11 @@ export function INITIATE_JOB(request: NextRequest) {
     }
 
     console.log("Run the Cron", request.headers);
-    fetchSystemScheduledJobs().then((onfulfilled) => {
+    /*fetchSystemScheduledJobs().then((onfulfilled) => {
         console.log("Scheduled jobs completed...", onfulfilled);
     }, (onrejected: unknown) => {
         console.error("Unable to complete scheduled jobs...", onrejected);
-    })
+    })*/
 
     return Response.json({data: {message: "Cron Successfully Initiated..."}, success: true});
 }
