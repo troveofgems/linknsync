@@ -11,6 +11,7 @@ Ical links across properties.
 
 ## Third Party Libs
 - ClerkJS - Authentication/Authorization
+- Mux - Tutorial Video Processing* (Not Available to the User)
 - Shadcn-Ui
   - Button
   - Calendar

@@ -281,20 +281,20 @@ model AttachedPMS {
  */
 model UserImprint {
   id                String              @id @default(uuid())
-  firstName         String              @unique /// @encrypted
-  firstNameHash     String?             @unique /// @encryption:hash(firstName)
-  lastName          String              @unique /// @encrypted
-  lastNameHash      String?             @unique /// @encryption:hash(lastName)
-  fullName          String              @unique /// @encrypted
-  fullNameHash      String?             @unique /// @encryption:hash(fullName)
-  contactEmail      String              @unique /// @encrypted
-  contactEmailHash  String?             @unique /// @encryption:hash(contactEmail)
-  contactPhone      String              @unique /// @encrypted
-  contactPhoneHash  String?             @unique /// @encryption:hash(contactPhone)
-  appRole           String /// @encrypted
-  appRoleHash       String? /// @encryption:hash(appRole)
-  cid               String              @unique /// @encrypted
-  cidHash           String?             @unique /// @encryption:hash(cid)
+  firstName         String              /// @encrypted
+  firstNameHash     String?             /// @encryption:hash(firstName)
+  lastName          String              /// @encrypted
+  lastNameHash      String?             /// @encryption:hash(lastName)
+  fullName          String              /// @encrypted
+  fullNameHash      String?             /// @encryption:hash(fullName)
+  contactEmail      String              /// @encrypted
+  contactEmailHash  String?             /// @encryption:hash(contactEmail)
+  contactPhone      String              /// @encrypted
+  contactPhoneHash  String?             /// @encryption:hash(contactPhone)
+  appRole           String              /// @encrypted
+  appRoleHash       String?             /// @encryption:hash(appRole)
+  cid               String              /// @encrypted
+  cidHash           String?             /// @encryption:hash(cid)
   OrgImprint        OrgImprint?         @relation(fields: [orgImprintId], references: [id])
   orgImprintId      String?
   createdAt         DateTime            @default(now())

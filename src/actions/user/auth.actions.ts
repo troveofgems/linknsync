@@ -14,6 +14,8 @@ export const fetchSessionData = async() => {
         { userId, orgRole, orgId, orgPermissions, sessionClaims } = await auth(),
         userData = await currentUser();
 
+    console.log("User Data? ", userData);
+
     // 1st Check - No ClerkId Reject Request
     if(!userId) { return new Error(REJECTED_REQUEST_MESSAGE); }
 
