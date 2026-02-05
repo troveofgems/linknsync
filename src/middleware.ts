@@ -1,6 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from "next/server";
 import { APP_PATHS } from "@/constants/nav.path.constants";
+import { INITIATE_JOB } from "@/api/job/route";
 
 const
     { goToHomepage } = APP_PATHS.generalPages,
@@ -33,10 +34,9 @@ export default clerkMiddleware(async (auth, req) => {
         return NextResponse.redirect(new URL(goToHomepage.path, req.url));
     }
 
-    // Pass APIs
+    // Pass APIs - Authorization happens with Bearer Token on the Route Level of the Cron
     if(isAPICronRoute(req)) {
-        console.log("Route to API Folder: ", req.url)
-        return NextResponse.redirect(new URL("/api/hello", req.url));
+        return INITIATE_JOB(req);
     }
 
     // Lockdown all non-public routes
@@ -48,6 +48,6 @@ export const config = {
         // Skip Next.js internals and all static files, unless found in search params
         '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
         // Always run for API routes
-        '/(api|trpc)(.*)',
+        '/src/(api|trpc)(.*)',
     ],
 };

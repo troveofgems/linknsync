@@ -136,8 +136,6 @@ export const fetchSystemScheduledJobs = async () => {
 
     const fullProcessing = [dailyProcessing, hourlyProcessing, errata];
 
-    console.log("All Entries: ", allEntries) // Use this to replace unknown
-
     // Sort Everything
     allEntries.forEach((item) => {
         const {scheduleType} = item as unknown as { scheduleType: string; };
