@@ -2,13 +2,12 @@ import {PricingCards} from "@/components/misc/PricingCards/PricingCards";
 import {FreeOption} from "@/app/(public-pages)/pricing/sections/Free";
 import {EnterpriseOption} from "@/app/(public-pages)/pricing/sections/Enterprise";
 import {ProOption} from "@/app/(public-pages)/pricing/sections/Pro";
+import {LAST_UPDATE__PRICING} from "@/constants/Static.Page.History.Constants";
+
+const PAGE_LABEL = "Our Pricing Plans";
 
 const
-    PAGE_LABEL = "Our Pricing Plans",
-    LAST_UPDATE = "1/28/2026";
-
-const
-    lastUpdate = new Date(LAST_UPDATE)
+    lastUpdate = new Date(LAST_UPDATE__PRICING)
         .toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",

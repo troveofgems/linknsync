@@ -20,12 +20,12 @@ import {DisputeResolution} from "@/app/(public-pages)/toc/sections/Dispute.Resol
 import {GoverningLaw} from "@/app/(public-pages)/toc/sections/Governing.Law";
 import {ElectronicCommunications} from "@/app/(public-pages)/toc/sections/Electronic.Communications";
 import {Miscellaneous} from "@/app/(public-pages)/toc/sections/Miscellaneous";
+import {LAST_UPDATE__TERMS_AND_CONDITIONS} from "@/constants/Static.Page.History.Constants";
+
+const PAGE_LABEL = "Terms and Conditions";
 
 const
-    PAGE_LABEL = "Terms and Conditions",
-    LAST_UPDATE = "2/4/2026";
-const
-    lastUpdate = new Date(LAST_UPDATE)
+    lastUpdate = new Date(LAST_UPDATE__TERMS_AND_CONDITIONS)
         .toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",

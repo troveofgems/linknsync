@@ -3,7 +3,7 @@ import {
     printSectionWrapper,
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
-import lnsPoster from '@/public/videos/lns-poster.mp4.json';
+import loginTutorial from '@/public/videos/login-tutorial.mp4.json';
 import type {Asset} from "../../../../../node_modules/next-video/dist/assets.d.ts";
 
 const
@@ -20,7 +20,7 @@ const pageContents = (
     label: HEADER,
     verbiage: INTRODUCTION_VERBIAGE,
     inShort: IN_SHORT,
-    video: lnsPoster as unknown as Asset
+    video: loginTutorial as unknown as Asset
 }]);
 
 // DO NOT CHANGE TEMPLATE CODE BELOW

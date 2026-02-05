@@ -16,13 +16,12 @@ import {PolicyUpdates} from "@/app/(public-pages)/privacyPolicy/sections/Policy.
 import {ManageYourData} from "@/app/(public-pages)/privacyPolicy/sections/ManageYourData";
 import {ContactUs} from "@/app/(public-pages)/privacyPolicy/sections/Contact.Us";
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
+import {LAST_UPDATE__PRIVACY_POLICY} from "@/constants/Static.Page.History.Constants";
+
+const PAGE_LABEL = "Privacy Policy";
 
 const
-    PAGE_LABEL = "Privacy Policy",
-    LAST_UPDATE = "1/28/2026";
-
-const
-    lastUpdate = new Date(LAST_UPDATE)
+    lastUpdate = new Date(LAST_UPDATE__PRIVACY_POLICY)
         .toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",

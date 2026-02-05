@@ -2,13 +2,12 @@ import {AdditionalListingAgent} from "@/app/(public-pages)/ourCustomers/sections
 import {ReferralListingAgent} from "@/app/(public-pages)/ourCustomers/sections/Referal.Listing.Agent";
 import {PrimaryListingAgent} from "@/app/(public-pages)/ourCustomers/sections/Primary.Listing.Agent";
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
+import {LAST_UPDATE__STRV_CUSTOMERS} from "@/constants/Static.Page.History.Constants";
+
+const PAGE_LABEL = "Short-Term Vacation Rental Property Managers";
 
 const
-    PAGE_LABEL = "Short-Term Vacation Rental Property Managers",
-    LAST_UPDATE = "1/28/2026";
-
-const
-    lastUpdate = new Date(LAST_UPDATE)
+    lastUpdate = new Date(LAST_UPDATE__STRV_CUSTOMERS)
         .toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",

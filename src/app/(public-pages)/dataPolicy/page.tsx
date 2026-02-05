@@ -5,13 +5,12 @@ import {ThirdPartyTools} from "@/app/(public-pages)/dataPolicy/sections/Third.Pa
 import {Retention} from "@/app/(public-pages)/dataPolicy/sections/Retention";
 import {Enforcement} from "@/app/(public-pages)/dataPolicy/sections/Enforcement";
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
+import {LAST_UPDATE__DATA_POLICY} from "@/constants/Static.Page.History.Constants";
+
+const PAGE_LABEL = "Data Policy";
 
 const
-    PAGE_LABEL = "Data Policy",
-    LAST_UPDATE = "1/28/2026";
-
-const
-    lastUpdate = new Date(LAST_UPDATE)
+    lastUpdate = new Date(LAST_UPDATE__DATA_POLICY)
         .toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",

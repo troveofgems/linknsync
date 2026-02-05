@@ -9,13 +9,12 @@ import DeletePropertyTutorial from "@/app/(public-pages)/tutorials/sections/Dele
 import UpdatePropertyTutorial from "@/app/(public-pages)/tutorials/sections/Update.Property.Tutorial";
 import ManageICalsTutorial from "@/app/(public-pages)/tutorials/sections/Manage.ICal.Uploads.Tutorial";
 import LogsTutorial from "@/app/(public-pages)/tutorials/sections/Logs.Tutorial";
+import {LAST_UPDATE__TUTORIALS} from "@/constants/Static.Page.History.Constants";
+
+const PAGE_LABEL = "Tutorials";
 
 const
-    PAGE_LABEL = "Tutorials",
-    LAST_UPDATE = "1/28/2026";
-
-const
-    lastUpdate = new Date(LAST_UPDATE)
+    lastUpdate = new Date(LAST_UPDATE__TUTORIALS)
         .toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",

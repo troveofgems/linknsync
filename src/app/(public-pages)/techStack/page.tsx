@@ -2,13 +2,12 @@ import {FrontEnd} from "@/app/(public-pages)/techStack/sections/Front.End";
 import {BackEnd} from "@/app/(public-pages)/techStack/sections/Back.End";
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
 import {StaticPageAlignment} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+import {LAST_UPDATE__TECH_STACK} from "@/constants/Static.Page.History.Constants";
+
+const PAGE_LABEL = "Technology Stack";
 
 const
-    PAGE_LABEL = "Technology Stack",
-    LAST_UPDATE = "1/28/2026";
-
-const
-    lastUpdate = new Date(LAST_UPDATE)
+    lastUpdate = new Date(LAST_UPDATE__TECH_STACK)
         .toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
