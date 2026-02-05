@@ -8,7 +8,7 @@ import type {Asset} from "../../../../../node_modules/next-video/dist/assets.d.t
 
 const
     HEADER = "Login & Profile",
-    IN_SHORT = "Shows how to login to your account the application using Clerk.",
+    IN_SHORT = "Shows how to log into your account and view your profile within the application using Clerk.",
     INTRODUCTION_VERBIAGE =  "Learn how to log into your account with this video!";
 
 const pageContents = (
