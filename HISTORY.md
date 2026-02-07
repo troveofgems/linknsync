@@ -1,4 +1,7 @@
 # Changes
+ - 2/7/26
+   - Added sitemap.xml and robots.txt
+   - 
  - 2/5/26 
    - Added History.md
 
@@ -8,5 +11,5 @@
    - Prisma Schema User Imprint Unique Constraints 
 
 # Features
- - 2/5/26
+ - 2/7/26
    - Vercel Cron Connected to Scheduled Jobs Call For System 

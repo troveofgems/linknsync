@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+User-agent: GPTBot
+Disallow: /
+
+Sitemap: https://linknsync.app/sitemap.xml
