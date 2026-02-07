@@ -257,7 +257,7 @@ const jobOpportunityDialog = (
         <ShowDialog
             key={"jobOpp-dialog"}
             dialogTitle={"Send A Job Opportunity To Dustin Greco"}
-            dialogDescription={"Use this form to send the creator of this web-app a job opportunity interest. I look forward to hearing from you!"}
+            dialogDescription={"Use this form to send the creator of this web-app a jobs opportunity interest. I look forward to hearing from you!"}
             dialogOpened={openJobOppDialog}
             handleDialogClose={setOpenJobOpportunityDialog}
         >
