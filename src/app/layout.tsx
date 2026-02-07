@@ -7,6 +7,7 @@ import "./static-pages.css";
 
 // Vercel Analytics
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 // Clerk
 import {
@@ -71,6 +72,7 @@ export default function RootLayout({
                 </Container>
             </Providers>
             <Analytics />
+            <SpeedInsights />
             </body>
             </html>
         </ClerkProvider>
