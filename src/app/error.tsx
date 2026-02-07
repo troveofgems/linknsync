@@ -1,10 +1,9 @@
 'use client';
 
 function Error({error}: { error: Error }) {
-    console.log("Error: ", process.env);
     return (
         <>
-            <div className={"w-full text-center h-[500px]"}>
+            <div className={"w-full text-center h-125"}>
                 <h2 className={"text-2xl"}>An Error Has Occurred Within The Application</h2>
                 <p className={"text-red-500 py-8"}>{error.name}</p>
                 <p className={"text-red-500"}>{error.message}</p>

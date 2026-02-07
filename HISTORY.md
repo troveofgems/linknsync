@@ -1,7 +1,9 @@
 # Changes
  - 2/7/26
    - Added sitemap.xml and robots.txt
-   - 
+   - Added Forbidden Page for manual entries to API cron routes
+   
+
  - 2/5/26 
    - Added History.md
 

@@ -18,7 +18,9 @@ const
         '/toc',
         '/privacyPolicy',
         '/dataPolicy',
-        '/techStack'
+        '/techStack',
+        // Custom Errors
+        '/error'
     ]),
     isAuthenticatedRoute = createRouteMatcher(['/dashboard(.*)']),
     isApiCronRoute = createRouteMatcher(['/api(.*)']),

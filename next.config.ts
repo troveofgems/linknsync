@@ -33,7 +33,7 @@ const nextConfig: NextConfig = {
             },
             {
                 protocol: "https",
-                hostname: "reservations.emeraldislerealty.com",
+                hostname: "linknsync.app",
                 port: "",
                 pathname: "/**"
             },
