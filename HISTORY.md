@@ -2,6 +2,7 @@
  - 2/7/26
    - Added sitemap.xml and robots.txt
    - Added Forbidden Page for manual entries to API cron routes
+   - Added Vercel Analytics
    
 
  - 2/5/26 

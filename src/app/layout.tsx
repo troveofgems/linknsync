@@ -5,6 +5,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./static-pages.css";
 
+// Vercel Analytics
+import { Analytics } from "@vercel/analytics/next";
+
+// Clerk
 import {
     ClerkProvider,
 } from "@clerk/nextjs";
@@ -66,6 +70,7 @@ export default function RootLayout({
                     <Footer />
                 </Container>
             </Providers>
+            <Analytics />
             </body>
             </html>
         </ClerkProvider>
