@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import {SignedIn, SignedOut, SignInButton, /*SignUpButton*/ Waitlist} from "@clerk/nextjs";
+import {SignedIn, SignedOut, SignInButton, /*SignUpButton*/} from "@clerk/nextjs";
 import { LuAlignLeft } from "react-icons/lu";
 import Link from "next/link";
 
