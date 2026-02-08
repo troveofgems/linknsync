@@ -1,5 +1,5 @@
 import {ContactUs} from "@/app/(public-pages)/toc/sections/Contact.Us";
-import {Waitlist} from "@clerk/nextjs";
+/*import {Waitlist} from "@clerk/nextjs";*/
 
 const PAGE_LABEL = "Contact Us";
 
@@ -14,12 +14,10 @@ const ContactUsPage = () => {
                 {pageLabel}
             </h1>
             <div className={"flex flex-col lg:flex-row w-1/2 m-auto items-center justify-center"}>
-                <div className={"lg:w-1/2"}>
-                    <ContactUs pageKey={pageKey} sectionLabel={"About Us"} />
-                </div>
-                <div className={"lg:w-1/2 mt-20"}>
+                <ContactUs pageKey={pageKey} sectionLabel={"About Us"} />
+                {/*<div className={"lg:w-1/2 mt-20"}>
                     <Waitlist />
-                </div>
+                </div>*/}
             </div>
 
         </section>
