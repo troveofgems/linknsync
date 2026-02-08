@@ -22,10 +22,10 @@ const pageContents = (
             paragraph: "Next.JS (React/Typescript)",
             desc: "Next.JS is bundled with React and Typescript",
             list: [
-                "Next.JS",
-                "React",
-                "Typescript",
-                "ShadCN UI/Tailwind CSS",
+                "NextJS v15",
+                "React v19",
+                "Typescript v5",
+                "ShadCN UI/Tailwind CSS v4",
                 "Vercel"
             ]
         }

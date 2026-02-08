@@ -4,8 +4,8 @@ import {
 } from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
 
 const
-    HEADER = "Contact Us",
-    INTRODUCTION_VERBIAGE = "If you have questions or comments about this policy, you may email us at: ",
+    HEADER = "",
+    INTRODUCTION_VERBIAGE = "If you have questions, concerns, or suggestions, you may email us at: ",
     CONTACT_EMAIL = "linknsyncdev@gmail.com",
     CONTACT_SUBJECT = "Contacted From Terms and Conditions"
 
