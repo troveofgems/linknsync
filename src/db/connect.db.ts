@@ -1,10 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { fieldEncryptionExtension } from "prisma-field-encryption";
+import { withAccelerate } from '@prisma/extension-accelerate';
 
 const prismaClientSingleton = () => {
-    return new PrismaClient().$extends(fieldEncryptionExtension({
-        encryptionKey: process.env.CLOAK_MASTER_KEY,
-    }));
+    return new PrismaClient()
+        .$extends(
+            fieldEncryptionExtension({ encryptionKey: process.env.CLOAK_MASTER_KEY }),
+        )
+        .$extends(withAccelerate());
 }
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;

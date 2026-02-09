@@ -1,9 +1,12 @@
 # Changes
+ - 2/9/26
+   - Added Prisma Accelerate For Edge Functions
+   - Split Dev/Prod DB Instances
+
  - 2/7/26
    - Added sitemap.xml and robots.txt
    - Added Forbidden Page for manual entries to API cron routes
    - Added Vercel Analytics, Speed Insights
-   
 
  - 2/5/26 
    - Added History.md
