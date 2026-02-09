@@ -44,7 +44,7 @@ export const fetchSessionData = async() => {
             profile: {
                 fullName: userData?.fullName,
                 email: userData?.primaryEmailAddress?.emailAddress,
-                phoneNumber: formatPhoneNumber({ phoneNumber: userData!.primaryPhoneNumber!.phoneNumber }).formatted,
+                phoneNumber: (formatPhoneNumber({ phoneNumber: userData!.primaryPhoneNumber!.phoneNumber }).formatted ?? "No Data"),
                 lastSignInAt: userData?.lastSignInAt,
                 username: userData?.username,
                 hasImage: userData?.hasImage,
