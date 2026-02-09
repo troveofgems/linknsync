@@ -19,10 +19,27 @@ export const fetchSessionData = async() => {
     // 1st Check - No ClerkId Reject Request
     if(!userId) { return new Error(REJECTED_REQUEST_MESSAGE); }
 
-    // 2nd Check - No Phone Number
-    let pNumber = "No Data";
+    // 2nd Check - No Full Name
+    let fName = "No Data";
+    if(!!userData?.fullName) {
+        fName = userData?.fullName;
+    } else {
+        fName = userData?.firstName + " " + userData?.lastName;
+    }
+
+    // 3rd Check - No Phone Number or Email Address
+    let
+        pNumber = "No Data",
+        email = "No Data";
+
     if(!!userData?.primaryPhoneNumber?.phoneNumber) {
         pNumber = formatPhoneNumber({ phoneNumber: userData!.primaryPhoneNumber!.phoneNumber }).formatted;
+    }
+
+    if(!!userData?.primaryEmailAddress?.emailAddress) {
+        email = userData.primaryEmailAddress.emailAddress;
+    } else {
+        email = userData!.emailAddresses[0].emailAddress;
     }
 
     const // Verified Clerk User Exists, Check For App-Side Supplementary Entries
@@ -48,8 +65,8 @@ export const fetchSessionData = async() => {
                 lastActivity: Date.now(),
             },
             profile: {
-                fullName: userData?.fullName,
-                email: userData?.primaryEmailAddress?.emailAddress,
+                fullName: fName,
+                email: email,
                 phoneNumber: pNumber,
                 lastSignInAt: userData?.lastSignInAt,
                 username: userData?.username,

@@ -1,7 +1,10 @@
 # Changes
  - 2/9/26
    - Added Prisma Accelerate For Edge Functions
-   - Split Dev/Prod DB Instances
+   - Split Dev/Prod DB Instances and Locations
+   - Split Dev/Prod Image Storage Locations
+   - Updated Encryption/Decryption Keys for Dev/Prod DBs
+   - Updated Cron Secret Keys for Dev/Prod Env
 
  - 2/7/26
    - Added sitemap.xml and robots.txt
