@@ -21,7 +21,7 @@ export const fetchSessionData = async() => {
 
     // 2nd Check - No Phone Number
     let pNumber = "No Data";
-    if(!!userData!.primaryPhoneNumber!.phoneNumber) {
+    if(!!userData?.primaryPhoneNumber?.phoneNumber) {
         pNumber = formatPhoneNumber({ phoneNumber: userData!.primaryPhoneNumber!.phoneNumber }).formatted;
     }
 
