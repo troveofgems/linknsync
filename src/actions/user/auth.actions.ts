@@ -19,6 +19,12 @@ export const fetchSessionData = async() => {
     // 1st Check - No ClerkId Reject Request
     if(!userId) { return new Error(REJECTED_REQUEST_MESSAGE); }
 
+    // 2nd Check - No Phone Number
+    let pNumber = "No Data";
+    if(!!userData!.primaryPhoneNumber!.phoneNumber) {
+        pNumber = formatPhoneNumber({ phoneNumber: userData!.primaryPhoneNumber!.phoneNumber }).formatted;
+    }
+
     const // Verified Clerk User Exists, Check For App-Side Supplementary Entries
         organizationEntry = await db.orgImprint.findFirst({
             where: { coid: orgId },
@@ -44,7 +50,7 @@ export const fetchSessionData = async() => {
             profile: {
                 fullName: userData?.fullName,
                 email: userData?.primaryEmailAddress?.emailAddress,
-                phoneNumber: (formatPhoneNumber({ phoneNumber: userData!.primaryPhoneNumber!.phoneNumber }).formatted ?? "No Data"),
+                phoneNumber: pNumber,
                 lastSignInAt: userData?.lastSignInAt,
                 username: userData?.username,
                 hasImage: userData?.hasImage,
