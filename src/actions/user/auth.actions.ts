@@ -12,9 +12,10 @@ const REJECTED_REQUEST_MESSAGE = "Reject Request";
 export const fetchSessionData = async() => {
     const // Do New Pull From Backend to Clerk to Verify Actual Session Data.
         { userId, orgRole, orgId, orgPermissions, sessionClaims } = await auth(),
+        test = auth(),
         userData = await currentUser();
 
-    console.log("Org Data? ", orgId, orgRole, orgPermissions, sessionClaims);
+    console.log("Org Data? ", test);
 
     // 1st Check - No ClerkId Reject Request
     if(!userId) { return new Error(REJECTED_REQUEST_MESSAGE); }
@@ -25,6 +26,10 @@ export const fetchSessionData = async() => {
         fName = userData?.fullName;
     } else {
         fName = userData?.firstName + " " + userData?.lastName;
+    }
+
+    if(orgId && process.env.NODE_ENV === "production") {
+        console.log("Make call to get organization name???");
     }
 
     // 3rd Check - No Phone Number or Email Address
