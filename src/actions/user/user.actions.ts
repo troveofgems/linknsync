@@ -97,6 +97,7 @@ export const imprintOrganization = async (
         };
     }
 
+    console.log("Profile is: ", profile);
     const  // Org Does Not Exist, so Prep to Build It
         organizationImprint = {
             name: profile!.org.name,
