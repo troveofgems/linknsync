@@ -6,16 +6,18 @@ import {imprintUser} from "@/actions/user/user.actions";
 import {formatPhoneNumber} from "@/lib/utils/AppUser/app.user.phone.number.utils";
 import {AppRole, getUserRole} from "@/lib/utils/AppUser/app.user.utils";
 import {ORG_ROLE__ID_SUPER_USER} from "@/constants/app.user.constants";
+import { clerkClient } from "@clerk/nextjs/server";
 
 const REJECTED_REQUEST_MESSAGE = "Reject Request";
 
 export const fetchSessionData = async() => {
     const // Do New Pull From Backend to Clerk to Verify Actual Session Data.
         { userId, orgRole, orgId, orgPermissions, sessionClaims } = await auth(),
-        test = auth(),
         userData = await currentUser();
 
-    console.log("Org Data? ", test, sessionClaims?.o);
+    const organization = await (await clerkClient()).organizations.getOrganization({ organizationId: orgId as string });
+
+    console.log("Org Data? ", sessionClaims?.o, orgRole, organization);
 
     // 1st Check - No ClerkId Reject Request
     if(!userId) { return new Error(REJECTED_REQUEST_MESSAGE); }
