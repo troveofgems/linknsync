@@ -86,7 +86,7 @@ export const fetchSessionData = async() => {
                 },
                 org: {
                     id: organizationEntry?.id,
-                    name: sessionClaims.orgName,
+                    name: organization.name,
                     permissions: orgPermissions,
                 }
             }
