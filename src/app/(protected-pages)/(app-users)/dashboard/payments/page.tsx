@@ -1,6 +1,6 @@
 "use client";
-import {SessionDataState, useUserStore} from "@/store/userStore";
-import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";
+/*import {SessionDataState, useUserStore} from "@/store/userStore";
+import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";*/
 /*import {useSearchParams} from "next/navigation";*/
 
 function PaymentsPage() {
