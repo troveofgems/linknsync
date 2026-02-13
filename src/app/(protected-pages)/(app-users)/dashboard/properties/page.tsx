@@ -3,8 +3,8 @@ import React, {useState, useCallback, Fragment} from "react";
 import {Badge} from "@/components/ui/badge";
 import {PropertyListTable} from "@/components/tables/PropertyListTable";
 import {LoggedInUserState, SessionDataState, useUserStore} from "@/store/userStore";
-import {APP_PATHS} from "@/constants/nav.path.constants";
 import {RbacPermissions} from "@/rbac/rbac.permissions";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 import {
     AlertDialog,
@@ -31,12 +31,12 @@ function PropertyManagementPage() {
 
     const createPropertyButton = (orgRole: string, isAdmin: boolean) => {
         const
-            { createProperty } = APP_PATHS.authenticatedPages.appUser.goToProperty,
+            { create: createProperty } = APP_PATHS.pages.authenticated.user.goToProperty,
             { checkAndAllowAccessTo } = RbacPermissions;
 
         console.log("Property Button: ", orgRole, attrs);
 
-        return (isAdmin || checkAndAllowAccessTo(orgRole, createProperty.permissions)) ? (
+        return (isAdmin || checkAndAllowAccessTo(orgRole, createProperty.permissions as string[])) ? (
             <div className={"flex justify-end-safe mb-8"}>
                 <button
                     className={"button-87"}
@@ -62,12 +62,12 @@ function PropertyManagementPage() {
 
     const handleContinueToCreateOrg = () => {
         setShowINDWarning(false);
-        return router.push(APP_PATHS.authenticatedPages.appUser.goToOrganization.manageOrganization.path);
+        return router.push(APP_PATHS.pages.authenticated.user.goToOrganization.manageOrganization.path as string);
     }
 
     const handleContinueToCreateProperty = () => {
         setShowINDWarning(false);
-        return router.push(APP_PATHS.authenticatedPages.appUser.goToProperty.createProperty.path);
+        return router.push(APP_PATHS.pages.authenticated.user.goToProperty.create.path as string);
     }
 
     return (

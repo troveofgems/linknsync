@@ -6,6 +6,7 @@ export interface Permissions {
         calendar: string[];
         conflictList: string[];
         logs: string[];
+        payments: string[];
         organization: string[];
     }
     restrictAccessFrom: {
@@ -23,21 +24,27 @@ export interface Permissions {
             }
         }
     },
-    checkAndAllowAccessTo: (role: string, pathPermissions: string[]) => boolean;
+    checkAndAllowAccessTo: (
+        role: string,
+        pathPermissions: string[]
+    ) => boolean;
     getLabelForRole: (
         role: string,
         pathPermissions: string[],
         labels:  {
-            defaultLabel: string
-            customLabel: string
-        }) => string;
+            defaultLabel: string;
+            customLabel: string;
+        }
+    ) => string;
 }
 
 const // Application User Roles
-    ROLE_PLA = "PLA",
-    ROLE_ALA = "ALA",
-    ROLE_RLA = "RLA",
-    ROLE_IND = "IND";
+    ROLE_SUA = "SUA", // Super User Administrator
+    ROLE_SAU = "SAU", // Super Audit User
+    ROLE_PLA = "PLA", // Primary Listing Agent
+    ROLE_ALA = "ALA", // Additional Listing Agent
+    ROLE_RLA = "RLA", // Referral Listing Agent
+    ROLE_IND = "IND"; // Individual User With No Instantiated Org Yet
 
 const // Role Based Labels
     label_ForPropertyManagers = "Manage Properties",
@@ -45,18 +52,21 @@ const // Role Based Labels
 
 export const RbacPermissions = (() => {
     const
-        ALL_ROLES = [ROLE_PLA, ROLE_ALA, ROLE_RLA, ROLE_IND],
-        PROPERTY_MANAGERS = [ROLE_PLA, ROLE_ALA, ROLE_IND];
+        ALL_NON_ADMIN_ROLES = [ROLE_PLA, ROLE_ALA, ROLE_RLA, ROLE_IND],
+        PROPERTY_MANAGERS = [ROLE_PLA, ROLE_ALA, ROLE_IND],
+        APP_ADMINISTRATORS = [ROLE_SUA, ROLE_SAU],
+        ALL_ROLES = [...ALL_NON_ADMIN_ROLES, ...APP_ADMINISTRATORS];
 
     return {
         allowAccessTo: { // Pages
             profile: ALL_ROLES,
             propertyList: ALL_ROLES,
             propertyById: ALL_ROLES,
-            calendar: PROPERTY_MANAGERS,
-            conflictList: PROPERTY_MANAGERS,
-            logs: PROPERTY_MANAGERS,
-            organization: PROPERTY_MANAGERS,
+            calendar: [...PROPERTY_MANAGERS, ...APP_ADMINISTRATORS],
+            conflictList: [...PROPERTY_MANAGERS, ...APP_ADMINISTRATORS],
+            logs: [...PROPERTY_MANAGERS, ...APP_ADMINISTRATORS],
+            payments: [ROLE_PLA, ...APP_ADMINISTRATORS], // Only PLAs should see or use the payments functionality
+            organization: [...PROPERTY_MANAGERS, ...APP_ADMINISTRATORS],
         },
         restrictAccessFrom: { // Actions
             manageIcalSourcesForProperty: [ROLE_RLA],

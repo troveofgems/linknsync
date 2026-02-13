@@ -2,7 +2,7 @@ import {PricingCards} from "@/components/misc/PricingCards/PricingCards";
 import {FreeOption} from "@/app/(public-pages)/pricing/sections/Free";
 import {EnterpriseOption} from "@/app/(public-pages)/pricing/sections/Enterprise";
 import {ProOption} from "@/app/(public-pages)/pricing/sections/Pro";
-import {LAST_UPDATE__PRICING} from "@/constants/Static.Page.History.Constants";
+import {LAST_UPDATE__PRICING} from "@/constants/static.page.history.constants";
 
 const PAGE_LABEL = "Our Pricing Plans";
 

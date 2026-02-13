@@ -11,7 +11,7 @@ import {GenericTextInput} from "@/components/forms/_elements/Inputs/GenericTextI
 import {SessionDataState} from "@/store/userStore";
 import {Alert} from "@/components/misc/Sonner.Alerter";
 import {useRouter} from "next/navigation";
-import {APP_PATHS} from "@/constants/nav.path.constants";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const ChangeMainICalForPropertyForm = (
     {
@@ -26,7 +26,7 @@ export const ChangeMainICalForPropertyForm = (
         closeDialogAction: React.Dispatch<React.SetStateAction<boolean>>;
     }) => {
     const
-        { viewPropertyList } = APP_PATHS.authenticatedPages.appUser.goToProperty,
+        { list: viewPropertyList } = APP_PATHS.pages.authenticated.user.goToProperty,
         router = useRouter(),
         [newICalSource] = useState(icalList.filter((item: { id: string; }) => item.id === icalId)[0]),
         [mainSource] = useState(icalList.filter((item: { id: string; isMainSrc: boolean; }) => item.isMainSrc)[0]),
@@ -44,7 +44,7 @@ export const ChangeMainICalForPropertyForm = (
                     description: new Date().toISOString(),
                     actionLabel: "Close",
                 });
-                return router.push(viewPropertyList.path);
+                return router.push(viewPropertyList.path as string);
             }
         }
     }, [state, isPending, closeDialogAction, router, viewPropertyList]);

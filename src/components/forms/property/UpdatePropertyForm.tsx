@@ -32,7 +32,7 @@ import {useFileToBase64, useImageUploader} from "@/hooks/ProtoImage/useImage";
 import {ArchivePropertyActionComponent} from "@/components/property/Danger/Archive.Property.Action.Component";
 import {BorderedPanel} from "@/components/forms/_elements/BorderedPanel/BorderedPanel";
 import {ServicerOptions} from "@/components/property/Servicers/ServicerOptions";
-import {APP_PATHS} from "@/constants/nav.path.constants";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 interface PropertyToUpdate {
     Photo: {
@@ -150,7 +150,7 @@ export const UpdatePropertyForm = (
                     description: new Date().toISOString(),
                     actionLabel: "Close",
                 });
-                return router.push(APP_PATHS.authenticatedPages.appUser.goToProperty.viewPropertyList.path);
+                return router.push(APP_PATHS.pages.authenticated.user.goToProperty.list.path as string);
             }
         }
     }, [

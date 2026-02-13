@@ -16,7 +16,7 @@ import {PolicyUpdates} from "@/app/(public-pages)/privacyPolicy/sections/Policy.
 import {ManageYourData} from "@/app/(public-pages)/privacyPolicy/sections/ManageYourData";
 import {ContactUs} from "@/app/(public-pages)/privacyPolicy/sections/Contact.Us";
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
-import {LAST_UPDATE__PRIVACY_POLICY} from "@/constants/Static.Page.History.Constants";
+import {LAST_UPDATE__PRIVACY_POLICY} from "@/constants/static.page.history.constants";
 
 const PAGE_LABEL = "Privacy Policy";
 

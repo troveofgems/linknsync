@@ -2,7 +2,7 @@ import {FrontEnd} from "@/app/(public-pages)/techStack/sections/Front.End";
 import {BackEnd} from "@/app/(public-pages)/techStack/sections/Back.End";
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
 import {StaticPageAlignment} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
-import {LAST_UPDATE__TECH_STACK} from "@/constants/Static.Page.History.Constants";
+import {LAST_UPDATE__TECH_STACK} from "@/constants/static.page.history.constants";
 
 const PAGE_LABEL = "Technology Stack";
 

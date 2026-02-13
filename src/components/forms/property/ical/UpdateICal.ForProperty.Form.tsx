@@ -12,8 +12,8 @@ import {GenericTextInput} from "@/components/forms/_elements/Inputs/GenericTextI
 import {SessionDataState} from "@/store/userStore";
 import {Alert} from "@/components/misc/Sonner.Alerter";
 import {useRouter} from "next/navigation";
-import {APP_PATHS} from "@/constants/nav.path.constants";
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const UpdateICalForPropertyForm = (
     {
@@ -55,7 +55,7 @@ export const UpdateICalForPropertyForm = (
     }
 
     const
-        { viewPropertyList } = APP_PATHS.authenticatedPages.appUser.goToProperty,
+        { list: viewPropertyList } = APP_PATHS.pages.authenticated.user.goToProperty,
         router = useRouter(),
         [icalSource] = useState(icalList.filter((item: { id: string; }) => item.id === icalId)[0]),
         [state, action, isPending] = useActionState(
@@ -73,7 +73,7 @@ export const UpdateICalForPropertyForm = (
                     description: new Date().toISOString(),
                     actionLabel: "Close",
                 });
-                return router.push(viewPropertyList.path);
+                return router.push(viewPropertyList.path as string);
             }
         }
     }, [state, isPending, handleDialogClose, router, viewPropertyList]);

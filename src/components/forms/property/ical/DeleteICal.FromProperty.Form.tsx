@@ -8,7 +8,7 @@ import {GenericTextInput} from "@/components/forms/_elements/Inputs/GenericTextI
 import {SessionDataState} from "@/store/userStore";
 import {Alert} from "@/components/misc/Sonner.Alerter";
 import {useRouter} from "next/navigation";
-import {APP_PATHS} from "@/constants/nav.path.constants";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 import {CurrentSource, ICalSource} from "@/components/forms/property/elements/CurrentSource";
 import {SubscribedIcalList} from "@/components/structural/tooltip/elements/Cron.elements";
 
@@ -25,7 +25,7 @@ export const DeleteICalFromPropertyForm = (
         handleDialogClose: React.Dispatch<React.SetStateAction<boolean>>;
     }) => {
     const
-        { viewPropertyList } = APP_PATHS.authenticatedPages.appUser.goToProperty,
+        { list: viewPropertyList } = APP_PATHS.pages.authenticated.user.goToProperty,
         router = useRouter(),
         formFullyLoaded = !!user,
         userLastName = !!user && user!.profile!.fullName.split(" ")[1],
@@ -47,7 +47,7 @@ export const DeleteICalFromPropertyForm = (
                     description: new Date().toISOString(),
                     actionLabel: "Close",
                 });
-                return router.push(viewPropertyList.path);
+                return router.push(viewPropertyList.path as string);
             }
         }
     }, [state, isPending, handleDialogClose, icalSource, router, viewPropertyList]);

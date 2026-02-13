@@ -27,7 +27,7 @@ import {useAddress} from "@/hooks/ProtoAddress/useAddress";
 import {Card, CardContent} from "@/components/ui/card";
 import {PictureWrapper} from "@/components/structural/picture/Picture.Wrapper";
 import {useFileToBase64} from "@/hooks/ProtoImage/useImage";
-import {APP_PATHS} from "@/constants/nav.path.constants";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const CreatePropertyForm = (
     {
@@ -61,7 +61,7 @@ export const CreatePropertyForm = (
                     description: new Date().toISOString(),
                     actionLabel: "Close",
                 });
-                const propertyListPath = APP_PATHS.authenticatedPages.appUser.goToProperty.viewPropertyList.path;
+                const propertyListPath = APP_PATHS.pages.authenticated.user.goToProperty.list.path as string;
                 return router.push(propertyListPath);
             }
         }

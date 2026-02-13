@@ -4,10 +4,11 @@ import {ArrowUpDown} from "lucide-react";
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 import Link from "next/link";
 
-import {APP_PATHS} from "@/constants/nav.path.constants";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 import {DateBlock, DateBlockConflict, UserImprint} from "@prisma/client";
 
-export const ConflictListColumnDefs: DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] = ([
+export const ConflictListColumnDefs:
+    DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] = ([
     {
         accessorKey: "name",
         header: ({ column }) => {
@@ -29,7 +30,11 @@ export const ConflictListColumnDefs: DisplayColumnDef<unknown> | GroupColumnDef<
                 <div className="capitalize">
                     <Link
                         className={"text-blue-400"}
-                        href={APP_PATHS.authenticatedPages.appUser.goToProperty.viewPropertyById.path(data.propertyId)}
+                        href={
+                            typeof APP_PATHS.pages.authenticated.user.goToProperty.view.path === "function" ?
+                                APP_PATHS.pages.authenticated.user.goToProperty.view.path(data.propertyId) :
+                                "/"
+                        }
                     >
                         {data.propertyName}
                     </Link>

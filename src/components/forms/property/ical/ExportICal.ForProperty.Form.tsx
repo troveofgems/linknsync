@@ -10,10 +10,10 @@ import {GenericTextInput} from "@/components/forms/_elements/Inputs/GenericTextI
 import {SessionDataState} from "@/store/userStore";
 import {Alert} from "@/components/misc/Sonner.Alerter";
 import {useRouter} from "next/navigation";
-import {APP_PATHS} from "@/constants/nav.path.constants";
 import {ICalSource} from "@/components/forms/property/elements/CurrentSource";
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
 import {addEllipsis} from "@/lib/utils/misc/string.utils";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const ExportLNSICSForPropertyForm = (
     {
@@ -27,7 +27,7 @@ export const ExportLNSICSForPropertyForm = (
         handleDialogClose: React.Dispatch<React.SetStateAction<boolean>>;
     }) => {
     const
-        { viewPropertyList } = APP_PATHS.authenticatedPages.appUser.goToProperty,
+        { list: viewPropertyList } = APP_PATHS.pages.authenticated.user.goToProperty,
         router = useRouter(),
         [readyForDownload, setReadyForDownload] = useState(false),
         [downloadData, setDownloadData] = useState<UpdateICalActionState | null>(null),

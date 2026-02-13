@@ -4,7 +4,7 @@ import {SignOutButton} from "@clerk/nextjs";
 import {Alert} from "@/components/misc/Sonner.Alerter";
 import {DropdownMenuItem} from "@/components/ui/dropdown-menu";
 import {useUserStore} from "@/store/userStore";
-import {APP_PATHS} from "@/constants/nav.path.constants";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const LogOutLink = () => {
     const
@@ -22,7 +22,7 @@ export const LogOutLink = () => {
         alertLogout();
     };
 
-    const logoutPath = APP_PATHS.generalPages.goToHomepage.path;
+    const logoutPath = APP_PATHS.pages.general.goToHomepage.path as string;
 
     return (
         <DropdownMenuItem key={"session_logout_action"}>

@@ -2,7 +2,7 @@ import {AdditionalListingAgent} from "@/app/(public-pages)/ourCustomers/sections
 import {ReferralListingAgent} from "@/app/(public-pages)/ourCustomers/sections/Referal.Listing.Agent";
 import {PrimaryListingAgent} from "@/app/(public-pages)/ourCustomers/sections/Primary.Listing.Agent";
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
-import {LAST_UPDATE__STRV_CUSTOMERS} from "@/constants/Static.Page.History.Constants";
+import {LAST_UPDATE__STRV_CUSTOMERS} from "@/constants/static.page.history.constants";
 
 const PAGE_LABEL = "Short-Term Vacation Rental Property Managers";
 

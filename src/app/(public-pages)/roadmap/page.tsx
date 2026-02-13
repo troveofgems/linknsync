@@ -2,7 +2,7 @@ import {Beta} from "@/app/(public-pages)/roadmap/sections/Beta";
 import {Version1} from "@/app/(public-pages)/roadmap/sections/Version1";
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
 import {Version2} from "@/app/(public-pages)/roadmap/sections/Version2";
-import {LAST_UPDATE__ROADMAP} from "@/constants/Static.Page.History.Constants";
+import {LAST_UPDATE__ROADMAP} from "@/constants/static.page.history.constants";
 
 const PAGE_LABEL = "Our Roadmap";
 

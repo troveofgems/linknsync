@@ -27,7 +27,7 @@ import {
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 import {formatAddress} from "@/lib/utils/Address/address.utils";
 import {PictureWrapper} from "@/components/structural/picture/Picture.Wrapper";
-import {APP_PATHS} from "@/constants/nav.path.constants";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 function addEllipsis(str: string, maxLength = 10) {
     if (str.length > maxLength) {
@@ -38,8 +38,10 @@ function addEllipsis(str: string, maxLength = 10) {
 }
 
 const {
-    viewPropertyById, updateProperty, manageIcalSourcesForProperty
-} = APP_PATHS.authenticatedPages.appUser.goToProperty;
+    view: viewPropertyById,
+    update: updateProperty,
+    manageIcals: manageIcalSourcesForProperty
+} = APP_PATHS.pages.authenticated.user.goToProperty;
 
 // Column Def List
 export const propertyListColumnDefs = (
@@ -339,7 +341,11 @@ export const propertyListColumnDefs = (
                                 className={"overrideActionBtnStyles"}
                             >
                                 <Link
-                                    href={viewPropertyById.path(data.id)}
+                                    href={
+                                        typeof viewPropertyById.path === "function" ?
+                                            viewPropertyById.path(data.id) :
+                                            "/"
+                                    }
                                 >
                                     View Property
                                 </Link>
@@ -358,7 +364,11 @@ export const propertyListColumnDefs = (
                                             className={"overrideActionBtnStyles"}
                                         >
                                             <Link
-                                                href={manageIcalSourcesForProperty.path(data.id)}
+                                                href={
+                                                    typeof manageIcalSourcesForProperty.path === "function" ?
+                                                        manageIcalSourcesForProperty.path(data.id) :
+                                                        "/"
+                                                }
                                             >
                                                 Manage ICal Sources
                                             </Link>
@@ -401,7 +411,11 @@ export const propertyListColumnDefs = (
                                                         className={"overrideActionBtnStyles"}
                                                     >
                                                         <Link
-                                                            href={updateProperty.path(data.id)}
+                                                            href={
+                                                                typeof updateProperty.path === "function" ?
+                                                                    updateProperty.path(data.id) :
+                                                                    "/"
+                                                            }
                                                         >
                                                             Update Property
                                                         </Link>

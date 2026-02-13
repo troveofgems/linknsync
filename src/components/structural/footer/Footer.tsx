@@ -6,7 +6,7 @@ import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
 
-import {APP_PATHS} from "@/constants/nav.path.constants";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const Footer = () => {
     const
@@ -32,7 +32,7 @@ export const Footer = () => {
         goToTermsAndConditions,
         goToTechStack,
         goToTutorials,
-    } = APP_PATHS.generalPages;
+    } = APP_PATHS.pages.general;
 
     return (
         <footer className="footer-20192">
@@ -52,7 +52,7 @@ export const Footer = () => {
                 </div>
                 <div className="row">
                     <div className={"mb-5"}>
-                        <a href={goToHomepage.path} className="footer-logo">Link N&#39; Sync</a>
+                        <a href={goToHomepage.path as string} className="footer-logo">Link N&#39; Sync</a>
                         <p className="copyright">
                             &reg; <small>2025 - {currentYear}</small>
                         </p>
@@ -63,10 +63,10 @@ export const Footer = () => {
                         <div className="xl:w-1/3 pb-5">
                             <h3 className={"footer-col-header"}>Customers</h3>
                             <ul className="flex flex-col items-center-safe links">
-                                <Link href={goToCustomer.path} className={"footerLink py-2"}>
+                                <Link href={goToCustomer.path as string} className={"footerLink py-2"}>
                                     {goToCustomer.label}
                                 </Link>
-                                <Link href={goToTutorials.path} className={"footerLink py-2"}>
+                                <Link href={goToTutorials.path as string} className={"footerLink py-2"}>
                                     {goToTutorials.label}
                                 </Link>
                             </ul>
@@ -74,16 +74,16 @@ export const Footer = () => {
                         <div className="xl:w-1/3 pb-5">
                             <h3 className={"footer-col-header"}>Company</h3>
                             <ul className="flex flex-col items-center-safe links">
-                                <Link href={goToAbout.path} className={"footerLink py-2"}>
+                                <Link href={goToAbout.path as string} className={"footerLink py-2"}>
                                     {goToAbout.label}
                                 </Link>
-                                <Link href={goToContact.path} className={"footerLink py-2"}>
+                                <Link href={goToContact.path as string} className={"footerLink py-2"}>
                                     {goToContact.label}
                                 </Link>
-                                <Link href={goToRoadmap.path} className={"footerLink py-2"}>
+                                <Link href={goToRoadmap.path as string} className={"footerLink py-2"}>
                                     {goToRoadmap.label}
                                 </Link>
-                                <Link href={goToPricing.path} className={"footerLink py-2"}>
+                                <Link href={goToPricing.path as string} className={"footerLink py-2"}>
                                     {goToPricing.label}
                                 </Link>
                             </ul>
@@ -91,16 +91,16 @@ export const Footer = () => {
                         <div className="xl:w-1/3 pb-5">
                             <h3 className={"footer-col-header"}>Further Information</h3>
                             <ul className="flex flex-col items-center-safe links">
-                                <Link href={goToTermsAndConditions.path} className={"footerLink py-2"}>
+                                <Link href={goToTermsAndConditions.path as string} className={"footerLink py-2"}>
                                     {goToTermsAndConditions.label}
                                 </Link>
-                                <Link href={goToPrivacyPolicy.path} className={"footerLink py-2"}>
+                                <Link href={goToPrivacyPolicy.path as string} className={"footerLink py-2"}>
                                     {goToPrivacyPolicy.label}
                                 </Link>
-                                <Link href={goToDataPolicy.path} className={"footerLink py-2"}>
+                                <Link href={goToDataPolicy.path as string} className={"footerLink py-2"}>
                                     {goToDataPolicy.label}
                                 </Link>
-                                <Link href={goToTechStack.path} className={"footerLink py-2"}>
+                                <Link href={goToTechStack.path as string} className={"footerLink py-2"}>
                                     {goToTechStack.label}
                                 </Link>
                             </ul>

@@ -7,13 +7,14 @@ import Link from "next/link";
 // Utils
 import {Address} from "@prisma/client";
 import {PictureWrapper} from "@/components/structural/picture/Picture.Wrapper";
-import {APP_PATHS} from "@/constants/nav.path.constants";
 import {AccessorColumnDef, DisplayColumnDef, GroupColumnDef} from "@tanstack/react-table";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
-const { viewPropertyById } = APP_PATHS.authenticatedPages.appUser.goToProperty;
+const { view: viewPropertyById } = APP_PATHS.pages.authenticated.user.goToProperty;
 
 // Column Def List
-export const propertyListColumnDefsRLA = (): DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] => ([
+export const propertyListColumnDefsRLA = ():
+    DisplayColumnDef<unknown> | GroupColumnDef<unknown> | AccessorColumnDef<unknown> [] => ([
     {
         accessorKey: "thumbnail",
         header: () => (<div></div>),
@@ -177,7 +178,7 @@ export const propertyListColumnDefsRLA = (): DisplayColumnDef<unknown> | GroupCo
                 <div className={"flex justify-end"}>
                     <Link
                         className={"flex"}
-                        href={viewPropertyById.path(data.id)}
+                        href={typeof viewPropertyById.path === "function" ? viewPropertyById.path(data.id) : "/"}
                     >
                         <View className={"text-green-500"} />
                     </Link>

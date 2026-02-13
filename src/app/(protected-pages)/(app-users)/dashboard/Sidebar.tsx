@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import {Badge} from "@/components/ui/badge";
 import {SessionDataState} from "@/store/userStore";
 import {fetchCollisionCountsByOrgIdAction} from "@/actions/conflict/read.action";
-import {APP_PATHS, NavLink} from "@/constants/nav.path.constants";
+import {APP_PATHS, NavLink} from "@/utils/nav.path.utils";
 
 type SidebarLink = {
     path: string;
@@ -16,15 +16,15 @@ type SidebarLink = {
     permissions: string[];
 };
 
-const { goToProfile, /*goToCalendar,*/ goToConflicts, goToProperty, goToLogs } = APP_PATHS.authenticatedPages.appUser;
+const { goToProfile, /*goToCalendar,*/ goToConflicts, goToProperty, goToLogs } = APP_PATHS.pages.authenticated.user;
 
-const linkList: SidebarLink[] = [ // Move to Another File
+const linkList = [
     goToProfile,
-    goToProperty.viewPropertyList,
+    goToProperty.list,
     /*goToCalendar,*/
     goToConflicts,
     goToLogs
-];
+] as SidebarLink[];
 
 export const SidebarManager = (
     {

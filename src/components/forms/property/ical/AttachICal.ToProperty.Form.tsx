@@ -15,9 +15,9 @@ import {Alert} from "@/components/misc/Sonner.Alerter";
 
 import {useRouter} from "next/navigation";
 import {ListICalsFromProperty} from "@/components/forms/property/ical/ListICals.FromProperty";
-import {APP_PATHS} from "@/constants/nav.path.constants";
 import {useFormStatus} from "react-dom";
 import {GenericTextInput} from "@/components/forms/_elements/Inputs/GenericTextInput";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const AttachICalToPropertyForm = (
     {
@@ -27,7 +27,7 @@ export const AttachICalToPropertyForm = (
     }
 ) => {
     const
-        { viewPropertyList } = APP_PATHS.authenticatedPages.appUser.goToProperty,
+        { list: viewPropertyList } = APP_PATHS.pages.authenticated.user.goToProperty,
         router = useRouter(),
         urlParams = useParams(),
         [pid, setPID] = useState<string | null>(null);
@@ -53,7 +53,7 @@ export const AttachICalToPropertyForm = (
                     description: new Date().toISOString(),
                     actionLabel: "Close",
                 });
-                return router.push(viewPropertyList.path);
+                return router.push(viewPropertyList.path as string);
             }
         }
     }, [state, isPending, router, viewPropertyList]);

@@ -9,7 +9,7 @@ import DeletePropertyTutorial from "@/app/(public-pages)/tutorials/sections/Dele
 import UpdatePropertyTutorial from "@/app/(public-pages)/tutorials/sections/Update.Property.Tutorial";
 import ManageICalsTutorial from "@/app/(public-pages)/tutorials/sections/Manage.ICal.Uploads.Tutorial";
 import LogsTutorial from "@/app/(public-pages)/tutorials/sections/Logs.Tutorial";
-import {LAST_UPDATE__TUTORIALS} from "@/constants/Static.Page.History.Constants";
+import {LAST_UPDATE__TUTORIALS} from "@/constants/static.page.history.constants";
 
 const PAGE_LABEL = "Tutorials";
 

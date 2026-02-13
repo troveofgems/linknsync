@@ -9,7 +9,7 @@ import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 import {AppRole, getUserRoleLabel} from "@/lib/utils/AppUser/app.user.utils";
 import {SessionDataState, useUserStore} from "@/store/userStore";
 import {PictureWrapper} from "@/components/structural/picture/Picture.Wrapper";
-import {APP_PATHS} from "@/constants/nav.path.constants";
+import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const ProfileForm = (
     {
@@ -32,7 +32,7 @@ export const ProfileForm = (
     useEffect(() => {
         if(redirectFromOrgRegistration) {
             reloadSession();
-            return router.push(APP_PATHS.authenticatedPages.appUser.goToProfile.path);
+            return router.push(APP_PATHS.pages.authenticated.user.goToProfile.path as string);
         }
     });
 

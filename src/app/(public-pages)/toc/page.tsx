@@ -20,7 +20,7 @@ import {DisputeResolution} from "@/app/(public-pages)/toc/sections/Dispute.Resol
 import {GoverningLaw} from "@/app/(public-pages)/toc/sections/Governing.Law";
 import {ElectronicCommunications} from "@/app/(public-pages)/toc/sections/Electronic.Communications";
 import {Miscellaneous} from "@/app/(public-pages)/toc/sections/Miscellaneous";
-import {LAST_UPDATE__TERMS_AND_CONDITIONS} from "@/constants/Static.Page.History.Constants";
+import {LAST_UPDATE__TERMS_AND_CONDITIONS} from "@/constants/static.page.history.constants";
 
 const PAGE_LABEL = "Terms and Conditions";
 

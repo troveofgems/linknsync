@@ -5,7 +5,7 @@ import {ThirdPartyTools} from "@/app/(public-pages)/dataPolicy/sections/Third.Pa
 import {Retention} from "@/app/(public-pages)/dataPolicy/sections/Retention";
 import {Enforcement} from "@/app/(public-pages)/dataPolicy/sections/Enforcement";
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
-import {LAST_UPDATE__DATA_POLICY} from "@/constants/Static.Page.History.Constants";
+import {LAST_UPDATE__DATA_POLICY} from "@/constants/static.page.history.constants";
 
 const PAGE_LABEL = "Data Policy";
 

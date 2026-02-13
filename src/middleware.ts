@@ -1,9 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from "next/server";
-import { APP_PATHS } from "@/constants/nav.path.constants";
+import { APP_PATHS } from "@/utils/nav.path.utils";
 
 const
-    { goToHomepage } = APP_PATHS.generalPages,
+    { goToHomepage } = APP_PATHS.pages.general,
     isPublicRoute = createRouteMatcher([
         // Company
         '/',
@@ -36,7 +36,7 @@ export default clerkMiddleware(async (auth, req) => {
 
     // Send Non-Authenticated Requests to Admin Resources Back to Home
     if(isAdminRoute(req) && !isAdminUser) {
-        return NextResponse.redirect(new URL(goToHomepage.path, req.url));
+        return NextResponse.redirect(new URL(goToHomepage.path as string, req.url));
     }
 
     // Lockdown all non-public routes

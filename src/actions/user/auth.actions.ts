@@ -17,8 +17,6 @@ export const fetchSessionData = async() => {
 
     const organization = await (await clerkClient()).organizations.getOrganization({ organizationId: orgId as string });
 
-    console.log("Org Data? ", sessionClaims?.o, orgRole, organization);
-
     // 1st Check - No ClerkId Reject Request
     if(!userId) { return new Error(REJECTED_REQUEST_MESSAGE); }
 
@@ -34,8 +32,7 @@ export const fetchSessionData = async() => {
         console.log("Make call to get organization name???");
     }
 
-    // 3rd Check - No Phone Number or Email Address
-    let
+    let // 3rd Check - No Phone Number or Email Address
         pNumber = "No Data",
         email = "No Data";
 
@@ -112,12 +109,3 @@ export const fetchSessionData = async() => {
 
     return attrs;
 };
-
-/*
-export const fetchUserAuthRaw = async() => {
-    return await auth();
-};
-
-export const fetchUserDataRaw = async() => {
-    return await currentUser();
-};*/
