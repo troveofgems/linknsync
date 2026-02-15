@@ -1,6 +1,8 @@
 # Changes
  - 2/15/26
    - Prisma Generate Set to No-Engine For Accelerate 
+   - Vercel Preview Setup, Development Setup
+
  - 2/9/26
    - Added Prisma Accelerate For Edge Functions
    - Split Dev/Prod DB Instances and Locations
