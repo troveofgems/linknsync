@@ -98,8 +98,13 @@ export const NAV_PATH_CONSTANTS = {
                 },
                 payments: {
                     path: "payments",
-                    label: "Payments",
+                    label: "My Subscription",
                     permissions: RbacPermissions.allowAccessTo.payments
+                },
+                pmsConnections: {
+                    path: "pms",
+                    label: "PMS Connections",
+                    permissions: RbacPermissions.allowAccessTo.pmsConnections
                 },
                 profile: {
                     path: "profile",

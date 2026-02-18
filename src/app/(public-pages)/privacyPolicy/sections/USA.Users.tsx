@@ -1,7 +1,7 @@
 import {
     StaticPageContent, PageKey, SectionLabel,
     printSectionWrapper,
-} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+} from "@/utils/static.page.content.utils";
 
 const
     HEADER = "11. Do United States Residents Have Specific Privacy Rights?",

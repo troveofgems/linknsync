@@ -97,12 +97,14 @@ export const ConflictListColumnDefs:
                 }),
                 convertedEndTime = datetimeConversionTo_String({
                     timestamp: data.firstBlock.endDate as Date
-                }),
+                })/*,
                 formattedStartTime = convertedStartTime.split(",")[0],
-                formattedEndTime = convertedEndTime.split(",")[0];
+                formattedEndTime = convertedEndTime.split(",")[0]*/;
 
             return (
-                <div className="text-right text-green-500">{formattedStartTime} to {formattedEndTime}</div>
+                <div className="text-right">
+                    {convertedStartTime} to {convertedEndTime}
+                </div>
             )
         },
     },
@@ -110,19 +112,21 @@ export const ConflictListColumnDefs:
         accessorKey: "conflictBookingDates",
         header: () => {
             return (
-                <h2>Conflict Booking Dates</h2>
+                <h2>Conflicting Booking Dates</h2>
             )
         },
         cell: ({ row }) => {
             const
                 data = row.original as unknown as { startDate: string; endDate: string },
                 convertedStartTime = datetimeConversionTo_String({ timestamp: data.startDate }),
-                convertedEndTime = datetimeConversionTo_String({ timestamp: data.endDate }),
+                convertedEndTime = datetimeConversionTo_String({ timestamp: data.endDate })/*,
                 formattedStartTime = convertedStartTime.split(",")[0],
-                formattedEndTime = convertedEndTime.split(",")[0];
+                formattedEndTime = convertedEndTime.split(",")[0]*/;
 
             return (
-                <div className="text-right text-red-500">{formattedStartTime} to {formattedEndTime}</div>
+                <div className="text-right text-red-500">
+                    {convertedStartTime} to {convertedEndTime}
+                </div>
             )
         },
     },

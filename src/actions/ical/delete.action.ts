@@ -1,6 +1,6 @@
 "use server";
 import db from "@/db/connect.db";
-import {DeleteICalSchema} from "@/validator/file/file.validator";
+import {DeleteICalSchema} from "@/validator/file.validation.schema";
 import { createUserAuditAction_BackgroundProcess } from "@/actions/audit/user/create.action";
 import {compileUserAuditObject} from "@/lib/utils/Audit/audit.utils";
 import {SessionDataState} from "@/store/userStore";

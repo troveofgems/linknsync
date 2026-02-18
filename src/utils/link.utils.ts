@@ -1,7 +1,7 @@
 import { APP_PATHS, NavLink } from "@/utils/nav.path.utils";
 
 export const privateLinks = (orgRole: string): NavLink[] => {
-    const { goToProfile, goToOrganization, goToPayments } = APP_PATHS.pages.authenticated.user;
+    const { goToProfile, goToOrganization, goToPayments, goToPMSConnections } = APP_PATHS.pages.authenticated.user;
 
     // Ind Users only have access to the Profile Link
     if(orgRole === "IND") {
@@ -16,6 +16,7 @@ export const privateLinks = (orgRole: string): NavLink[] => {
             goToProfile as NavLink,
             goToOrganization.manageOrganization as NavLink,
             goToPayments as NavLink,
+            goToPMSConnections as NavLink,
         ];
     }
 

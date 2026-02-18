@@ -1,7 +1,7 @@
 'use server';
 import db from "@/db/connect.db";
 
-import {CreateOrUpdatePropertySchema} from "@/validator/property/property.validator";
+import {CreateOrUpdatePropertySchema} from "@/validator/property.validation.schema";
 import {
     createAddressAction,
     CreateAddressActionState,

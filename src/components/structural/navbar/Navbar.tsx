@@ -1,12 +1,15 @@
-"use client";
+ "use client";
 import React, {useEffect} from "react";
+ import {useUser} from "@clerk/nextjs";
+ import {setInitializedSessionData, useUserStore} from "@/store/userStore";
+
 import {Container} from "../container/Container";
-import {Logo} from "@/components/structural/navbar/_Logo";
-import {ThemeToggler} from "@/components/structural/navbar/_DarkMode";
-import {LinksDropdown} from "@/components/structural/navbar/_LinksDropdown";
-import {useUser/*, useClerk*/} from "@clerk/nextjs";
-import {setInitializedSessionData, useUserStore} from "@/store/userStore";
-import {Alert} from "@/components/misc/Sonner.Alerter";
+ import {ACTIVE_APP_VERSION} from "@/constants/SiteContent/app.constants";
+ import {Logo} from "@/components/structural/navbar/_Logo";
+ import {ThemeToggler} from "@/components/structural/navbar/_DarkMode";
+ import {LinksDropdown} from "@/components/structural/navbar/_LinksDropdown";
+ import {Alert} from "@/components/misc/Sonner.Alerter";
+ import {Badge} from "@/components/ui/badge";
 
 function Navbar() {
     const
@@ -53,6 +56,16 @@ function Navbar() {
 
     return (
         <nav className="border-b mb-5 borderBOverride">
+            {
+                process.env.NODE_ENV !== "production" && (
+                    <div id={"app_version"} className={"text-center mt-4"}>
+                        <Badge variant={"destructive"}>
+                            {ACTIVE_APP_VERSION}
+                        </Badge>
+                        <hr className={"mt-4"} />
+                    </div>
+                )
+            }
             <Container className="flex flex-col sm:flex-row sm:justify-between sm:items-center flex-wrap py-8 mobile-override-nav">
                 <Logo />
                 <div className={"flex gap-4 items-center"}>

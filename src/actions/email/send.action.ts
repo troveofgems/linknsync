@@ -5,7 +5,7 @@ import db from "@/db/connect.db";
 import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 import {createBookingRequestAction} from "@/actions/bookingRequest/create.action";
 import {timeConversionTo_AmPm} from "@/lib/utils/DateTime/time.utils";
-import {initTransporter} from "@/lib/utils/EmailTransporter/transporter.utils";
+import {initTransporter} from "@/lib/EmailTransporter/transporter.lib";
 import {AddressFormatterProps, formatAddress} from "@/lib/utils/Address/address.utils";
 
 export interface CreateSendEmailActionState {
@@ -26,6 +26,7 @@ export const createSendEmailActionFromForm = async(
     prevState: CreateSendEmailActionState,
     form: FormData,
 ): Promise<CreateSendEmailActionState> => {
+    console.log("")
    const // Fetch Property For PLA Data
        property = await db.property.findFirst({
            where: { id: form.get("property.id") as string },
@@ -46,6 +47,7 @@ export const createSendEmailActionFromForm = async(
                contactEmail: true
            }
        });
+
 
     // Build Email Object
     const requestData = {

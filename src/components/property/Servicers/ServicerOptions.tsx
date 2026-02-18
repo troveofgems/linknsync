@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import {GenericTextInput} from "@/components/forms/_elements/Inputs/GenericTextInput";
 
-import TrackLogo from "@/public/images/travelnet_solutions_logo.jpeg";
+import TrackLogo from "@/public/images/travelnet_solutions_logo.png";
 import Image from "next/image";
 
 export const ServicerOptions = (
@@ -43,7 +43,7 @@ export const ServicerOptions = (
                         containerClassnames={"flex flex-row mt-2 alignContentCenter"}
                         labelClassnames={"formLabel formCheckboxLabel alignContentCenter"}
                         inputFieldClassnames={"formInput formCheckbox"}
-                        label={"Sync Calendar Updates To Track"}
+                        label={"Sync Calendar Updates To Track (PUSH)"}
                     />
                 </div>
                 <div className={"flex flex-col justify-end-safe text-end pl-4 w-[280px]"}>

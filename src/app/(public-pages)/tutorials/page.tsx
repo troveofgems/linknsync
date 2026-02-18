@@ -1,5 +1,5 @@
 import {QuestionsOrConcerns} from "@/components/pages/questions-or-conerns/QuestionsOrConcerns";
-import {StaticPageAlignment} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+import {StaticPageAlignment} from "@/utils/static.page.content.utils";
 import LoginAndProfileTutorial from "@/app/(public-pages)/tutorials/sections/Login.And.Profile.Tutorial";
 import CreatePropertyTutorial from "@/app/(public-pages)/tutorials/sections/Create.Property.Tutorial";
 import OrganizationTutorial from "@/app/(public-pages)/tutorials/sections/Organization.Tutorial";

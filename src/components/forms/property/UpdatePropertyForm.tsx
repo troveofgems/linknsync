@@ -134,6 +134,7 @@ export const UpdatePropertyForm = (
                 } as ReadPropertyByIdParams
             ).then(result => {
                 const {response: { propertyById } } = result;
+                console.log("Property By Id? ", propertyById);
                 setProperty(propertyById as unknown as PropertyToUpdate);
                 handleAddressPrefillWithData(propertyById?.Address as UserInputAddress);
                 handleImagePrefillWithData({
@@ -159,7 +160,7 @@ export const UpdatePropertyForm = (
         handleAddressChange, handleAddressPrefillWithData, handleImagePrefillWithData,
     ]);
 
-    console.log(property);
+    console.log("Update Property", property);
 
     return (
         <form action={action} nonce={state.nonce}>
@@ -167,7 +168,7 @@ export const UpdatePropertyForm = (
                 <div className={"w-10/12"}>
                     <BorderedPanel
                         divKey={baseKey + "connectToServicer"}
-                        title={"Servicer Connections"}
+                        title={"PMS Connections"}
                     >
                         {
                             (

@@ -43,6 +43,8 @@ const {
     manageIcals: manageIcalSourcesForProperty
 } = APP_PATHS.pages.authenticated.user.goToProperty;
 
+console.log("APP PATHS", APP_PATHS);
+
 // Column Def List
 export const propertyListColumnDefs = (
     {

@@ -15,7 +15,12 @@ export const fetchSessionData = async() => {
         { userId, orgRole, orgId, orgPermissions, sessionClaims } = await auth(),
         userData = await currentUser();
 
-    const organization = await (await clerkClient()).organizations.getOrganization({ organizationId: orgId as string });
+    let organization = null;
+    try {
+        organization = await (await clerkClient()).organizations.getOrganization({ organizationId: orgId as string });
+    } catch(err) {
+        console.log("No Org Found...", err);
+    }
 
     // 1st Check - No ClerkId Reject Request
     if(!userId) { return new Error(REJECTED_REQUEST_MESSAGE); }
@@ -83,7 +88,7 @@ export const fetchSessionData = async() => {
                 },
                 org: {
                     id: organizationEntry?.id,
-                    name: organization.name,
+                    name: organization?.name ?? "No Org Yet",
                     permissions: orgPermissions,
                 }
             }

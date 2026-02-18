@@ -3,7 +3,7 @@ import db from "@/db/connect.db";
 import {ZodError} from "zod";
 import {SessionDataState} from "@/store/userStore";
 import {SupportedCountries} from "@prisma/client";
-import {optionSelected} from "@/lib/utils/misc/bool.utils";
+import {optionSelected} from "@/utils/bool.utils";
 
 /**
  * This File Contains the Logic for Updating a Property
@@ -71,26 +71,10 @@ export const updatePropertyAction = async(
 
     // Marked As Connected To A Servicer
     const servicerConnected = optionSelected(form.get("property.servicer.tns.connected") as string);
+    const unitId = form.get("property.servicer.tns.unitId") as string;
+
     if(servicerConnected) {
-        // Upsert To AttachedPMS
-        await db.attachedPMS.upsert({
-            update: {
-                pmsList: ["TNS"],
-                foreignIdList: [form.get("property.servicer.tns.unitId") as string],
-            },
-            create: {
-                pmsList: ["TNS"],
-                foreignIdList: [form.get("property.servicer.tns.unitId") as string],
-                Property: {
-                    connect: {
-                        id: prevState.pid
-                    }
-                }
-            },
-            where: {
-                propertyId: prevState.pid
-            },
-        });
+        console.log("Need to make a call to property to connect the unit id")
     }
 
     // Update Property Detail

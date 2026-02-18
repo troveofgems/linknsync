@@ -367,6 +367,9 @@ export const addNewEvents = async (
         actionsTaken.push("New Conflicts Recorded: 0");
     }
 
+    // Add Events Call To Push To TravelNet/PMS - Create Unit Block
+
+
     return {
         message: "New Events Added Successfully",
         response: {
@@ -449,6 +452,8 @@ export const removeExistingEvents = async (
         actionsTaken.push("Existing Events Removed: 0");
         actionsTaken.push("Existing Conflicts Removed: 0");
     }
+
+    // Add Events Call To Push To TravelNet/PMS For Removal Delete Unit Block
 
     return {
         message: "Removed Events Successfully",

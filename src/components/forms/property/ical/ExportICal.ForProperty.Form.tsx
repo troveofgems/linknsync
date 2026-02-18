@@ -12,7 +12,7 @@ import {Alert} from "@/components/misc/Sonner.Alerter";
 import {useRouter} from "next/navigation";
 import {ICalSource} from "@/components/forms/property/elements/CurrentSource";
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
-import {addEllipsis} from "@/lib/utils/misc/string.utils";
+import {addEllipsis} from "@/utils/string.utils";
 import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const ExportLNSICSForPropertyForm = (

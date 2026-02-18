@@ -1,7 +1,7 @@
 import {
     StaticPageContent, PageKey, SectionLabel,
     printSectionWrapper,
-} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+} from "@/utils/static.page.content.utils";
 
 const
     HEADER = "14. How Can You Review, Update, Or Delete The Data We Collect From You?",

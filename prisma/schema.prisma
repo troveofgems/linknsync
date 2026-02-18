@@ -6,30 +6,32 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 /**
  * App-User Tables
  */
 model Property {
-  id               String         @id @default(uuid())
+  id               String       @id @default(uuid())
   name             String /// @encrypted
   nameHash         String? /// @encryption:hash(name)
   homepageLink     String /// @encrypted
   homepageLinkHash String? /// @encryption:hash(homepageLink)
-  archived         Boolean?       @default(false)
+  archived         Boolean?     @default(false)
   archivedAt       DateTime?
+  trackUnitId      String?
   Photo            Photo?
   Address          Address?
   Calendar         Calendar?
   CronService      CronService?
-  AttachedPMS      AttachedPMS?
+  AttachedPMS      AttachedPMS? @relation(fields: [attachedPMSId], references: [id])
   cid              String
   coid             String
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  attachedPMSId    String?
 
   @@index([coid, cid]) // For company-clerk queries
   @@index([coid]) // For company-based queries
@@ -45,7 +47,7 @@ model Photo {
   widthHash        String? /// @encryption:hash(width)
   height           String? /// @encrypted
   heightHash       String? /// @encryption:hash(height)
-  size             BigInt @default(0)
+  size             BigInt   @default(0)
   mime             String? /// @encrypted
   mimeHash         String? /// @encryption:hash(mime)
   ext              String? /// @encrypted
@@ -58,8 +60,8 @@ model Photo {
   mediumUrlHash    String? /// @encryption:hash(mediumUrl)
   deleteUrl        String? /// @encrypted
   deleteUrlHash    String? /// @encryption:hash(deleteUrl)
-  Property         Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  propertyId       String     @unique()
+  Property         Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId       String   @unique()
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
@@ -141,6 +143,7 @@ model ICalEntry {
   icalUrl            String? /// @encrypted
   icalUrlHash        String? /// @encryption:hash(icalUrl)
   icalFilename       String? /// @encrypted
+  slug               String?
   icalFilenameHash   String? /// @encryption:hash(icalFilename)
   isMainSrc          Boolean             @default(false)
   dateBlocks         DateBlock[]
@@ -260,13 +263,41 @@ model BookingRequest {
 }
 
 model AttachedPMS {
-  id            String     @id @default(uuid())
-  pmsList       String[]
-  foreignIdList String[]
-  Property      Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  propertyId    String     @unique()
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  id                 String     @id @default(uuid())
+  pmsName            String?    @default("Track")
+  domain             String
+  apiKey             String
+  secretKey          String
+  blockReasonId      String
+  attachedProperties Property[]
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+}
+
+model Subscription {
+  id                          String      @id @default(uuid())
+  amount                      String
+  currency                    String
+  recurringInterval           String
+  status                      String
+  currentPeriodStart          DateTime
+  currentPeriodEnd            DateTime
+  cancelAtPeriodEnd           Boolean     @default(false)
+  canceledAt                  DateTime?
+  startedAt                   DateTime
+  endsAt                      DateTime?
+  endedAt                     DateTime?
+  customerId                  String
+  productId                   String
+  discountId                  String?
+  checkoutId                  String
+  customerCancellationReason  String?
+  customerCancellationComment String?
+  metaData                    String? // JSON String
+  customFieldData             String?
+  userId                      UserImprint @relation(fields: [id], references: [id])
+  createdAt                   DateTime    @default(now())
+  updatedAt                   DateTime    @updatedAt
 }
 
 /**
@@ -274,20 +305,20 @@ model AttachedPMS {
  */
 model UserImprint {
   id                String              @id @default(uuid())
-  firstName         String              /// @encrypted
-  firstNameHash     String?             /// @encryption:hash(firstName)
-  lastName          String              /// @encrypted
-  lastNameHash      String?             /// @encryption:hash(lastName)
-  fullName          String              /// @encrypted
-  fullNameHash      String?             /// @encryption:hash(fullName)
-  contactEmail      String              /// @encrypted
-  contactEmailHash  String?             /// @encryption:hash(contactEmail)
-  contactPhone      String              /// @encrypted
-  contactPhoneHash  String?             /// @encryption:hash(contactPhone)
-  appRole           String              /// @encrypted
-  appRoleHash       String?             /// @encryption:hash(appRole)
-  cid               String              /// @encrypted
-  cidHash           String?             /// @encryption:hash(cid)
+  firstName         String /// @encrypted
+  firstNameHash     String? /// @encryption:hash(firstName)
+  lastName          String /// @encrypted
+  lastNameHash      String? /// @encryption:hash(lastName)
+  fullName          String /// @encrypted
+  fullNameHash      String? /// @encryption:hash(fullName)
+  contactEmail      String /// @encrypted
+  contactEmailHash  String? /// @encryption:hash(contactEmail)
+  contactPhone      String /// @encrypted
+  contactPhoneHash  String? /// @encryption:hash(contactPhone)
+  appRole           String /// @encrypted
+  appRoleHash       String? /// @encryption:hash(appRole)
+  cid               String /// @encrypted
+  cidHash           String? /// @encryption:hash(cid)
   OrgImprint        OrgImprint?         @relation(fields: [orgImprintId], references: [id])
   orgImprintId      String?
   createdAt         DateTime            @default(now())
@@ -298,6 +329,7 @@ model UserImprint {
   DateBlock         DateBlock[]
   DateBlockConflict DateBlockConflict[]
   BookingRequest    BookingRequest[]
+  Subscription      Subscription[]
 }
 
 model OrgImprint {

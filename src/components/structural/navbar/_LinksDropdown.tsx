@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {LogOutLink} from "@/components/structural/navbar/_LogOutLink";
 
-import {adminLinks, privateLinks} from "@/lib/utils/Routes/link.utils";
+import {adminLinks, privateLinks} from "@/utils/link.utils";
 import {useUserStore} from "@/store/userStore";
 import {UserIcon} from "@/components/structural/navbar/_UserIcon";
 

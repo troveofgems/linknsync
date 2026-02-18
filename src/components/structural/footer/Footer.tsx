@@ -1,12 +1,14 @@
 "use client";
 import React, {useState} from "react";
 import "./Footer.scss";
-import {DialogShell} from "@/components/dialogs/DialogShell";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge"
 
 import {APP_PATHS} from "@/utils/nav.path.utils";
+import {ACTIVE_APP_VERSION} from "@/constants/SiteContent/app.constants";
+
+import {DialogShell} from "@/components/dialogs/DialogShell";
+import {Button} from "@/components/ui/button";
+import {Badge} from "@/components/ui/badge"
 
 export const Footer = () => {
     const
@@ -56,7 +58,7 @@ export const Footer = () => {
                         <p className="copyright">
                             &reg; <small>2025 - {currentYear}</small>
                         </p>
-                        <Badge variant="destructive">BETA 0.1.0</Badge>
+                        <Badge variant="destructive">{ACTIVE_APP_VERSION}</Badge>
                     </div>
                     <hr className={"footerHR"} />
                     <div className={"xl:flex"}>

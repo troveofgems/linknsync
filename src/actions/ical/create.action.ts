@@ -1,6 +1,6 @@
 "use server";
 import db from "@/db/connect.db";
-import { ICalSchema_LINK, ICalSchema_FileUpload } from "@/validator/file/file.validator";
+import { ICalSchema_LINK, ICalSchema_FileUpload } from "@/validator/file.validation.schema";
 import {
     createDateBlockAction,
     CreateDateBlockActionProps,

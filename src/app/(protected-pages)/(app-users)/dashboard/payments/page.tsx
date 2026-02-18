@@ -1,21 +1,15 @@
-"use client";
-/*
-`prisma://` or `prisma+postgres://`
+import { getSubscriptionDetails } from "@/lib/subscription/subscription";
 
-import {SessionDataState, useUserStore} from "@/store/userStore";
-import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";*/
-/*import {useSearchParams} from "next/navigation";*/
+import PricingTable from "./_component/pricing-table";
 
-function PaymentsPage() {
-/*    const
-        { user: { isLoading, attrs } } = useUserStore(),
-        searchParams = useSearchParams();*/
+async function PaymentsPage() {
+    const subscriptionDetails = await getSubscriptionDetails();
 
     return (
         <div>
-            <h2>Services Subscription</h2>
-            {/*{isLoading && <LoaderSkeleton loadingMessage={"Loading Payments Screen"} additionalClassNames={""} />}*/}
-            {/*{!isLoading && <ProfileForm userProfile={attrs as SessionDataState} redirectFromOrgRegistration={(searchParams?.get("registeredOrg") as unknown as boolean || false)} /> }*/}
+            <div className="flex flex-col w-full">
+                <PricingTable subscriptionDetails={subscriptionDetails} />
+            </div>
         </div>
     );
 }

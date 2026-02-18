@@ -1,6 +1,6 @@
 "use server";
 import db from "@/db/connect.db";
-import {ICalSchema_FileUpload, ICalSchema_LINK} from "@/validator/file/file.validator";
+import {ICalSchema_FileUpload, ICalSchema_LINK} from "@/validator/file.validation.schema";
 import {createICalAttachmentActionFromForm, CreateICalAttachmentActionState} from "@/actions/ical/create.action";
 import { createUserAuditAction_BackgroundProcess } from "@/actions/audit/user/create.action";
 import {

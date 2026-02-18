@@ -72,38 +72,16 @@ export const ICalUploader = (
                             inputFieldClassnames={"formInput w-fit"}
                         />
                     </div>
-                    <div className={`px-4 w-3/4 m-auto mt-7`}>
-                        {
-                            icalImportType === "link" && (
-                                <div className={"w-full m-auto"}>
-                                    <p>
-                                            <span className={"text-green-700 text-3xl"}>
-                                                <TbActivityHeartbeat key={`dynamic_resource_hb_icon`} />
-                                            </span>
-                                        <span className={"text-muted-foreground"}>
-                                                {TEXT_BLOCK__DYNAMIC_URL_UPLOAD_MESSAGE}
-                                            </span>
-                                    </p>
-                                </div>
-                            )
-                        }
-                        {
-                            icalImportType === "file" && (
-                                <div className={"w-full"}>
-                                    <p>
-                                            <span className={"text-red-700 text-3xl"}>
-                                                <GiCrystalGrowth key={`static_resource_crystal_icon`} />
-                                            </span>
-                                        <span className={"text-destructive pr-2"}>
-                                                {TEXT_BLOCK__WARNING_MESSAGE}
-                                            </span>
-                                        <span className={"text-muted-foreground"}>
-                                                {TEXT_BLOCK__STATIC_FILE_UPLOAD_MESSAGE}
-                                            </span>
-                                    </p>
-                                </div>
-                            )
-                        }
+                    <div className={"w-1/2 mx-20"}>
+                        <GenericTextInput
+                            setAsInputTextField={true}
+                            label={"Slug"}
+                            showAsRequired={false}
+                            name={"ical.slug"}
+                            id={"ical.slug"}
+                            labelClassnames={"formLabel"}
+                            inputFieldClassnames={"formInput"}
+                        />
                     </div>
                 </div>
                 <div className={`${inputFieldClassnames}`}>
@@ -140,6 +118,39 @@ export const ICalUploader = (
                         )
                     }
                 </div>
+            </div>
+            <div className={`w-3/4 mt-7`}>
+                {
+                    icalImportType === "link" && (
+                        <div className={"w-full m-auto"}>
+                            <p>
+                                <span className={"text-green-700 text-3xl"}>
+                                    <TbActivityHeartbeat key={`dynamic_resource_hb_icon`} />
+                                </span>
+                                <span className={"text-muted-foreground"}>
+                                    {TEXT_BLOCK__DYNAMIC_URL_UPLOAD_MESSAGE}
+                                </span>
+                            </p>
+                        </div>
+                    )
+                }
+                {
+                    icalImportType === "file" && (
+                        <div className={"w-full"}>
+                            <p>
+                                <span className={"text-red-700 text-3xl"}>
+                                    <GiCrystalGrowth key={`static_resource_crystal_icon`} />
+                                </span>
+                                <span className={"text-destructive pr-2"}>
+                                    {TEXT_BLOCK__WARNING_MESSAGE}
+                                </span>
+                                <span className={"text-muted-foreground"}>
+                                    {TEXT_BLOCK__STATIC_FILE_UPLOAD_MESSAGE}
+                                </span>
+                            </p>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )
