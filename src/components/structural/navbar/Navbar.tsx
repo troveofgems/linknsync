@@ -56,16 +56,12 @@ function Navbar() {
 
     return (
         <nav className="border-b mb-5 borderBOverride">
-            {
-                process.env.NODE_ENV !== "production" && (
-                    <div id={"app_version"} className={"text-center mt-4"}>
-                        <Badge variant={"destructive"}>
-                            {ACTIVE_APP_VERSION}
-                        </Badge>
-                        <hr className={"mt-4"} />
-                    </div>
-                )
-            }
+            <div id={"app_version"} className={"text-center mt-4"}>
+                <Badge variant={"destructive"}>
+                    {ACTIVE_APP_VERSION}
+                </Badge>
+                <hr className={"mt-4"} />
+            </div>
             <Container className="flex flex-col sm:flex-row sm:justify-between sm:items-center flex-wrap py-8 mobile-override-nav">
                 <Logo />
                 <div className={"flex gap-4 items-center"}>
