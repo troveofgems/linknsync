@@ -137,7 +137,7 @@ export const updateICalAction = async(
             });
 
             // Process and Upload New ICal From Form
-            const { response: newICalResourceResponse, message, errors } = await createICalAttachmentActionFromForm(
+            const { response: newICalResourceResponse } = await createICalAttachmentActionFromForm(
                     { pState: prevState.pState } as CreateICalAttachmentActionState,
                     form,
                     false
@@ -240,7 +240,9 @@ export const updateICalAction = async(
 
     return {
         message: "The iCal Resource has been successfully updated!",
-        response: {},
+        response: {
+
+        },
         pState: prevState.pState
     } as UpdateICalActionState;
 };
