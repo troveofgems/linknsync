@@ -32,12 +32,12 @@ function Navbar() {
         }
 
         if(authenticatedUserWithoutAppSessionStateTracker) {
-            console.log("App Not Tracking User Session Yet...");
+            console.warn("App Not Tracking User Session Yet...");
             setInitializedSessionData(user, false);
         }
 
         if(authenticatedUserWithAppSessionStateTracker) {
-            console.log(
+            console.warn(
                 "User Fully Initialized Through Clerk And Application",
                 appSessionDataInitializedFromClerk,
                 useUserStore.getState().getRemainingSessionTime()

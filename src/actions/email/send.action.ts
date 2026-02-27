@@ -26,7 +26,6 @@ export const createSendEmailActionFromForm = async(
     prevState: CreateSendEmailActionState,
     form: FormData,
 ): Promise<CreateSendEmailActionState> => {
-    console.log("")
    const // Fetch Property For PLA Data
        property = await db.property.findFirst({
            where: { id: form.get("property.id") as string },

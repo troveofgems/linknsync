@@ -30,8 +30,6 @@ export async function getSubscriptionDetails(): Promise<SubscriptionDetailsResul
             .from(subscription)
             .where(eq(subscription.userId, session.user.id));*/
 
-        console.log("User Already Subscribed? ", userSubscriptions);
-
         if (!userSubscriptions.length) {
             return { hasSubscription: false };
         }
@@ -39,12 +37,12 @@ export async function getSubscriptionDetails(): Promise<SubscriptionDetailsResul
         // Get the most recent active subscription
         const activeSubscription = userSubscriptions
             .filter((sub) => sub.status === "active")
-            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+            .sort((a, b) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime())[0];
 
         if (!activeSubscription) {
             // Check for canceled or expired subscriptions
             const latestSubscription = userSubscriptions
-                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+                .sort((a, b) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime())[0];
 
             if (latestSubscription) {
                 const now = new Date();

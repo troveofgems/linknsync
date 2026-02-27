@@ -6,6 +6,11 @@ import {createConflictAction, CreateConflictActionState} from "@/actions/conflic
 import {ConflictResolutions, processConflictResolutions} from "@/actions/cronService/update.action";
 import {SessionDataState} from "@/store/userStore";
 import DateBlockCreateManyInput = Prisma.DateBlockCreateManyInput;
+import {
+    createTrackUnitBlockAction,
+    deleteTrackUnitBlockAction,
+    TrackUnitBlockActionState
+} from "@/actions/pms/_pms/track.actions";
 
 /**
  * This File Contains the Logic for Creating a Property
@@ -93,8 +98,6 @@ export const createDateBlockAction = async(
         data: nonConflicting as DateBlockCreateManyInput[],
         skipDuplicates: true
     });
-
-    console.log("Conflicts are: ", conflicts)
 
     // Process Conflicts
     const generatedConflictBlocks = await createConflictAction(
@@ -353,6 +356,14 @@ export const addNewEvents = async (
             data: nonConflicting as DateBlockCreateManyInput[]
         });
         actionsTaken.push(`New Events Recorded: ${createManyDateBlocksResponse.count}`);
+        // Add Events Call To Push To TravelNet/PMS - Create Unit Block
+        if(process.env.NODE_ENV === 'development') {
+            console.log("Add Non-conflicting Dates: ", createManyDateBlocksResponse)
+        }
+        await createTrackUnitBlockAction(
+            {} as TrackUnitBlockActionState,
+            []
+        );
     } else {
         actionsTaken.push("New Events Recorded: 0");
     }
@@ -366,9 +377,6 @@ export const addNewEvents = async (
     } else {
         actionsTaken.push("New Conflicts Recorded: 0");
     }
-
-    // Add Events Call To Push To TravelNet/PMS - Create Unit Block
-
 
     return {
         message: "New Events Added Successfully",
@@ -392,7 +400,17 @@ export const removeExistingEvents = async (
                 }
             }
         });
+        // Add Events Call To Push To TravelNet/PMS For Removal Delete Unit Block
+        if(process.env.NODE_ENV === "development") {
+            console.log("Make call to delete existing events in lns from track: ", deleteManyDateBlocksResponse);
+        }
         actionsTaken.push(`Existing Events Removed: ${deleteManyDateBlocksResponse.count}`);
+        await deleteTrackUnitBlockAction(
+            {} as TrackUnitBlockActionState,
+            {
+                unitBlockIdList: []
+            }
+        );
 
         // Conflicts Processed Next
         const fetchConflictsResponse = await db.dateBlockConflict.findMany({
@@ -452,8 +470,6 @@ export const removeExistingEvents = async (
         actionsTaken.push("Existing Events Removed: 0");
         actionsTaken.push("Existing Conflicts Removed: 0");
     }
-
-    // Add Events Call To Push To TravelNet/PMS For Removal Delete Unit Block
 
     return {
         message: "Removed Events Successfully",

@@ -104,7 +104,6 @@ export const fetchPropertyByIdAction = async(
     prevState: ReadPropertyActionState,
     searchParams: ReadPropertyByIdParams
 ) => {
-    console.log("Try to fetch Property By Id? ", searchParams);
     try {
         const fetchPropertyByIdResponse = await db.property.findFirst({
             where: {
@@ -179,8 +178,6 @@ export const fetchPropertyByIdAction = async(
                 },
             }
         });
-
-        console.log("Fetch Successful? ", fetchPropertyByIdResponse);
 
         return {
             message: "Property By Id Fetch Successful!",

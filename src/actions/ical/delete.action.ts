@@ -22,7 +22,6 @@ export const deleteICalAction = async(
     form: FormData,
     generateAudit = true
 ): Promise<DeleteICalActionState> => {
-    console.log(prevState, form);
     const // FormData & Variable Extracts With Validation
         coid = prevState.pState?.profile?.org.id as string,
         cid = prevState.pState?.loggedInUser?.userId as string,
@@ -37,8 +36,6 @@ export const deleteICalAction = async(
             generatedDeleteConfirmationCode: form.get("code.deletion.generated") as string,
         },
         validatedFields = DeleteICalSchema.safeParse(userInput);
-
-    console.log("Validated fields: ", validatedFields);
 
     // Return Failed Validation Otherwise Continue With Processing Below
     if(!validatedFields.success) {

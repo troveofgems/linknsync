@@ -98,8 +98,6 @@ export const processConflictResolutions = async (resolvedConflicts: ConflictReso
         response = await db.resolutionAudit.createMany({
             data: resolvedConflictsToStore,
         });
-
-        console.log("Response From Resolution Audit: ", response);
     }
 
     return {

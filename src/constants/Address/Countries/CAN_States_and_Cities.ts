@@ -47,7 +47,6 @@ export const getCanadianCitiesByProvinceOrTerritory = (requestedRegion: string):
     name: string;
     value: string;
 }> => {
-    console.log("Requested Region? ", requestedRegion);
     if(CanadianCities.includes(requestedRegion)) {
         return canadianCities[requestedRegion].map(city => ({
             city,

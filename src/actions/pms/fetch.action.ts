@@ -25,8 +25,8 @@ export interface FetchPMSListActionState {
 export const fetchPMSAction = async(
     user: SessionDataState,
 ): Promise<FetchPMSListActionState> => {
-    const // Owner Data
-        { loggedInUser, profile } = user as SessionDataState;
+/*    const // Owner Data
+        { loggedInUser, profile } = user as SessionDataState;*/
         /*coid = profile!.org.id,
         cid  = loggedInUser!.userId!,
         sid = loggedInUser!.sessionId!*/

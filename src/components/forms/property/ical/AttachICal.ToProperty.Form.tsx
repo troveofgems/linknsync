@@ -58,8 +58,6 @@ export const AttachICalToPropertyForm = (
         }
     }, [state, isPending, router, viewPropertyList]);
 
-    console.log("ADD ICAL: ");
-
     return (
         <form action={action}>
             <h2 className={"text-1xl font-semibold capitalize"}>ICal Sources</h2>

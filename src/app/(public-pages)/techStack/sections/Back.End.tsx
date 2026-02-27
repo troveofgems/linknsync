@@ -22,10 +22,11 @@ const pageContents = (
             paragraph: "NodeJS",
             desc: "NodeJS is the main engine for the application.",
             list: [
+                "ImitateEmail (dev)/Sendgrid (prod)",
                 "ImgBB",
-                "ImitateEmail",
                 "ClerkJS",
-                "Supabase PostGreSQL DB",
+                "Vercel PostGreSQL DB",
+                "Polar.sh For Payment Management Services",
                 "Mux Video Processing for Tutorials Videos"
             ]
         }

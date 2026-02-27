@@ -44,7 +44,6 @@ export const ExportLNSICSForPropertyForm = (
                     description: new Date().toISOString(),
                     actionLabel: "Close",
                 });
-                console.log("Set DownloadData: ", state)
                 setDownloadData(state.response as unknown as UpdateICalActionState);
                 setReadyForDownload(true);
                 const downloadHref = state.response.downloadHref ?? "/";

@@ -22,11 +22,10 @@ export const fetchCronServiceListAction = async(
     prevState: ReadCronServiceActionState,
     searchParams: ReadCronServiceActionListByOrgIdParams
 ) => {
-    const { coid } = searchParams.coid as unknown as ReadCronServiceActionListByOrgIdParams;
     try {
         const fetchCronServiceListResponse = await db.cronService.findMany({
             where: {
-                coid: coid as string
+                coid: searchParams.coid as string
             },
             select: {
                 id: true,

@@ -24,7 +24,6 @@ export const ConflictListColumnDefs:
         },
         cell: ({ row }) => {
             const data = row.original as { propertyId: string; propertyName: string; };
-            console.log("Convert to Linkable: ", data);
 
             return (
                 <div className="capitalize">

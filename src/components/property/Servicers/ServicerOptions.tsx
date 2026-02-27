@@ -8,12 +8,10 @@ import Image from "next/image";
 export const ServicerOptions = (
     {
         connected = false,
-        attachedPMSList,
-        unitIdList
+        unitId
     }: {
         connected?: boolean;
-        attachedPMSList?: string[];
-        unitIdList?: string[];
+        unitId?: string;
     }
 ) => {
     const [showTrackUnitId, setShowTrackUnitId] = useState(connected);
@@ -21,10 +19,6 @@ export const ServicerOptions = (
     const handleConnectToServicerClick = () => {
         setShowTrackUnitId(!showTrackUnitId);
     };
-
-    if(attachedPMSList) {
-        console.log("PMS List attached...Logic Goes Here...")
-    }
 
     return (
         <div className={"flex flex-col w-full justify-start-safe"}>
@@ -54,7 +48,7 @@ export const ServicerOptions = (
                                 showAsRequired={true}
                                 id={"property.servicer.tns.unitId"}
                                 name={"property.servicer.tns.unitId"}
-                                defaultValue={unitIdList?.[0] ?? ""}
+                                defaultValue={unitId ?? ""}
                                 labelClassnames={"mt-0"}
                                 inputFieldClassnames={"formInput text-end"}
                                 placeholder={"Track Unit Id"}

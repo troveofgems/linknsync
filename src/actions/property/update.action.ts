@@ -2,7 +2,7 @@
 import db from "@/db/connect.db";
 import {ZodError} from "zod";
 import {SessionDataState} from "@/store/userStore";
-import {SupportedCountries} from "@prisma/client";
+import {AttachedPMS, SupportedCountries} from "@prisma/client";
 import {optionSelected} from "@/utils/bool.utils";
 
 /**
@@ -55,6 +55,8 @@ export const updatePropertyAction = async(
         advancedUpdates: {
             archived?: boolean;
             archivedAt?: Date;
+            trackUnitId?: string;
+            attachedPMSId?: string;
         } = {};
 
     // Marked Archived?
@@ -71,10 +73,15 @@ export const updatePropertyAction = async(
 
     // Marked As Connected To A Servicer
     const servicerConnected = optionSelected(form.get("property.servicer.tns.connected") as string);
-    const unitId = form.get("property.servicer.tns.unitId") as string;
-
+    const trackUnitId = form.get("property.servicer.tns.unitId") as string;
     if(servicerConnected) {
-        console.log("Need to make a call to property to connect the unit id")
+        const { id: trackId } = await db.attachedPMS.findFirst({
+            where: {
+                pmsName: "Track"
+            }
+        }) as Partial<AttachedPMS>;
+        advancedUpdates.trackUnitId = trackUnitId;
+        advancedUpdates.attachedPMSId = trackId;
     }
 
     // Update Property Detail

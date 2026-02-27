@@ -31,6 +31,7 @@ export const readICalSourceListAction = async(
             importType: true,
             icalUrl: true,
             icalFilename: true,
+            slug: true,
             isMainSrc: true,
             createdAt: true,
             updatedAt: true,

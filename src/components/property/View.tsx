@@ -41,14 +41,11 @@ export const PropertyView = ({
                     propertyId: pid,
                 } as ReadPropertyByIdParams
             ).then((result) => {
-                console.log("Result was: ", result);
                 setProperty(result.response.propertyById as PropertyViewProps);
                 setLoadingProperty(false);
             })
         }
     }, [loadingProperty, pid, user]);
-
-    console.log("Property: ", property);
 
     return (
         <>

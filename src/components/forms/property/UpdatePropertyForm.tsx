@@ -41,6 +41,7 @@ interface PropertyToUpdate {
     id: string;
     archived: boolean;
     archivedAt: Date;
+    trackUnitId?: string;
     Address: {
         street: string;
         street2: string;
@@ -134,7 +135,6 @@ export const UpdatePropertyForm = (
                 } as ReadPropertyByIdParams
             ).then(result => {
                 const {response: { propertyById } } = result;
-                console.log("Property By Id? ", propertyById);
                 setProperty(propertyById as unknown as PropertyToUpdate);
                 handleAddressPrefillWithData(propertyById?.Address as UserInputAddress);
                 handleImagePrefillWithData({
@@ -160,8 +160,6 @@ export const UpdatePropertyForm = (
         handleAddressChange, handleAddressPrefillWithData, handleImagePrefillWithData,
     ]);
 
-    console.log("Update Property", property);
-
     return (
         <form action={action} nonce={state.nonce}>
             <div className={"flex flex-row justify-between"}>
@@ -176,8 +174,7 @@ export const UpdatePropertyForm = (
                             ) && (
                                 <ServicerOptions
                                     connected={property.AttachedPMS !== null}
-                                    attachedPMSList={property?.AttachedPMS?.pmsList ?? undefined}
-                                    unitIdList={property?.AttachedPMS?.foreignIdList ?? undefined}
+                                    unitId={property?.trackUnitId as string ?? undefined}
                                 />
                             )
                         }

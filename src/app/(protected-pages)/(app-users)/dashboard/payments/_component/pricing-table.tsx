@@ -47,15 +47,17 @@ export default function PricingTable(
 ) {
     //const router = useRouter();
     const { user: { attrs } } = useUserStore();
-    console.log("Process.env", process.env);
 
     const handleCheckout = async (productId: string, slug: string) => {
+        if(process.env.NODE_ENV === "development") {
+            console.warn("Handle Checkout with product id and slug", productId, slug, attrs);
+        }
         try {
             window.location.href = `/api/checkout?products=aa87ce1c-7af1-45a2-95be-427066a89e8a`;
         } catch (error) {
             console.error("Checkout failed:", error);
             // TODO: Add user-facing error notification
-            toast.error("We were unable to complete your purchase with Stripe...");
+            toast.error("We were unable to complete your purchase with Polar...");
         }
     };
 
@@ -160,6 +162,7 @@ export default function PricingTable(
                         ) : (
                             <Button
                                 className="w-full"
+                                disabled={true}
                                 onClick={() => handleCheckout(STARTER_TIER, STARTER_SLUG)}
                             >
                                 Get Started

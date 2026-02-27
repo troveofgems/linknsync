@@ -37,8 +37,6 @@ export const ListICalsFromProperty = (
         [sources, setSources] = useState<Partial<ICalSource>[] | null>(null),
         [limitReached, setLimitReached] = useState(true);
 
-    console.log("useFormStatus? ", useFormStatus);
-
     const
         [icalId, setICalId] = useState<string>(""),
         [openEditICalDialog, setOpenEditICalDialog] = useState(false),

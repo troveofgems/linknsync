@@ -21,7 +21,6 @@ export const updateICalAction = async(
     form: FormData,
     generateAudit = true
 ): Promise<StripeActionState> => {
-    console.log("Interact with Stripe", form);
     const
         coid = prevState.pState?.profile?.org.id as string,
         cid = prevState.pState?.loggedInUser?.userId as string,
@@ -32,7 +31,7 @@ export const updateICalAction = async(
     const actionsTaken: string[] = [];
 
     actionsTaken.push("Adding Console.log")
-    console.log("Stripe: ", generateAudit, coid, cid, sid, ownerType, actionsTaken);
+    console.log("Polarsh: ", generateAudit, coid, cid, sid, ownerType, actionsTaken);
 
 
 
@@ -46,7 +45,7 @@ export const updateICalAction = async(
     }
 
     return {
-        message: "Stripe!",
+        message: "Polarsh Subscription Successfully Placed!",
         response: {},
         pState: prevState.pState
     } as StripeActionState;

@@ -264,11 +264,16 @@ model BookingRequest {
 
 model AttachedPMS {
   id                 String     @id @default(uuid())
-  pmsName            String?    @default("Track")
-  domain             String
-  apiKey             String
-  secretKey          String
-  blockReasonId      String
+  pmsName            String     @default("Track") /// @encrypted
+  pmsNameHash        String?    /// @encryption:hash(pmsName)
+  domain             String     /// @encrypted
+  domainHash         String?    /// @encryption:hash(domain)
+  apiKey             String     /// @encrypted
+  apiKeyHash         String?    /// @encryption:hash(apiKey)
+  secretKey          String     /// @encrypted
+  secretKeyHash      String?    /// @encryption:hash(secretKey)
+  blockReasonId      String     /// @encrypted
+  blockReasonIdHash  String?    /// @encryption:hash(blockReasonId)
   attachedProperties Property[]
   createdAt          DateTime   @default(now())
   updatedAt          DateTime   @updatedAt
@@ -298,6 +303,18 @@ model Subscription {
   userId                      UserImprint @relation(fields: [id], references: [id])
   createdAt                   DateTime    @default(now())
   updatedAt                   DateTime    @updatedAt
+}
+
+model PmsUpdateLog {
+  id            String @id @default(uuid())
+  pms           String
+  lnsBlockId    String
+  pmsBlockId    String
+  actionType    String
+  pmsResponse   String
+  orgImprintId  String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
 
 /**

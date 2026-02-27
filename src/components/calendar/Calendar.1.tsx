@@ -328,7 +328,6 @@ export const Calendar1 = (
                                                 {
                                                     (!!viewingEvents && viewingEvents.length > 0) &&
                                                     (viewingEvents.map((event, index, eventArray) => {
-                                                        console.log("Event Array: ", eventArray);
                                                         const evt = event as unknown as ScheduledEvent;
                                                         const evtArray = eventArray as {
                                                             markedAsArrival: boolean;
