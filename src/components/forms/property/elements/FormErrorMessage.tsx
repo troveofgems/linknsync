@@ -4,6 +4,7 @@ import {UpdatePropertyActionState} from "@/actions/property/update.action";
 import {DeleteICalActionState} from "@/actions/ical/delete.action";
 import {DeletePropertyActionState} from "@/actions/property/delete.action";
 import {UpdateICalActionState} from "@/actions/ical/update.action";
+import {AttachPMSActionState} from "@/actions/pms/attach.action";
 
 export const FormErrorMessage = (
     {
@@ -12,7 +13,7 @@ export const FormErrorMessage = (
     }: {
         formState:
             CreatePropertyActionState | UpdatePropertyActionState | DeletePropertyActionState |
-            UpdateICalActionState | DeleteICalActionState,
+            UpdateICalActionState | DeleteICalActionState | AttachPMSActionState,
         overrideDefaultError?: boolean;
     }
 ) => (!!formState?.errors && !overrideDefaultError) ? (

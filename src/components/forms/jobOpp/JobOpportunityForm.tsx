@@ -51,8 +51,8 @@ export const JobOpportunityForm = (
                     placeholder={"Company or Personal Name"}
                     name={"contactName"}
                     id={"contactName"}
-                    labelClassnames={"formLabel lightDarkFormText"}
-                    inputFieldClassnames={"formInput lightDarkFormText"}
+                    labelClassnames={"formLabel"}
+                    inputFieldClassnames={"formInput"}
                     /*fieldErrorMessage={((typeof formState?.errors?.name === "object" && formState?.errors?.name?.join("\n")) || undefined)}*/
                 />
                 <GenericTextInput
@@ -62,8 +62,8 @@ export const JobOpportunityForm = (
                     placeholder={"Email or Phone Number"}
                     name={"contactMethod"}
                     id={"contactMethod"}
-                    labelClassnames={"formLabel lightDarkFormText"}
-                    inputFieldClassnames={"formInput lightDarkFormText"}
+                    labelClassnames={"formLabel"}
+                    inputFieldClassnames={"formInput"}
                     /*fieldErrorMessage={((typeof formState?.errors?.homepageLink === "object" && formState?.errors?.homepageLink?.join("\n")) || undefined)}*/
                 />
                 <GenericTextInput
@@ -81,7 +81,7 @@ export const JobOpportunityForm = (
                     <Textarea
                         id={"notes-textarea"}
                         name={"opportunityNotes"}
-                        className={"lightDarkFormTextInverted"}
+                        className={"formInput"}
                         placeholder="Please provide some details about the job opportunity you might have for me! Thank you for taking the time to reach out to me!"
                         required={true}
                     />

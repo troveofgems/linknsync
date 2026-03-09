@@ -65,7 +65,6 @@ export const CreatePropertyForm = (
                 return router.push(propertyListPath);
             }
         }
-        console.log(state);
     }, [state, isPending, router, error]);
 
     return (

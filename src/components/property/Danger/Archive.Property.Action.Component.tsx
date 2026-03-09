@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {GenericTextInput} from "@/components/forms/_elements/Inputs/GenericTextInput";
-import {getCurrentTS, getTSModifier, modifyTSBy} from "@/lib/utils/misc/date.utils";
+import {getCurrentTS, getTSModifier, modifyTSBy} from "@/utils/date.utils";
 
 export const ArchivePropertyActionComponent = (
     {

@@ -12,7 +12,7 @@ import {Alert} from "@/components/misc/Sonner.Alerter";
 import {useRouter} from "next/navigation";
 import {ICalSource} from "@/components/forms/property/elements/CurrentSource";
 import {DropdownMenuSeparator} from "@/components/ui/dropdown-menu";
-import {addEllipsis} from "@/lib/utils/misc/string.utils";
+import {addEllipsis} from "@/utils/string.utils";
 import {APP_PATHS} from "@/utils/nav.path.utils";
 
 export const ExportLNSICSForPropertyForm = (
@@ -44,7 +44,6 @@ export const ExportLNSICSForPropertyForm = (
                     description: new Date().toISOString(),
                     actionLabel: "Close",
                 });
-                console.log("Set DownloadData: ", state)
                 setDownloadData(state.response as unknown as UpdateICalActionState);
                 setReadyForDownload(true);
                 const downloadHref = state.response.downloadHref ?? "/";

@@ -1,6 +1,6 @@
 'use server';
 import db from "@/db/connect.db";
-import {AddressSchema, AddressSchemaObj} from "@/validator/Address/address.validation";
+import {AddressSchema, AddressSchemaObj} from "@/validator/address.validation.schema";
 import {ZodError} from "zod";
 import {SupportedCountries} from "@/lib/utils/Address/address.utils";
 import {SessionDataState} from "@/store/userStore";

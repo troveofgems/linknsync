@@ -34,8 +34,6 @@ function PropertyManagementPage() {
             { create: createProperty } = APP_PATHS.pages.authenticated.user.goToProperty,
             { checkAndAllowAccessTo } = RbacPermissions;
 
-        console.log("Property Button: ", orgRole, attrs);
-
         return (isAdmin || checkAndAllowAccessTo(orgRole, createProperty.permissions as string[])) ? (
             <div className={"flex justify-end-safe mb-8"}>
                 <button

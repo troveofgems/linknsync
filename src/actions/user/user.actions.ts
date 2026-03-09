@@ -23,8 +23,6 @@ export const imprintUser = async (
             where: { cid }
         });
 
-    console.log("User Already Exists? ", userAlreadyExists);
-
     if(userAlreadyExists) {
         return {
             message: "User Already Exists. Skipping...",
@@ -86,8 +84,6 @@ export const imprintOrganization = async (
             }
         });
 
-    console.log("Does Org Already Exist? ", organizationAlreadyExists, coid);
-
     if(organizationAlreadyExists) {
         return {
             message: `Organization Already Exists. Skipping Build...`,
@@ -98,7 +94,6 @@ export const imprintOrganization = async (
         };
     }
 
-    console.log("Profile is: ", profile);
     const  // Org Does Not Exist, so Prep to Build It
         organizationImprint = {
             name: profile!.org.name,

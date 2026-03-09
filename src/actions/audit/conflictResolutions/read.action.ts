@@ -22,11 +22,10 @@ export const fetchConflictResolutionsAuditListAction = async(
     prevState: ReadConflictResolutionsAuditActionState,
     searchParams: ReadConflictResolutionsAuditActionListByOrgIdParams
 ) => {
-    const { coid } = searchParams.coid as unknown as ReadConflictResolutionsAuditActionListByOrgIdParams;
     try {
         const fetchConflictResolutionsAuditListResponse = await db.resolutionAudit.findMany({
             where: {
-                orgImprintId: coid as string
+                orgImprintId: searchParams.coid as string
             },
             select: {
                 id: true,

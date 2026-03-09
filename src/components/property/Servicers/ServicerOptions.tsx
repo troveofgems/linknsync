@@ -2,18 +2,16 @@
 import React, {useState} from "react";
 import {GenericTextInput} from "@/components/forms/_elements/Inputs/GenericTextInput";
 
-import TrackLogo from "@/public/images/travelnet_solutions_logo.jpeg";
+import TrackLogo from "@/public/images/travelnet_solutions_logo.png";
 import Image from "next/image";
 
 export const ServicerOptions = (
     {
         connected = false,
-        attachedPMSList,
-        unitIdList
+        unitId
     }: {
         connected?: boolean;
-        attachedPMSList?: string[];
-        unitIdList?: string[];
+        unitId?: string;
     }
 ) => {
     const [showTrackUnitId, setShowTrackUnitId] = useState(connected);
@@ -21,10 +19,6 @@ export const ServicerOptions = (
     const handleConnectToServicerClick = () => {
         setShowTrackUnitId(!showTrackUnitId);
     };
-
-    if(attachedPMSList) {
-        console.log("PMS List attached...Logic Goes Here...")
-    }
 
     return (
         <div className={"flex flex-col w-full justify-start-safe"}>
@@ -43,7 +37,7 @@ export const ServicerOptions = (
                         containerClassnames={"flex flex-row mt-2 alignContentCenter"}
                         labelClassnames={"formLabel formCheckboxLabel alignContentCenter"}
                         inputFieldClassnames={"formInput formCheckbox"}
-                        label={"Sync Calendar Updates To Track"}
+                        label={"Sync Calendar Updates To Track (PUSH)"}
                     />
                 </div>
                 <div className={"flex flex-col justify-end-safe text-end pl-4 w-[280px]"}>
@@ -54,7 +48,7 @@ export const ServicerOptions = (
                                 showAsRequired={true}
                                 id={"property.servicer.tns.unitId"}
                                 name={"property.servicer.tns.unitId"}
-                                defaultValue={unitIdList?.[0] ?? ""}
+                                defaultValue={unitId ?? ""}
                                 labelClassnames={"mt-0"}
                                 inputFieldClassnames={"formInput text-end"}
                                 placeholder={"Track Unit Id"}

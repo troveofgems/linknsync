@@ -48,7 +48,7 @@ export const LinkedPropertiesTable = (
     }, [isLoading, cronServiceTableData, coid]);
 
     return (
-        <div id="userAuditTable" className={"w-full"}>
+        <div id="linkedPropertiesTable" className={"w-full"}>
             {
                 isLoading && (
                     <LoaderSkeleton

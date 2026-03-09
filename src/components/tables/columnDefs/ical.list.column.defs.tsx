@@ -97,6 +97,21 @@ export const IcalListColumnDefs = (
         },
     },
     {
+        accessorKey: "slug",
+        header: () => <div>Slug</div>,
+        cell: ({row}) => {
+            const data = row.original as unknown as { slug: string; };
+
+            const slugMask = (data.slug === "" || data.slug === null) ? "No Value" : data.slug;
+
+            return (
+                <div className={"text-start"}>
+                    {slugMask}
+                </div>
+            )
+        },
+    },
+    {
         accessorKey: "isMainSrc",
         header: () => <div>Main Source</div>,
         cell: ({row}) => {

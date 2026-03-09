@@ -2,8 +2,8 @@
 import db from "@/db/connect.db";
 import {ZodError} from "zod";
 import {SessionDataState} from "@/store/userStore";
-import {SupportedCountries} from "@prisma/client";
-import {optionSelected} from "@/lib/utils/misc/bool.utils";
+import {AttachedPMS, SupportedCountries} from "@prisma/client";
+import {optionSelected} from "@/utils/bool.utils";
 
 /**
  * This File Contains the Logic for Updating a Property
@@ -55,6 +55,8 @@ export const updatePropertyAction = async(
         advancedUpdates: {
             archived?: boolean;
             archivedAt?: Date;
+            trackUnitId?: string;
+            attachedPMSId?: string;
         } = {};
 
     // Marked Archived?
@@ -71,26 +73,15 @@ export const updatePropertyAction = async(
 
     // Marked As Connected To A Servicer
     const servicerConnected = optionSelected(form.get("property.servicer.tns.connected") as string);
+    const trackUnitId = form.get("property.servicer.tns.unitId") as string;
     if(servicerConnected) {
-        // Upsert To AttachedPMS
-        await db.attachedPMS.upsert({
-            update: {
-                pmsList: ["TNS"],
-                foreignIdList: [form.get("property.servicer.tns.unitId") as string],
-            },
-            create: {
-                pmsList: ["TNS"],
-                foreignIdList: [form.get("property.servicer.tns.unitId") as string],
-                Property: {
-                    connect: {
-                        id: prevState.pid
-                    }
-                }
-            },
+        const { id: trackId } = await db.attachedPMS.findFirst({
             where: {
-                propertyId: prevState.pid
-            },
-        });
+                pmsName: "Track"
+            }
+        }) as Partial<AttachedPMS>;
+        advancedUpdates.trackUnitId = trackUnitId;
+        advancedUpdates.attachedPMSId = trackId;
     }
 
     // Update Property Detail

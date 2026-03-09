@@ -1,7 +1,7 @@
 import {
     PageKey, SectionLabel, StaticPageContent,
     printSectionWrapper
-} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+} from "@/utils/static.page.content.utils";
 
 const
     HEADER = "1. Our Services",

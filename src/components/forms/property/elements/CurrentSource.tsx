@@ -6,7 +6,7 @@ import {
     LOAD_ERROR_CONTENT, SubscribedIcalList
 } from "@/components/structural/tooltip/elements/Cron.elements";
 import {DateBlock} from "@prisma/client";
-import {addEllipsis} from "@/lib/utils/misc/string.utils";
+import {addEllipsis} from "@/utils/string.utils";
 
 export type ICalSource = {
     id: string;

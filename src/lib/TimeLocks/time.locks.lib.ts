@@ -1,5 +1,5 @@
 import {ScheduleType} from "@prisma/client";
-export interface TimeLocks {
+export interface TimeLocksLib {
     for_CRUD_Ops: {
         orgSchedule: ScheduleType,
         constrainedActions: {
@@ -31,5 +31,5 @@ export const TimeLocksOnActions = (() => {
     return {
         for_CRUD_Ops: {},
         checkIfActionIsLocked
-    } as TimeLocks;
+    } as TimeLocksLib;
 })();

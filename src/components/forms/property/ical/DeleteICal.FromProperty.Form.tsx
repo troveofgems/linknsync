@@ -52,8 +52,6 @@ export const DeleteICalFromPropertyForm = (
         }
     }, [state, isPending, handleDialogClose, icalSource, router, viewPropertyList]);
 
-    console.log("Ical Source: ", icalSource, icalList, icalId);
-
     return (
         <form id="deleteICalForm" action={action}>
             {

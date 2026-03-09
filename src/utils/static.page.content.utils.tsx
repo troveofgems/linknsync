@@ -3,7 +3,7 @@ import {Card, CardContent} from "@/components/ui/card";
 import {PictureWrapper} from "@/components/structural/picture/Picture.Wrapper";
 import BrettAndDustin from "@/public/images/brettanddustin.jpg";
 import {VideoShell} from "@/app/(public-pages)/tutorials/video-shell/VideoShell";
-import type {Asset} from "../../../../node_modules/next-video/dist/assets.d.ts";
+import type {Asset} from "next-video/dist/assets.d.ts";
 
 const CONTACT_US_EMAIL = "linknsyncdev@gmail.com";
 

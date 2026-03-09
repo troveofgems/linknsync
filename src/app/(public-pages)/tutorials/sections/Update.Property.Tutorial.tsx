@@ -1,7 +1,7 @@
 import {
     StaticPageContent, PageKey, SectionLabel,
     printSectionWrapper,
-} from "@/lib/utils/StaticPageContent/StaticPageContent.utils";
+} from "@/utils/static.page.content.utils";
 
 import lnsPoster from '@/public/videos/lns-poster.mp4.json';
 import type {Asset} from "../../../../../node_modules/next-video/dist/assets.d.ts";

@@ -1,7 +1,7 @@
 'use server';
 import db from "@/db/connect.db";
 
-import {CreateOrUpdatePropertySchema} from "@/validator/property/property.validator";
+import {CreateOrUpdatePropertySchema} from "@/validator/property.validation.schema";
 import {
     createAddressAction,
     CreateAddressActionState,
@@ -90,8 +90,6 @@ export const createPropertyAction = async(
         cid  = loggedInUser!.userId!,
         sid = loggedInUser!.sessionId!;
 
-    console.log("Form--Debug Static: ", formData);
-
     try {
         const // Variable Extraction
             property = {
@@ -119,6 +117,7 @@ export const createPropertyAction = async(
                 importType,
                 icalSource: formData.get("ical.file") as File
             }),
+            icalSlug = formData.get("ical.slug") as string,
             icalUrl = importType === "link" ?
                 formData.get("ical.href") as string :
                 setFileName(formData.get("ical.file") as File),
@@ -199,8 +198,6 @@ export const createPropertyAction = async(
 
                 imgUploaderResponse = await imgbbUpload(imgUploaderOptions);
 
-                console.log("Img BB Response: ", imgUploaderResponse);
-
                 if(imgUploaderResponse.status === 200) {
                     const
                         {
@@ -229,7 +226,7 @@ export const createPropertyAction = async(
                     });
                 }
             } catch(error) {
-                console.log("Error Processing Image, Continuing Anyway: ", error);
+                console.warn("Error Processing Image, Continuing Anyway: ", error);
             }
         }
 
@@ -277,7 +274,6 @@ export const createPropertyAction = async(
             }
         );
 
-        console.log("Form Data: ", formData);
         // Create ICal Resource & Process DateBlocks/Conflicts
         let importFile: File | undefined = undefined;
         if(importType === "file") {
@@ -298,6 +294,7 @@ export const createPropertyAction = async(
                 importType,
                 icalUrl,
                 icalFilename,
+                slug: icalSlug,
                 propertyId: generatedPropertyId,
                 isMainSrc: true,
                 Calendar: {
@@ -312,7 +309,7 @@ export const createPropertyAction = async(
             } as CreateICalAttachmentProps,
                 coid,
                 importFile
-        )
+        );
 
         // System Audit Log Background Process
         if(generateAudit) {

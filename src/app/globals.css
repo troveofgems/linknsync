@@ -245,7 +245,7 @@ button{
     display: block;
     height: 50px;
     width: 100%;
-    background-color: rgba(255,255,255,0.07);
+    background-color: var(--input);
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 8px;
@@ -334,11 +334,12 @@ button.w-full.text-left {
 
 .overrideActionBtnStyles {
     background-color: transparent!important;
+    border-color: transparent;
+    box-shadow: none;
     color: var(--color-foreground);
-    text-align: start;
-    margin: 0!important;
-    padding: 0!important;
+    justify-content: start;
     font-weight: normal;
+    width: 100%;
 }
 
 .cl-footerAction,

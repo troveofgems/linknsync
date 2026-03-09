@@ -4,13 +4,15 @@ import React, {useState} from "react";
 import {GenericTextInput} from "@/components/forms/_elements/Inputs/GenericTextInput";
 
 // Cron Connected ICal Source Icon
-import { TbActivityHeartbeat } from "react-icons/tb";
+import {TbActivityHeartbeat} from "react-icons/tb";
 import {GiCrystalGrowth} from "react-icons/gi";
 
 import {
     TEXT_BLOCK__DYNAMIC_URL_UPLOAD_MESSAGE, TEXT_BLOCK__STATIC_FILE_UPLOAD_MESSAGE,
     TEXT_BLOCK__WARNING_MESSAGE
 } from "@/constants/SiteContent/TextBlocks.constants";
+import {distributionManagers} from "@/constants/distribution.manager.constants";
+
 import {CreatePropertyActionState} from "@/actions/property/create.action";
 import {UpdatePropertyActionState} from "@/actions/property/update.action";
 import {CreateICalAttachmentActionState} from "@/actions/ical/create.action";
@@ -20,6 +22,7 @@ interface ICalImportOptions {
     value: string;
     name: string;
 }
+
 const icalImportOptions: ICalImportOptions[] = [
     {
         value: "link",
@@ -50,9 +53,13 @@ export const ICalUploader = (
 ) => {
     const
         [icalImportType, setIcalImportType] = useState("link"),
-        handleImportTypeChange = (evt: { target: { value: React.SetStateAction<string>; }; }) => {
-            setIcalImportType(evt.target.value);
-        };
+        [sourceType, setSourceType] = useState("track"),
+        handleImportTypeChange =
+            (evt: { target: { value: React.SetStateAction<string>; }; }) =>
+                setIcalImportType(evt.target.value),
+        handleSlugChange =
+            (evt: { target: { value: React.SetStateAction<string>; }; }) =>
+                setSourceType(evt.target.value);
 
     return (
         <div>
@@ -72,38 +79,19 @@ export const ICalUploader = (
                             inputFieldClassnames={"formInput w-fit"}
                         />
                     </div>
-                    <div className={`px-4 w-3/4 m-auto mt-7`}>
-                        {
-                            icalImportType === "link" && (
-                                <div className={"w-full m-auto"}>
-                                    <p>
-                                            <span className={"text-green-700 text-3xl"}>
-                                                <TbActivityHeartbeat key={`dynamic_resource_hb_icon`} />
-                                            </span>
-                                        <span className={"text-muted-foreground"}>
-                                                {TEXT_BLOCK__DYNAMIC_URL_UPLOAD_MESSAGE}
-                                            </span>
-                                    </p>
-                                </div>
-                            )
-                        }
-                        {
-                            icalImportType === "file" && (
-                                <div className={"w-full"}>
-                                    <p>
-                                            <span className={"text-red-700 text-3xl"}>
-                                                <GiCrystalGrowth key={`static_resource_crystal_icon`} />
-                                            </span>
-                                        <span className={"text-destructive pr-2"}>
-                                                {TEXT_BLOCK__WARNING_MESSAGE}
-                                            </span>
-                                        <span className={"text-muted-foreground"}>
-                                                {TEXT_BLOCK__STATIC_FILE_UPLOAD_MESSAGE}
-                                            </span>
-                                    </p>
-                                </div>
-                            )
-                        }
+                    <div className={"w-1/2 mx-20"}>
+                        <GenericTextInput
+                            setAsDropdown={true}
+                            label={"Source"}
+                            showAsRequired={true}
+                            name={"ical.slug"}
+                            id={"ical.slug"}
+                            optionList={distributionManagers}
+                            value={sourceType}
+                            handleOnChange={handleSlugChange}
+                            labelClassnames={"formLabel"}
+                            inputFieldClassnames={"formInput"}
+                        />
                     </div>
                 </div>
                 <div className={`${inputFieldClassnames}`}>
@@ -140,6 +128,39 @@ export const ICalUploader = (
                         )
                     }
                 </div>
+            </div>
+            <div className={`w-3/4 mt-7`}>
+                {
+                    icalImportType === "link" && (
+                        <div className={"w-full m-auto"}>
+                            <p>
+                                <span className={"text-green-700 text-3xl"}>
+                                    <TbActivityHeartbeat key={`dynamic_resource_hb_icon`} />
+                                </span>
+                                <span className={"text-muted-foreground"}>
+                                    {TEXT_BLOCK__DYNAMIC_URL_UPLOAD_MESSAGE}
+                                </span>
+                            </p>
+                        </div>
+                    )
+                }
+                {
+                    icalImportType === "file" && (
+                        <div className={"w-full"}>
+                            <p>
+                                <span className={"text-red-700 text-3xl"}>
+                                    <GiCrystalGrowth key={`static_resource_crystal_icon`} />
+                                </span>
+                                <span className={"text-destructive pr-2"}>
+                                    {TEXT_BLOCK__WARNING_MESSAGE}
+                                </span>
+                                <span className={"text-muted-foreground"}>
+                                    {TEXT_BLOCK__STATIC_FILE_UPLOAD_MESSAGE}
+                                </span>
+                            </p>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )

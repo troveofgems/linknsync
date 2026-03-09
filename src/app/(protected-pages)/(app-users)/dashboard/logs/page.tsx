@@ -25,7 +25,7 @@ import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";
 const LogsPage = () => {
     const
         { user: { isLoading, isAuthenticated, attrs, error } } = useUserStore(),
-        [ coid, setCOID ] = useState(!isLoading ? attrs!.profile!.org.id : "");
+        [ coid, setCOID ] = useState(!isLoading ? attrs!.profile!.org.id : process.env.THROWAWAY_ORG_ID);
 
     useEffect(() => {
         if(coid === "" && !!attrs?.profile!.org.id) {
@@ -62,7 +62,7 @@ const LogsPage = () => {
                                             </CardDescription>
                                         </CardHeader>
                                         <CardContent className="grid gap-6">
-                                            <LinkedPropertiesTable coid={coid} orgRole={attrs?.loggedInUser?.orgRole as string} />
+                                            <LinkedPropertiesTable coid={coid as string} orgRole={attrs?.loggedInUser?.orgRole as string} />
                                         </CardContent>
                                     </Card>
                                 </TabsContent>
@@ -75,7 +75,7 @@ const LogsPage = () => {
                                             </CardDescription>
                                         </CardHeader>
                                         <CardContent className="grid gap-6">
-                                            <SyncServiceTable coid={coid} orgRole={attrs?.loggedInUser?.orgRole as string} />
+                                            <SyncServiceTable coid={coid as string} orgRole={attrs?.loggedInUser?.orgRole as string} />
                                         </CardContent>
                                     </Card>
                                 </TabsContent>
@@ -88,7 +88,7 @@ const LogsPage = () => {
                                             </CardDescription>
                                         </CardHeader>
                                         <CardContent className="grid gap-6">
-                                            <ConflictResolutionsTable coid={coid} orgRole={attrs?.loggedInUser?.orgRole as string} />
+                                            <ConflictResolutionsTable coid={coid as string} orgRole={attrs?.loggedInUser?.orgRole as string} />
                                         </CardContent>
                                     </Card>
                                 </TabsContent>
@@ -101,7 +101,7 @@ const LogsPage = () => {
                                             </CardDescription>
                                         </CardHeader>
                                         <CardContent className="grid gap-6">
-                                            <UserAuditTable coid={coid} orgRole={attrs?.loggedInUser?.orgRole as string} />
+                                            <UserAuditTable coid={coid as string} orgRole={attrs?.loggedInUser?.orgRole as string} />
                                         </CardContent>
                                     </Card>
                                 </TabsContent>

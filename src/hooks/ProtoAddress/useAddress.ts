@@ -268,7 +268,6 @@ export const useAddress = (
     const handleAddressPrefillWithData = (
         address: UserInputAddress
     ) => {
-        console.log("Inside Prefill Address: ", address);
         const
             showParishes = (address.country === SupportedCountries.USA) && (address.state === "LA"),
             isMUA = ((!!address?.street2 && address?.street2?.length > 0) || false);

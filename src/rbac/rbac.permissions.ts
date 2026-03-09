@@ -7,6 +7,7 @@ export interface Permissions {
         conflictList: string[];
         logs: string[];
         payments: string[];
+        pmsConnections: string[];
         organization: string[];
     }
     restrictAccessFrom: {
@@ -66,6 +67,7 @@ export const RbacPermissions = (() => {
             conflictList: [...PROPERTY_MANAGERS, ...APP_ADMINISTRATORS],
             logs: [...PROPERTY_MANAGERS, ...APP_ADMINISTRATORS],
             payments: [ROLE_PLA, ...APP_ADMINISTRATORS], // Only PLAs should see or use the payments functionality
+            pmsConnections: [ROLE_PLA],
             organization: [...PROPERTY_MANAGERS, ...APP_ADMINISTRATORS],
         },
         restrictAccessFrom: { // Actions

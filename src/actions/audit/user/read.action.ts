@@ -22,11 +22,10 @@ export const fetchUserAuditListAction = async(
     prevState: ReadUserAuditActionState,
     searchParams: ReadUserAuditActionListByOrgIdParams
 ) => {
-    const { coid } = searchParams.coid as unknown as ReadUserAuditActionListByOrgIdParams;
     try {
         const
             fetchUserAuditListResponse = await db.userAudit.findMany({
-                where: { orgImprintId: coid },
+                where: { orgImprintId: searchParams.coid },
                 select: {
                     id: true,
                     actionsTaken: true,
