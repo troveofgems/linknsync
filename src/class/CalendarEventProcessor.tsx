@@ -69,6 +69,7 @@ export class CalendarEventProcessor {
         }
 
         const setEventToDay = (date: Date) => {
+            console.log("Arrival Exists? ", date.getTime(), eventsToDivest);
             const
                 arrivalExistsForEvent = // Filters For Arrivals
                    eventsToDivest.filter(day => (date.getTime() === day.startDate.getTime())),
