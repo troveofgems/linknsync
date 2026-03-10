@@ -157,6 +157,8 @@ export class CalendarEventProcessor {
                 }
             }
         }
+
+        console.log("Returning Calendar? ", calendar);
         return calendar;
     }
 
