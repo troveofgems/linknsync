@@ -91,6 +91,7 @@ export class CalendarEventProcessor {
                 processedEvents: ScheduledEvent[] = [];
 
             if(arrivalExistsForEvent.length > 0) {
+                console.log("Arrival Exists: ", arrivalExistsForEvent);
                 arrivalExistsForEvent.forEach((scheduledEvent) => {
                     const stayLength = this.calculateDiffBetweenDays(scheduledEvent.startDate, scheduledEvent.endDate);
                     processedEvents.push(this.processBookedDay(scheduledEvent, false, false, true, stayLength))
@@ -104,6 +105,7 @@ export class CalendarEventProcessor {
             }
 
             if(departureExistsForEvent.length > 0) {
+                console.log("Departure Exists: ", departureExistsForEvent);
                 departureExistsForEvent.forEach((scheduledEvent) => {
                     const stayLength = this.calculateDiffBetweenDays(scheduledEvent.startDate, scheduledEvent.endDate);
                     processedEvents.push(this.processBookedDay(scheduledEvent, false, true, false, stayLength))
@@ -117,6 +119,7 @@ export class CalendarEventProcessor {
             }
 
             if(bookedDayExistsForEvent.length > 0) {
+                console.log("Booked Day Exists for Event: ", bookedDayExistsForEvent);
                 bookedDayExistsForEvent.forEach((scheduledEvent) => {
                     const stayLength = this.calculateDiffBetweenDays(scheduledEvent.startDate, scheduledEvent.endDate);
                     processedEvents.push(this.processBookedDay(scheduledEvent, true, false, false, stayLength))
@@ -129,6 +132,7 @@ export class CalendarEventProcessor {
                 });
             }
 
+            console.log("Processed Events: ", processedEvents);
             return processedEvents;
         }
 
