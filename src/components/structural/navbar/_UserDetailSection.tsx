@@ -8,7 +8,6 @@ import {auth} from "@clerk/nextjs/server";
 
 export const UserDetailSection = async () => {
     const authObj = await auth();
-    console.log("UserDetailSection", authObj);
     return (
         <>
             <DropdownMenuSeparator />

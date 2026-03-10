@@ -1,6 +1,6 @@
 "use server";
 import db from "@/db/connect.db";
-import { ICalSchema_LINK, ICalSchema_FileUpload } from "@/validator/file/file.validator";
+import { ICalSchema_LINK, ICalSchema_FileUpload } from "@/validator/file.validation.schema";
 import {
     createDateBlockAction,
     CreateDateBlockActionProps,
@@ -38,6 +38,7 @@ export interface CreateICalAttachmentActionState {
 export type CreateICalAttachmentProps = {
     importType: "link" | "fileUpload";
     icalUrl: string;
+    slug?: string;
     icalFilename: string;
     isMainSrc?: boolean;
     Calendar: {
@@ -71,6 +72,7 @@ export const createICalAttachmentActionFromForm = async(
     }
 
     const fileFilename = (form.get("ical.file") as File) ?? undefined;
+    const icalSlug = form.get("ical.slug") as string;
 
     const { loggedInUser, profile } = prevState.pState as SessionDataState,
         coid = profile!.org.id,
@@ -111,6 +113,7 @@ export const createICalAttachmentActionFromForm = async(
         const inputData = {
             importType,
             icalUrl,
+            slug: icalSlug,
             icalFilename,
             propertyId,
             isMainSrc: icalCount === 0,

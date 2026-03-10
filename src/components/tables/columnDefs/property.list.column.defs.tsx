@@ -65,15 +65,18 @@ export const propertyListColumnDefs = (
         accessorKey: "thumbnail",
         header: () => (<div></div>),
         cell: ({ row }) => {
-            const
-                data = row.original as unknown as { Photo: Partial<Photo> },
+            const data = row.original as unknown as { Photo: Partial<Photo> };
+
+            let photo = undefined;
+            if(!!data.Photo) {
                 photo = {
-                    title: data.Photo.title as string,
-                    srcUrl: data.Photo.srcUrl as string,
-                    thumbnailUrl: data.Photo.thumbnailUrl as string,
-                    width: `${data.Photo.width}`,
-                    height: `${data.Photo.height}`
-                };
+                    title: data.Photo?.title as string,
+                    srcUrl: data.Photo?.srcUrl as string,
+                    thumbnailUrl: data.Photo?.thumbnailUrl as string,
+                    width: `${data.Photo?.width}`,
+                    height: `${data.Photo?.height}`
+                } as Partial<Photo>;
+            }
 
             return (
                 <PictureWrapper

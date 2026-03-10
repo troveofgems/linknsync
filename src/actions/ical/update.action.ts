@@ -1,6 +1,6 @@
 "use server";
 import db from "@/db/connect.db";
-import {ICalSchema_FileUpload, ICalSchema_LINK} from "@/validator/file/file.validator";
+import {ICalSchema_FileUpload, ICalSchema_LINK} from "@/validator/file.validation.schema";
 import {createICalAttachmentActionFromForm, CreateICalAttachmentActionState} from "@/actions/ical/create.action";
 import { createUserAuditAction_BackgroundProcess } from "@/actions/audit/user/create.action";
 import {
@@ -45,7 +45,6 @@ export const updateICalAction = async(
     form: FormData,
     generateAudit = true
 ): Promise<UpdateICalActionState> => {
-    console.log("updateICalAction", form);
     const
         coid = prevState.pState?.profile?.org.id as string,
         cid = prevState.pState?.loggedInUser?.userId as string,
@@ -137,15 +136,12 @@ export const updateICalAction = async(
                 }
             });
 
-            console.log("About to process ICal Addition? ", form);
             // Process and Upload New ICal From Form
-            const { response: newICalResourceResponse, message, errors } = await createICalAttachmentActionFromForm(
+            const { response: newICalResourceResponse } = await createICalAttachmentActionFromForm(
                     { pState: prevState.pState } as CreateICalAttachmentActionState,
                     form,
                     false
             );
-
-            console.log("Response? ", newICalResourceResponse, message, errors);
 
             actionsTaken = [
                 `ICal Updated From: ${deletedICalResourceResponse?.icalFilename || "No Data"}`,
@@ -230,7 +226,7 @@ export const updateICalAction = async(
             });
         }
     } else if (importType === "file") {
-        console.log("File Uploaded For Update...");
+        console.warn("File Uploaded For Update...");
     }
 
     // Generate Audit
@@ -244,7 +240,9 @@ export const updateICalAction = async(
 
     return {
         message: "The iCal Resource has been successfully updated!",
-        response: {},
+        response: {
+
+        },
         pState: prevState.pState
     } as UpdateICalActionState;
 };

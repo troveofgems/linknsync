@@ -41,7 +41,6 @@ export const UserAuditTable = (
                     coid
                 }
             ).then((response) => {
-                console.log("User Response: ", response);
                 if(!!response.response) {
                     setUserActionsTableData(response.response as unknown as UserActionList);
                     setIsLoading(false);

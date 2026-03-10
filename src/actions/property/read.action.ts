@@ -2,6 +2,7 @@
 import db from "../../db/connect.db";
 import {SessionDataState} from "@/store/userStore";
 import {Property} from "@prisma/client";
+import {constructedQuery} from "@/utils/db.query.builder.utils";
 
 /**
  * This File Contains the Logic for Reading Property List or An Individual Property By ID
@@ -32,28 +33,7 @@ export const fetchPropertyListAction = async (
     prevState: ReadPropertyActionState,
     searchParams: ReadPropertyListParams
 ) => {
-    const
-        useQueryForPLAsAndALAs = searchParams.orgRole !== "IND" && searchParams.orgRole !== "RLA",
-        useQueryForIndependents = searchParams.orgRole === "IND",
-        useQueryForRLAs = searchParams.orgRole === "RLA";
-
-    let query = {};
-    if(useQueryForPLAsAndALAs) {
-        query = {
-            coid: searchParams.coid || "zzz"
-        };
-    } else if (useQueryForIndependents) {
-        query = {
-            cid: searchParams.cid,
-        };
-    } else if (useQueryForRLAs) {
-        query = {
-            /*permissions: {
-                in: []
-            }*/
-            coid: searchParams.coid || "zzz"
-        };
-    }
+    const query = constructedQuery({ orgRole: searchParams.orgRole, coid: searchParams.coid, cid: searchParams.cid });
 
     try {
         const fetchPropertyListResponse = await db.property.findMany({
@@ -89,6 +69,7 @@ export const fetchPropertyListAction = async (
                                 icalUrl: true,
                                 icalFilename: true,
                                 isMainSrc: true,
+                                slug: true,
                                 createdAt: true,
                                 updatedAt: true,
                                 dateBlocks: true,
@@ -114,6 +95,7 @@ export const fetchPropertyListAction = async (
             pState: prevState?.pState
         };
     } catch(error) {
+        console.log("ERROR!!!!: ", error);
         return { message: 'Error Fetching Property List', error };
     }
 };
@@ -141,13 +123,7 @@ export const fetchPropertyByIdAction = async(
                         isMUA: true
                     }
                 },
-                AttachedPMS: {
-                    select: {
-                        id: true,
-                        pmsList: true,
-                        foreignIdList: true,
-                    }
-                },
+                AttachedPMS: true,
                 Photo: {
                     select: {
                         id: true,
@@ -164,6 +140,7 @@ export const fetchPropertyByIdAction = async(
                         icalSources: {
                             select: {
                                 id: true,
+                                slug: true,
                                 importType: true,
                                 icalUrl: true,
                                 dateBlocks: {
@@ -201,6 +178,7 @@ export const fetchPropertyByIdAction = async(
                 },
             }
         });
+
         return {
             message: "Property By Id Fetch Successful!",
             response: {

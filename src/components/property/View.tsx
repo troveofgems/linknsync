@@ -41,14 +41,11 @@ export const PropertyView = ({
                     propertyId: pid,
                 } as ReadPropertyByIdParams
             ).then((result) => {
-                console.log("Result was: ", result);
                 setProperty(result.response.propertyById as PropertyViewProps);
                 setLoadingProperty(false);
             })
         }
     }, [loadingProperty, pid, user]);
-
-    console.log("Property: ", property);
 
     return (
         <>
@@ -64,7 +61,21 @@ export const PropertyView = ({
                 !loadingProperty &&
                 !!property &&
                 (
-                    <div className={"flex w-full flex-row justify-between mb-8 h-fit"}>
+                    <div className={"flex w-full flex-col justify-between mb-8 h-fit"}>
+                        <div className={"mb-8 w-[60%]"}>
+                            <Card className={"w-full alignContentCenter"}>
+                                <CardContent>
+                                    <PictureWrapper
+                                        photo={!!property.Photo ? {
+                                            thumbnailUrl: property.Photo.srcUrl ?? property.Photo.thumbnailUrl,
+                                            width: property.Photo.width,
+                                            height: property.Photo.height,
+                                            title: property.Photo.title
+                                        } : undefined}
+                                    />
+                                </CardContent>
+                            </Card>
+                        </div>
                         <div className={"w-2/5"}>
                             <h1 className={"text-3xl text-start flex flex-row mb-5"}>
                                 { property.name }
@@ -101,20 +112,6 @@ export const PropertyView = ({
                                     })
                                 }
                             </pre>
-                        </div>
-                        <div className={"w-full"}>
-                            <Card className={"w-full alignContentCenter"}>
-                                <CardContent>
-                                    <PictureWrapper
-                                        photo={!!property.Photo ? {
-                                            thumbnailUrl: property.Photo.srcUrl ?? property.Photo.thumbnailUrl,
-                                            width: property.Photo.width,
-                                            height: property.Photo.height,
-                                            title: property.Photo.title
-                                        } : undefined}
-                                    />
-                                </CardContent>
-                            </Card>
                         </div>
                     </div>
                 )

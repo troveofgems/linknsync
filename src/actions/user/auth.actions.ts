@@ -6,7 +6,7 @@ import {imprintUser} from "@/actions/user/user.actions";
 import {formatPhoneNumber} from "@/lib/utils/AppUser/app.user.phone.number.utils";
 import {AppRole, getUserRole} from "@/lib/utils/AppUser/app.user.utils";
 import {ORG_ROLE__ID_SUPER_USER} from "@/constants/app.user.constants";
-import { clerkClient } from "@clerk/nextjs/server";
+import {clerkClient} from "@clerk/nextjs/server";
 
 const REJECTED_REQUEST_MESSAGE = "Reject Request";
 
@@ -15,7 +15,12 @@ export const fetchSessionData = async() => {
         { userId, orgRole, orgId, orgPermissions, sessionClaims } = await auth(),
         userData = await currentUser();
 
-    const organization = await (await clerkClient()).organizations.getOrganization({ organizationId: orgId as string });
+    let organization = null;
+    try {
+        organization = await (await clerkClient()).organizations.getOrganization({ organizationId: orgId as string });
+    } catch(err) {
+        console.warn("No Org Found...", err);
+    }
 
     // 1st Check - No ClerkId Reject Request
     if(!userId) { return new Error(REJECTED_REQUEST_MESSAGE); }
@@ -26,10 +31,6 @@ export const fetchSessionData = async() => {
         fName = userData?.fullName;
     } else {
         fName = userData?.firstName + " " + userData?.lastName;
-    }
-
-    if(orgId && process.env.NODE_ENV === "production") {
-        console.log("Make call to get organization name???");
     }
 
     let // 3rd Check - No Phone Number or Email Address
@@ -46,9 +47,11 @@ export const fetchSessionData = async() => {
         email = userData!.emailAddresses[0].emailAddress;
     }
 
+    const orgIdMask = !orgId ? process.env.THROWAWAY_ORG_ID : orgId;
+
     const // Verified Clerk User Exists, Check For App-Side Supplementary Entries
         organizationEntry = await db.orgImprint.findFirst({
-            where: { coid: orgId },
+            where: { coid: orgIdMask },
             select: { id: true }
         }),
         userEntry = await db.userImprint.findFirst({
@@ -82,8 +85,8 @@ export const fetchSessionData = async() => {
                     passwordEnabled: userData?.passwordEnabled,
                 },
                 org: {
-                    id: organizationEntry?.id,
-                    name: organization.name,
+                    id: organizationEntry?.id ?? process.env.THROWAWAY_ORG_ID,
+                    name: organization?.name ?? "No Org Yet",
                     permissions: orgPermissions,
                 }
             }

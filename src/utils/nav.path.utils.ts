@@ -228,6 +228,13 @@ export const APP_PATHS = (() => (
                         routeDefinition: NAV_PATH_CONSTANTS.private.dashboard.sections.payments,
                         permissions: RbacPermissions.allowAccessTo.payments
                     }),
+                    goToPMSConnections: _routeBuilder({
+                        topLevelPath: PRIVATE,
+                        type: 1,
+                        prependedPath: NAV_PATH_CONSTANTS.private.dashboard.path + "/",
+                        routeDefinition: NAV_PATH_CONSTANTS.private.dashboard.sections.pmsConnections,
+                        permissions: RbacPermissions.allowAccessTo.pmsConnections
+                    }),
                     goToProfile: _routeBuilder({
                         topLevelPath: PRIVATE,
                         type: 1,
@@ -254,8 +261,10 @@ export const APP_PATHS = (() => (
                         }),
                         manageIcals: _routeBuilder({
                             topLevelPath: PRIVATE,
-                            type: 1,
-                            prependedPath: NAV_PATH_CONSTANTS.private.dashboard.path + "/",
+                            type: 2,
+                            prependedPath:
+                                NAV_PATH_CONSTANTS.private.dashboard.path + "/" +
+                                NAV_PATH_CONSTANTS.private.dashboard.sections.property.topLevelPath,
                             routeDefinition: NAV_PATH_CONSTANTS.private.dashboard.sections.property.sections.icals,
                             permissions: RbacPermissions.restrictAccessFrom.manageIcalSourcesForProperty
                         }),

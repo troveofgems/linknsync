@@ -18,6 +18,7 @@ import {
     fetchBookingRequestsByPropertyIdAction,
     ReadBookingRequestsByPropertyIdActionState
 } from "@/actions/bookingRequest/read.action";
+import {datetimeConversionTo_String} from "@/lib/utils/DateTime/date.utils";
 
 interface CalendarProps {
     pid: string;
@@ -36,6 +37,8 @@ interface Day {
         markedAsArrival: boolean;
         markedAsDeparture: boolean;
         markedAsBooked: boolean;
+        startDate: Date;
+        endDate: Date;
     }>;
 }
 
@@ -325,13 +328,14 @@ export const Calendar1 = (
                                                 {
                                                     (!!viewingEvents && viewingEvents.length > 0) &&
                                                     (viewingEvents.map((event, index, eventArray) => {
-                                                        console.log("Event Array: ", eventArray);
                                                         const evt = event as unknown as ScheduledEvent;
                                                         const evtArray = eventArray as {
                                                             markedAsArrival: boolean;
                                                             markedAsRequestedBooking: boolean;
                                                             markedAsDeparture: boolean;
                                                             daysBetweenArrivalAndDeparture: number;
+                                                            startDate: Date;
+                                                            endDate: Date;
                                                             UserImprint?: Partial<UserImprint>;
                                                         }[];
                                                         return (
@@ -351,7 +355,11 @@ export const Calendar1 = (
                                                                                     ) : evtArray[index]?.markedAsRequestedBooking ? (
                                                                                         "Booking Requested - Pending PLA Approval"
                                                                                     ) : (
-                                                                                        `All Day Booking`
+                                                                                        `Booked from ${datetimeConversionTo_String({
+                                                                                            timestamp: evtArray[index].startDate as Date
+                                                                                        })} to ${datetimeConversionTo_String({
+                                                                                            timestamp: evtArray[index].endDate as Date
+                                                                                        })}`
                                                                                     )
                                                                         }
                                                                     </span>
@@ -368,7 +376,11 @@ export const Calendar1 = (
                                                                             <span>
                                                                                 {
                                                                                     evtArray[index].daysBetweenArrivalAndDeparture} Day Stay - {
-                                                                                evtArray[index].markedAsArrival ? ("Arrival") : evtArray[index].markedAsDeparture ? ("Departure") : ("Booked All Day")
+                                                                                evtArray[index].markedAsArrival ? ("Arrival") : evtArray[index].markedAsDeparture ? ("Departure") : (`Arrival on ${datetimeConversionTo_String({
+                                                                                    timestamp: evtArray[index].startDate as Date
+                                                                                })}, and Departure on ${datetimeConversionTo_String({
+                                                                                    timestamp: evtArray[index].endDate as Date
+                                                                                })}`)
                                                                             }
                                                                             </span>
                                                                         )

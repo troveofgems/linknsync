@@ -12,7 +12,7 @@ export const camelToTwoWords = (str: string) => {
 };
 
 export const addEllipsis = (str: string, maxLength = 10) => {
-    if (str.length > maxLength) {
+    if (str?.length > maxLength) {
         // Subtract 3 from maxLength to account for the "..."
         return str.substring(0, maxLength - 3) + '...';
     }

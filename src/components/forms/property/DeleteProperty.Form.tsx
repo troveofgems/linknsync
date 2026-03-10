@@ -32,7 +32,6 @@ export const DeletePropertyForm = (
 
     useEffect(() => {
         if(!!state && !isPending) {
-            console.log("Message: ", state);
             if(!!state && !!state.message && state.message === "The Property And All Associated Data Have Been Deleted!") {
                 handleDialogClose(false);
                 Alert({
