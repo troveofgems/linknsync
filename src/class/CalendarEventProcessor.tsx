@@ -69,14 +69,13 @@ export class CalendarEventProcessor {
         }
 
         const setEventToDay = (date: Date) => {
-            console.log("Arrival Exists? ", date, date.getTime(), eventsToDivest);
             const
                 arrivalExistsForEvent = // Filters For Arrivals
                    eventsToDivest.filter(day => (date.getTime() === zeroOutDate(day.startDate).getTime())),
                 arrivalExistsForBookingRequest =
                     bookingEventsToDivest.filter(bookingRequest => zeroOutDate(convertUTCToLocal(bookingRequest.arrival)).getTime() === date.getTime()),
                 departureExistsForEvent = // Filters For Departures
-                    eventsToDivest.filter(day => (date.getTime() === zeroOutDate(convertUTCToLocal(day.endDate)).getTime())),
+                    eventsToDivest.filter(day => (date.getTime() === zeroOutDate(day.endDate).getTime())),
                 departureExistsForBookingRequest =
                     bookingEventsToDivest.filter(bookingRequest => zeroOutDate(convertUTCToLocal(bookingRequest.departure)).getTime() === date.getTime()),
                 bookedDayExistsForEvent = // Filters For Departures
