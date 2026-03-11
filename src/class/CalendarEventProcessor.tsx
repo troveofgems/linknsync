@@ -72,7 +72,7 @@ export class CalendarEventProcessor {
             console.log("Arrival Exists? ", date, date.getTime(), eventsToDivest);
             const
                 arrivalExistsForEvent = // Filters For Arrivals
-                   eventsToDivest.filter(day => (date.getTime() === day.startDate.getTime())),
+                   eventsToDivest.filter(day => (date.getTime() === zeroOutDate(day.startDate).getTime())),
                 arrivalExistsForBookingRequest =
                     bookingEventsToDivest.filter(bookingRequest => zeroOutDate(convertUTCToLocal(bookingRequest.arrival)).getTime() === date.getTime()),
                 departureExistsForEvent = // Filters For Departures
