@@ -111,8 +111,11 @@ export const Calendar1 = (
                 isBookedDay = false,
                 isArrivalAndDeparture = false;
 
-            const eventExists = (day.events.length >= 1);
-            if(eventExists) {
+            const
+                eventExists = (day.events.length === 1),
+                multipleEvents = (day.events.length > 1);
+
+            if(eventExists && !multipleEvents) {
                 isBookingRequest = day.events[0]!.markedAsRequestedBooking;
                 isArrival = day.events[0]!.markedAsArrival;
                 isDeparture = day.events[0]!.markedAsDeparture;

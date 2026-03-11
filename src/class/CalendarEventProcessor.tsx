@@ -69,14 +69,14 @@ export class CalendarEventProcessor {
         }
 
         const setEventToDay = (date: Date) => {
-            console.log("Arrival Exists? ", date.getTime(), eventsToDivest);
+            console.log("Arrival Exists? ", date, date.getTime(), eventsToDivest);
             const
                 arrivalExistsForEvent = // Filters For Arrivals
                    eventsToDivest.filter(day => (date.getTime() === day.startDate.getTime())),
                 arrivalExistsForBookingRequest =
                     bookingEventsToDivest.filter(bookingRequest => zeroOutDate(convertUTCToLocal(bookingRequest.arrival)).getTime() === date.getTime()),
                 departureExistsForEvent = // Filters For Departures
-                    eventsToDivest.filter(day => (date.getTime() === day.endDate.getTime())),
+                    eventsToDivest.filter(day => (date.getTime() === zeroOutDate(convertUTCToLocal(day.endDate)).getTime())),
                 departureExistsForBookingRequest =
                     bookingEventsToDivest.filter(bookingRequest => zeroOutDate(convertUTCToLocal(bookingRequest.departure)).getTime() === date.getTime()),
                 bookedDayExistsForEvent = // Filters For Departures
@@ -91,8 +91,13 @@ export class CalendarEventProcessor {
                     )),
                 processedEvents: ScheduledEvent[] = [];
 
+            console.log("Arrival Exists for Event: ", arrivalExistsForEvent.length);
+            console.log("Departure Exists for Event: ", departureExistsForEvent.length);
+            if(arrivalExistsForEvent.length > 0 && departureExistsForEvent.length > 0) {
+                console.log("Arrival and Departure? ");
+            }
+
             if(arrivalExistsForEvent.length > 0) {
-                console.log("Arrival Exists: ", arrivalExistsForEvent);
                 arrivalExistsForEvent.forEach((scheduledEvent) => {
                     const stayLength = this.calculateDiffBetweenDays(scheduledEvent.startDate, scheduledEvent.endDate);
                     processedEvents.push(this.processBookedDay(scheduledEvent, false, false, true, stayLength))
@@ -106,7 +111,6 @@ export class CalendarEventProcessor {
             }
 
             if(departureExistsForEvent.length > 0) {
-                console.log("Departure Exists: ", departureExistsForEvent);
                 departureExistsForEvent.forEach((scheduledEvent) => {
                     const stayLength = this.calculateDiffBetweenDays(scheduledEvent.startDate, scheduledEvent.endDate);
                     processedEvents.push(this.processBookedDay(scheduledEvent, false, true, false, stayLength))
