@@ -46,7 +46,10 @@ export const createTrackUnitBlockAction = async(
     try {
         console.log("Create Unit Block With: ", unitBlockIdList, encodedBearerToken);
 
-        /*const response = await fetch(`${process.env.TNS_BASE_URL}/unit-blocks`, {
+        /*
+        const tnsBaseUrl = `${process.env.TNS_BASE_URL}`;
+
+        const response = await fetch(`${process.env.TNS_BASE_URL}/unit-blocks`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -63,7 +66,11 @@ export const createTrackUnitBlockAction = async(
 
         if (!response.ok) {
             console.error("Failed to create block in track pms.");
-        }*/
+        } else {
+            // Store Track Response Id
+        }
+
+        */
 
 
         return {
