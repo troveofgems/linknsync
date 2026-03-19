@@ -82,6 +82,7 @@ export const UserActionsColumnDefs:  DisplayColumnDef<unknown> | GroupColumnDef<
                     createdAt: Date | string | null | undefined
                 }
             ) => {
+                // TODO: Create Helper to Sort This Mess
                 if(userAction.api === "create.action" && userAction.path === "property") {
                     return [
                         <p key={`${userAction.id}_createPropertyAPI`}>
@@ -99,6 +100,16 @@ export const UserActionsColumnDefs:  DisplayColumnDef<unknown> | GroupColumnDef<
                         <p className={"ml-5 text-muted-foreground"} key={`${userAction.id}_createPropertyAPI_icalAttached_conflictsRecorded`}>
                             {userAction.actionsTaken[8]}
                         </p>
+                    ];
+                }
+                if(userAction.api === "delete.action" && userAction.path === "property") {
+                    return [
+                        <div key={`${userAction.id}_sendBookingRequest`}>
+                            <p>
+                                {userAction.actionsTaken[0].split(":")[0]}
+                            </p>
+                            <p className={"ml-5 text-muted-foreground"}>Property Id: {userAction.actionsTaken[0].split(":")[1]}</p>
+                        </div>
                     ];
                 }
                 if(userAction.api === "create.action" && userAction.path === "ical") {
@@ -155,8 +166,21 @@ export const UserActionsColumnDefs:  DisplayColumnDef<unknown> | GroupColumnDef<
                             <p>
                                 {userAction.actionsTaken[0].split(":")[0]}
                             </p>
-                            <small className={"text-muted-foreground"}>ReqID: {userAction.actionsTaken[0].split(":")[1]}</small>
+                            <p className={"ml-5 text-muted-foreground"}>ReqID: {userAction.actionsTaken[0].split(":")[1]}</p>
                         </div>
+                    ];
+                }
+                if(userAction.api === "attach.action" && userAction.path === "pms") {
+                    return [
+                        <p key={`${userAction.id}_attachPMSAPI`}>
+                            {userAction.actionsTaken[0]}
+                        </p>,
+                        <p className={"ml-5 text-muted-foreground"} key={`${userAction.id}_PMSName`}>
+                            PMS: {userAction.actionsTaken[1].split("-")[0]}
+                        </p>,
+                        <p className={"ml-10 text-muted-foreground"} key={`${userAction.id}_PMSDomain`}>
+                            Domain: {(userAction.actionsTaken[1].split("-")[1]).toLowerCase()}
+                        </p>
                     ];
                 }
                 return (<></>);

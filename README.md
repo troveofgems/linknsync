@@ -18,3 +18,6 @@ Ical links across properties.
 
 # Work
 06.13.25 - System/Light/Dark Modes
+
+# Notes
+03.16.25 - DO NOT APPLY UPGRADES TO PRISMA UNTIL ENCRYPTION IS POSSIBLE

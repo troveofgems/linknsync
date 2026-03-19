@@ -61,11 +61,10 @@ export const attachPMSAction = async(
         cid  = loggedInUser!.userId!,
         sid = loggedInUser!.sessionId!;
 
-    console.log("Form--Debug Static: ", formData);
-
     try {
         const // Variable Extraction
             pms = {
+                orgImprintId: coid,
                 domain: formData.get("pms.domain") as string,
                 apiKey: formData.get("pms.apiKey") as string,
                 secretKey: formData.get("pms.secretKey") as string,
@@ -101,6 +100,7 @@ export const attachPMSAction = async(
             .create({
                 data: {
                     pmsName: "Track",
+                    orgImprintId: coid,
                     domain: validatedPMSFields.response.pmsValidation.data?.domain as string,
                     apiKey: validatedPMSFields.response.pmsValidation.data?.apiKey as string,
                     secretKey: validatedPMSFields.response.pmsValidation.data?.secretKey as string,

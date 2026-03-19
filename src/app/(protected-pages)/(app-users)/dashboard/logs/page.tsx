@@ -15,12 +15,13 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import {SyncServiceTable} from "@/components/tables/Sync.Service.table";
-import {UserAuditTable} from "@/components/tables/UserAudit.table";
-import {ConflictResolutionsTable} from "@/components/tables/ConflictResolutions.table";
-import {LinkedPropertiesTable} from "@/components/tables/LinkedProperties.table";
+import {SyncServiceTable} from "@/components/tables/logs/Sync.Service.Table";
+import {UserAuditTable} from "@/components/tables/logs/User.Audit.Table";
+import {ConflictResolutionsTable} from "@/components/tables/logs/Conflict.Resolutions.Table";
+import {LinkedPropertiesTable} from "@/components/tables/logs/Linked.Properties.Table";
 import {useUserStore} from "@/store/userStore";
 import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";
+import {PMSAuditTable} from "@/components/tables/logs/PMS.Audit.Table";
 
 const LogsPage = () => {
     const
@@ -42,7 +43,8 @@ const LogsPage = () => {
                         <TabsTrigger value="cronService" className={"mr-4"}>Linked Properties</TabsTrigger>
                         <TabsTrigger value="lnsService" className={"mr-4"}>Sync Service Logs</TabsTrigger>
                         <TabsTrigger value="conflictResolutions" className={"mr-4"}>Conflict Resolutions</TabsTrigger>
-                        <TabsTrigger value="userActions">User Actions</TabsTrigger>
+                        <TabsTrigger value="userActions" className={"mr-4"}>User Logs</TabsTrigger>
+                        <TabsTrigger value="pmsActions">PMS Logs</TabsTrigger>
                     </TabsList>
                     {
                         isLoading && (
@@ -102,6 +104,19 @@ const LogsPage = () => {
                                         </CardHeader>
                                         <CardContent className="grid gap-6">
                                             <UserAuditTable coid={coid as string} orgRole={attrs?.loggedInUser?.orgRole as string} />
+                                        </CardContent>
+                                    </Card>
+                                </TabsContent>
+                                <TabsContent value="pmsActions">
+                                    <Card>
+                                        <CardHeader>
+                                            <CardTitle>PMS Logs</CardTitle>
+                                            <CardDescription>
+                                                PMS Actions Taken Using This System Are Listed Here
+                                            </CardDescription>
+                                        </CardHeader>
+                                        <CardContent className="grid gap-6">
+                                            <PMSAuditTable coid={coid as string} orgRole={attrs?.loggedInUser?.orgRole as string} />
                                         </CardContent>
                                     </Card>
                                 </TabsContent>

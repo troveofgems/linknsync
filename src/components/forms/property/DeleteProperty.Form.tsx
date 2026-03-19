@@ -25,7 +25,9 @@ export const DeletePropertyForm = (
     const
         [state, action, isPending] = useActionState(
             deletePropertyAction,
-            {} as DeletePropertyActionState
+            {
+                pState: user
+            } as DeletePropertyActionState
         ),
         idSegments = propertyId.split("-"),
         lastSegmentOfId = idSegments[idSegments.length - 1];
@@ -46,10 +48,10 @@ export const DeletePropertyForm = (
 
     return (
         <form id="deleteICalForm" action={action}>
-            <p className={"py-3 pl-1"}>
+            <p className={"py-3 pl-1 text-muted-foreground"}>
                 To remove the property, enter in the following:
             </p>
-            <pre className={"p-2"}>
+            <pre className={"p-2 text-muted-foreground"}>
                 {user!.profile!.fullName.split(" ")[1]} - {lastSegmentOfId}
             </pre>
             {

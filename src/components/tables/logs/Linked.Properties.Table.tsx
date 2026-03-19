@@ -2,7 +2,7 @@
 import {useEffect, useState} from "react";
 import {fetchCronServiceListAction, ReadCronServiceActionState} from "@/actions/cronService/read.action";
 import {TableShell} from "@/components/tables/TableShell";
-import {LinkedPropertiesListColumnDefs} from "@/components/tables/columnDefs/linked.properties.list.column.defs";
+import {LinkedPropertiesListColumnDefs} from "@/components/tables/columnDefs/logs/linked.properties.list.column.defs";
 import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";
 import {$Enums} from "@prisma/client";
 

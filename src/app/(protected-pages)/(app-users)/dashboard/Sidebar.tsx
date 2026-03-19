@@ -16,10 +16,10 @@ type SidebarLink = {
     permissions: string[];
 };
 
-const { goToProfile, /*goToCalendar,*/ goToConflicts, goToProperty, goToLogs } = APP_PATHS.pages.authenticated.user;
+const { /*goToProfile,*/ /*goToCalendar,*/ goToConflicts, goToProperty, goToLogs } = APP_PATHS.pages.authenticated.user;
 
 const linkList = [
-    goToProfile,
+    /*goToProfile,*/
     goToProperty.list,
     /*goToCalendar,*/
     goToConflicts,

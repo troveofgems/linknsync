@@ -143,7 +143,8 @@ export const createICalAttachmentActionFromForm = async(
             propertyId: inputData.propertyId,
             importType: inputData.importType,
             importFile: form.get("ical.file") as File,
-            generatedICalResourceId
+            generatedICalResourceId,
+            slug: icalSlug
         });
 
     if(generateAudit) {
@@ -177,6 +178,8 @@ export const createICalAttachmentAction = async(
     coid: string,
     importFile?: File
 ): Promise<CreateICalAttachmentActionState> => {
+    console.log("Creating ICal Attachment.......", icalResource);
+
     const // Process ICal Resource
         { id: generatedICalResourceId } = await db.iCalEntry.create({
             data: icalResource as CreateICalAttachmentProps

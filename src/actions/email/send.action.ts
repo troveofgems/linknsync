@@ -72,6 +72,14 @@ export const createSendEmailActionFromForm = async(
     // Set up Nodemailer transporter with Imitate Email SMTP credentials
     const transporter = await initTransporter();
 
+    if(transporter === null) {
+        return {
+            message: "Emailing is Disabled...Email Could Not Be Sent!",
+            response: {},
+            pState: prevState.pState
+        } as CreateSendEmailActionState
+    }
+
     // Email message options
     const mailOptions = {
         from: `"Contact Form" <noreply@linknsync.com>`, // sender address
@@ -236,6 +244,14 @@ export const createSendConflictsDetectedEmailAction = async(
 
     // Set up Nodemailer transporter with Imitate Email SMTP credentials
     const transporter = await initTransporter();
+
+    if(transporter === null) {
+        return {
+            message: "Emailing is Disabled...Email Could Not Be Sent!",
+            response: {},
+            pState: prevState.pState
+        } as CreateSendEmailActionState
+    }
 
     const stringifiesConflicts = properties.map((item) => {
         let dataStr = "";

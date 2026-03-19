@@ -4,6 +4,10 @@ import {DeleteICalSchema} from "@/validator/file.validation.schema";
 import { createUserAuditAction_BackgroundProcess } from "@/actions/audit/user/create.action";
 import {compileUserAuditObject} from "@/lib/utils/Audit/audit.utils";
 import {SessionDataState} from "@/store/userStore";
+import {
+    deleteTrackUnitBlockAction,
+    TrackUnitBlockActionState
+} from "@/actions/pms/_pms/track.actions";
 
 /**
  * This File Contains the Logic for Deleting An ICal File
@@ -46,6 +50,30 @@ export const deleteICalAction = async(
         } as DeleteICalActionState;
     }
 
+    // Check For PMS Logs... TODO: Create A Better Flow For This
+    const pmsLogs = await db.pmsUpdateLog.findMany({
+        where: {
+            icalEntryId: resource.icalSourceId,
+        }
+    });
+
+    const deletesToPushToPMS =
+        pmsLogs // Only look for Created Calls to PMS otherwise Delete All other associated DateBlocks
+            .filter((item) =>
+                item.callStatusCode === "201"
+            );
+
+    console.log("Deletes to push to track? ", deletesToPushToPMS);
+
+    if(deletesToPushToPMS.length > 0) {
+        console.log("Deletes to push to track exist! ", deletesToPushToPMS);
+        const pmsDeletedResources = await deleteTrackUnitBlockAction(
+            prevState as TrackUnitBlockActionState,
+            deletesToPushToPMS
+        );
+        console.log("PMS Deleted Resources Response: ", pmsDeletedResources);
+    }
+
     // Prisma Delete Call
     const deletedResource = await db.iCalEntry.delete({
         where: {
@@ -76,7 +104,7 @@ export const deleteICalAction = async(
     return { // Returns Result of Processing
         message: "The iCal resource has been successfully removed!",
         response: {
-            ...deletedResource
+            //...deletedResource
         },
         pState: prevState.pState
     } as DeleteICalActionState;

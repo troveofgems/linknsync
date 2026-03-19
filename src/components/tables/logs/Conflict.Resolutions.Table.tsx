@@ -1,7 +1,7 @@
 "use client";
 import {useEffect, useState} from "react";
 import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";
-import {ConflictResolutionListColumnDefs} from "@/components/tables/columnDefs/conflict.resolution.list.column.defs";
+import {ConflictResolutionListColumnDefs} from "@/components/tables/columnDefs/logs/conflict.resolution.list.column.defs";
 import {TableShell} from "@/components/tables/TableShell";
 import {fetchConflictResolutionsAuditListAction, ReadConflictResolutionsAuditActionState} from "@/actions/audit/conflictResolutions/read.action";
 

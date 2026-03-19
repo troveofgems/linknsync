@@ -1,6 +1,6 @@
 "use client";
 import {useEffect, useState} from "react";
-import {SyncServiceListColumnDefs} from "@/components/tables/columnDefs/sync.service.column.defs";
+import {SyncServiceListColumnDefs} from "@/components/tables/columnDefs/logs/sync.service.column.defs";
 import {TableShell} from "@/components/tables/TableShell";
 import {LoaderSkeleton} from "@/components/structural/loader/Custom.Loader";
 import {fetchSyncAuditListAction, ReadSyncAuditActionState} from "@/actions/audit/sync/read.action";
