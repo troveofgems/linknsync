@@ -22,5 +22,8 @@ export const AttachOrUpdatePMSSchema = z.object({
         .string()
         .max(2, {message: "Block Reason Id must not be more than 2 characters."})
         .optional()
-        .or(z.literal(""))
+        .or(z.literal("")),
+    orgImprintId: z
+        .string()
+        .optional()
 });

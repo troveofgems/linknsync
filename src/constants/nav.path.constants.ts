@@ -108,7 +108,7 @@ export const NAV_PATH_CONSTANTS = {
                 },
                 profile: {
                     path: "profile",
-                    label: "Profile",
+                    label: "My Dashboard",
                     permissions: RbacPermissions.allowAccessTo.profile
                 },
                 property: {

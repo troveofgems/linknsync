@@ -1,13 +1,13 @@
 import icalPackage, {CalendarComponent, parseICS, VCalendar, VEvent} from "node-ical";
 import {DateBlock} from "@/actions/actions.types";
 import db from "@/db/connect.db";
-import {DateBlockConflict, PriorityType, Prisma} from "@prisma/client";
+import {DateBlockConflict, PmsUpdateLog, PriorityType, Prisma} from "@prisma/client";
 import {createConflictAction, CreateConflictActionState} from "@/actions/conflict/create.action";
 import {ConflictResolutions, processConflictResolutions} from "@/actions/cronService/update.action";
 import {SessionDataState} from "@/store/userStore";
 import DateBlockCreateManyInput = Prisma.DateBlockCreateManyInput;
 import {
-    createTrackUnitBlockAction,
+    confirmTrackIsConnected,
     deleteTrackUnitBlockAction,
     TrackUnitBlockActionState
 } from "@/actions/pms/_pms/track.actions";
@@ -38,6 +38,7 @@ export type CreateDateBlockActionProps = {
     calendarId: string;
     propertyId: string;
     importType: string;
+    slug?: string;
     importFile?: File;
     generatedICalResourceId: string;
 }
@@ -57,7 +58,8 @@ export const createDateBlockAction = async(
         propertyId,
         importType,
         importFile,
-        generatedICalResourceId
+        generatedICalResourceId,
+        slug
     }: CreateDateBlockActionProps
 ): Promise<CreateDateBlockActionState> => {
     const
@@ -69,6 +71,7 @@ export const createDateBlockAction = async(
                 propertyId,
                 cid,
                 coid,
+                slug,
                 undefined,
                 prevState!.pState!.loggedInUser!.orgRole as string
             ) :
@@ -79,6 +82,7 @@ export const createDateBlockAction = async(
                 propertyId,
                 cid,
                 coid,
+                slug,
                 undefined,
                 prevState!.pState!.loggedInUser!.orgRole as string
             ),
@@ -94,10 +98,17 @@ export const createDateBlockAction = async(
         }
     }
 
-    const generatedDateBlocks = await db.dateBlock.createMany({
+    const generatedDateBlocks = await db.dateBlock.createManyAndReturn({
         data: nonConflicting as DateBlockCreateManyInput[],
         skipDuplicates: true
     });
+
+    const trackResponse = await confirmTrackIsConnected(
+        propertyId,
+        generatedDateBlocks,
+        prevState.pState as SessionDataState
+    );
+    console.log("Track response? ", trackResponse);
 
     // Process Conflicts
     const generatedConflictBlocks = await createConflictAction(
@@ -108,7 +119,7 @@ export const createDateBlockAction = async(
     return {
         message: "Processed DateBlocks!",
         response: {
-            generatedDateBlocks: generatedDateBlocks.count || 0,
+            generatedDateBlocks: generatedDateBlocks?.length ?? 0,
             generatedConflictBlocks: generatedConflictBlocks.response?.processedConflictCount || 0
         }
     }
@@ -125,6 +136,7 @@ export const processDateBlocksFromURL = async (
     propertyId: string,
     cid: string,
     coid: string,
+    slug?: string,
     icalId?: string,
     ownerType?: string,
 ) => {
@@ -150,6 +162,7 @@ export const processDateBlocksFromURL = async (
         eventCreated: new Date(),
         startDate: new Date(),
         endDate: new Date(),
+        slug: "Unknown",
         summary: "Unknown",
         isRecurring: false,
         recurrenceRule: "No Rules",
@@ -179,6 +192,7 @@ export const processDateBlocksFromURL = async (
             dateBlockEntry.eventUID = key.toString();
             dateBlockEntry.eventCreated = new Date();
             dateBlockEntry.summary = "No Summary";
+            dateBlockEntry.slug = slug;
             dateBlockEntry.startDate = vEvent.start as Date;
             dateBlockEntry.endDate = vEvent.end as Date;
             if(!!icalId && icalId.length > 0) {
@@ -198,6 +212,7 @@ export const processDateBlocksFromFile = async (
     propertyId: string,
     cid: string,
     coid: string,
+    slug?: string,
     icalId?: string,
     ownerType?: string
 ) => {
@@ -256,6 +271,7 @@ export const processDateBlocksFromFile = async (
                 // Process Events
                 dateBlockEntry.eventType = events[key].type;
                 dateBlockEntry.eventUID = key.toString();
+                dateBlockEntry.slug = slug;
                 dateBlockEntry.eventCreated = new Date();
                 dateBlockEntry.summary = "No Summary";
                 dateBlockEntry.startDate = vEvent.start as Date;
@@ -351,19 +367,22 @@ export const addNewEvents = async (
         addNonConflictingEvents = [...[nonConflicting]].length > 0,
         addConflicts = [...[conflicts]].length > 0;
 
+    console.log("Non-Conflicting Events To Add: ", nonConflicting);
+
     if(addNonConflictingEvents) {
-        const createManyDateBlocksResponse = await db.dateBlock.createMany({
+        const createManyDateBlocksResponse = await db.dateBlock.createManyAndReturn({
             data: nonConflicting as DateBlockCreateManyInput[]
         });
-        actionsTaken.push(`New Events Recorded: ${createManyDateBlocksResponse.count}`);
+        actionsTaken.push(`New Events Recorded: ${createManyDateBlocksResponse.length}`);
         // Add Events Call To Push To TravelNet/PMS - Create Unit Block
         if(process.env.NODE_ENV === 'development') {
             console.log("Add Non-conflicting Dates: ", createManyDateBlocksResponse)
         }
-        await createTrackUnitBlockAction(
+        /*await createTrackUnitBlockAction(
             {} as TrackUnitBlockActionState,
-            []
-        );
+            nonConflicting,
+            {}
+        );*/
     } else {
         actionsTaken.push("New Events Recorded: 0");
     }
@@ -392,6 +411,8 @@ export const removeExistingEvents = async (
 ) => {
     const eventsToProcessExist = !!removeEvents && removeEvents.length > 0;
 
+    console.log("Removing Events...", removeEvents);
+
     if(eventsToProcessExist) { // DateBlocks Processed First
         const deleteManyDateBlocksResponse = await db.dateBlock.deleteMany({
             where: {
@@ -406,10 +427,8 @@ export const removeExistingEvents = async (
         }
         actionsTaken.push(`Existing Events Removed: ${deleteManyDateBlocksResponse.count}`);
         await deleteTrackUnitBlockAction(
-            {} as TrackUnitBlockActionState,
-            {
-                unitBlockIdList: []
-            }
+           {} as TrackUnitBlockActionState,
+           [] as Partial<PmsUpdateLog>[]
         );
 
         // Conflicts Processed Next

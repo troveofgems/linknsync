@@ -181,6 +181,7 @@ model DateBlock {
   summaryHash      String? /// @encryption:hash(summary)
   startDate        DateTime
   endDate          DateTime
+  slug             String?
   isRecurring      Boolean             @default(false)
   recurrenceRule   String              @default("")
   priority         PriorityType        @default(NO_PRIORITY)
@@ -213,6 +214,7 @@ model DateBlockConflict {
   eventCreated     DateTime
   summary          String /// @encrypted
   summaryHash      String? /// @encryption:hash(summary)
+  slug             String?
   startDate        DateTime
   endDate          DateTime
   isRecurring      Boolean            @default(false)
@@ -264,6 +266,7 @@ model BookingRequest {
 
 model AttachedPMS {
   id                 String     @id @default(uuid())
+  orgImprintId       String?
   pmsName            String     @default("Track") /// @encrypted
   pmsNameHash        String?    /// @encryption:hash(pmsName)
   domain             String     /// @encrypted
@@ -308,11 +311,19 @@ model Subscription {
 model PmsUpdateLog {
   id            String @id @default(uuid())
   pms           String
-  lnsBlockId    String
-  pmsBlockId    String
-  actionType    String
+  pmsBlockId    String?
+  pmsCallActionType String
   pmsResponse   String
+  callStatusCode String
+  callStatusText String
+  requestToPMSSubmittedAt String
+  lnsDateBlockId String
+  lnsCallType String
   orgImprintId  String
+  propertyId String
+  icalEntryId String
+  sourceSlug String
+  user String
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }

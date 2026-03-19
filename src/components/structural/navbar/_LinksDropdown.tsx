@@ -67,7 +67,7 @@ export const LinksDropdown = () => {
                 </SignedIn>
                 <SignedOut>
                     <DropdownMenuItem>
-                        <SignInButton mode={"modal"}>
+                        <SignInButton mode={"modal"} fallbackRedirectUrl={"/dashboard/profile"}>
                             <button className={"w-full text-left"}>Login</button>
                         </SignInButton>
                     </DropdownMenuItem>

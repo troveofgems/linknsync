@@ -281,6 +281,8 @@ export const createPropertyAction = async(
             icalFilename = importFile.name;
         }
 
+        console.log("ICAL Slug? ", formData);
+
         const
             {
             response: {

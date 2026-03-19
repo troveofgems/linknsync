@@ -12,6 +12,7 @@ export type DateBlock = {
     eventType: string;
     eventUID: string;
     eventCreated: Date;
+    slug?: string;
     summary: string;
     startDate: Date;
     endDate: Date;
