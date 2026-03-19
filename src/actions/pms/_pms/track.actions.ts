@@ -143,7 +143,7 @@ const runAsyncTask = async(
     authorizationBearerToken: string,
     data: CreateTrackUnitBlockProps | DeleteTrackUnitBlockProps,
 ) => await fetch(
-        `${tnsDomainSetUrl}/unit-blocks`,
+        `${tnsDomainSetUrl}unit-blocks`,
         {
             method: "POST",
             headers: {
@@ -158,7 +158,7 @@ const runAsyncTaskDeletes = async(
     authorizationBearerToken: string,
     unitBlockId: string,
 ) => await fetch(
-    `${tnsDomainSetUrl}/unit-blocks/${unitBlockId}`,
+    `${tnsDomainSetUrl}unit-blocks/${unitBlockId}`,
     {
         method: "DELETE",
         headers: {
