@@ -267,7 +267,7 @@ export const IcalListColumnDefs = (
                                                         <DropdownMenuItem>
                                                             <div className={"flex flex-col w-full"}>
                                                                 <div className={"flex flex-row w-full items-center"}>
-                                                                    <Key className={"text-gray-50 mr-2"}/>
+                                                                    <Key className={"text-violet-600 mr-2"}/>
                                                                     <Button
                                                                         className={"overrideActionBtnStyles"}
                                                                         onClick={() => {

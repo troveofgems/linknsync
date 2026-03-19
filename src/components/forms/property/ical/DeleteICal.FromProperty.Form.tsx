@@ -61,10 +61,10 @@ export const DeleteICalFromPropertyForm = (
                     </div>
                 )
             }
-            <p className={"py-3 pl-1"}>
+            <p className={"py-3 pl-1 text-white"}>
                 To remove the linked source, enter in the following:
             </p>
-            <pre className={"p-2"}>
+            <pre className={"p-2 text-white"}>
                 {generatedDeletionCode}
             </pre>
             {
