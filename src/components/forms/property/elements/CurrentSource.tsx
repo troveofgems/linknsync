@@ -37,13 +37,13 @@ export const CurrentSource = (
         source?: ICalSource | SubscribedIcalList,
     ) => (
             <div className={"w-full flex justify-between items-center flex-row-reverse"}>
-                <div>
+                <div className={"text-muted-foreground"}>
                     { source?.UserImprint?.appRole }
                 </div>
-                <div>
+                <div className={"text-muted-foreground"}>
                     { source?.UserImprint?.fullName}
                 </div>
-                <div>
+                <div className={"text-muted-foreground"}>
                     {
                         source?.importType === "link" ? (
                             LINKED_TO_CRON_TRIGGER()
@@ -54,7 +54,7 @@ export const CurrentSource = (
                         )
                     }
                 </div>
-                <div>
+                <div className={"text-muted-foreground"}>
                     { addEllipsis(source?.icalFilename as string, 20) }
                 </div>
             </div>
