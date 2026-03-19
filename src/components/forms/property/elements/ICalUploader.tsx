@@ -79,7 +79,7 @@ export const ICalUploader = (
                             inputFieldClassnames={"formInput w-fit"}
                         />
                     </div>
-                    <div className={"w-1/2 mx-20"}>
+                    <div className={"w-1/2 pl-15"}>
                         <GenericTextInput
                             setAsDropdown={true}
                             label={"Source"}
